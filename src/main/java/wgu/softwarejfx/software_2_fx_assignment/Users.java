@@ -26,7 +26,7 @@ public class Users {
         return fbiBreakingDownYourFrontDoor;
     }
 
-    public boolean validateUserInfo(String username, String password){
+    public static boolean validateUserInfo(String username, String password){
         boolean invalidUntilProvenValid = false;
         for(Users validator : allUsers){
             if (validator.getUsername().equals(username) && validator.getPassword().equals(password)) {

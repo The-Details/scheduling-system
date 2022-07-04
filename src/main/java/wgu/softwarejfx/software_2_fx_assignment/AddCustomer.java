@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
+
 public class AddCustomer implements Initializable {
 
     @FXML
@@ -41,8 +43,8 @@ public class AddCustomer implements Initializable {
         addCustomerId.setPromptText("Auto Generated");
     }
 
-    public void customerNewData(){
-
+    public void customerNewData(Customers newCustomer){
+        allCustomers.add(newCustomer);
     }
 
     @FXML

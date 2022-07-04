@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static wgu.softwarejfx.software_2_fx_assignment.Customers.lookupCustomerById;
+
 public class ModifyCustomer implements Initializable {
 
     @FXML
@@ -36,8 +38,28 @@ public class ModifyCustomer implements Initializable {
     @FXML
     Button cancelModifiedCustomerButton;
 
-    public void customerDataToModifyFieldSetup(){
+    public void customerDataToModifyFieldSetup(int customerId){
 
+        Customers dataToModify = lookupCustomerById(customerId);
+
+        if(modifyCustomerId.getText() == null) {
+            modifyCustomerId.setText("");
+            modifyCustomerName.setText("");
+            modifyCustomerPhone.setText("");
+            modifyCustomerAddress.setText("");
+            modifyCustomerStateProvince.setText("");
+            modifyCustomerCountry.setText("");
+            modifyCustomerZipCode.setText("");
+        }
+        else{
+            modifyCustomerId.setText(String.valueOf(dataToModify.getCustomerId()));
+            modifyCustomerName.setText(dataToModify.getCustomerName());
+            modifyCustomerPhone.setText(dataToModify.getPhoneNumber());
+            modifyCustomerAddress.setText(dataToModify.getAddress());
+            modifyCustomerStateProvince.setText(dataToModify);
+            modifyCustomerCountry.setText(dataToModify.get);
+            modifyCustomerZipCode.setText(dataToModify.getZipCode());
+        }
     }
 
     public void modifiedCustomerRecords(){

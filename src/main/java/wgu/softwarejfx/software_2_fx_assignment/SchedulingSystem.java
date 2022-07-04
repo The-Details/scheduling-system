@@ -15,6 +15,7 @@ import static wgu.softwarejfx.software_2_fx_assignment.Contacts.allContacts;
 import static wgu.softwarejfx.software_2_fx_assignment.Countries.allCountries;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
 import static wgu.softwarejfx.software_2_fx_assignment.FirstLevelDivisions.allFirstLevelDivisions;
+import static wgu.softwarejfx.software_2_fx_assignment.LoginController.logInFormText;
 import static wgu.softwarejfx.software_2_fx_assignment.Users.allUsers;
 
 public class SchedulingSystem extends Application {
@@ -41,14 +42,14 @@ public class SchedulingSystem extends Application {
     ResultSet countriesResultSet;
     ResultSet userResultSet;
 
-    public void constructConnection(){
-        try{
-            this.lan = DriverManager.getConnection("jdbc:mysql://localhost:3306/web?useSSL=false", "sqlUser", "Passw0rd!");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
+//    public void constructConnection(){
+//        try{
+//            this.lan = DriverManager.getConnection("jdbc:mysql://localhost:3306/web?useSSL=false", "sqlUser", "Passw0rd!");
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+//
 //    public void userData() throws SQLException {
 //        userStmt = lan.createStatement();
 //        userQuery = "SELECT *" + "FROM users";
@@ -152,7 +153,7 @@ public class SchedulingSystem extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-        constructConnection();
+//        constructConnection();
 //        userData();
 //        divisionData();
 //        appointment();
@@ -162,7 +163,7 @@ public class SchedulingSystem extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(SchedulingSystem.class.getResource("login-form.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Log-In");
+        stage.setTitle(logInFormText.getString("windowTitle"));
         stage.setScene(scene);
         stage.show();
     }

@@ -34,7 +34,6 @@ public class Customers {
     }
 
     public void addCustomer(Customers newCustomer){
-
         allCustomers.add(newCustomer);
     }
 
@@ -55,7 +54,6 @@ public class Customers {
     }
 
     public void deleteCustomer(Customers selectedCustomer){
-
         allCustomers.remove(selectedCustomer);
     }
 
@@ -66,11 +64,10 @@ public class Customers {
                 crossHairs.add(spyGlass);
             }
         }
-
         return crossHairs;
     }
 
-    public Customers lookupCustomerById(int customerId){
+    public static Customers lookupCustomerById(int customerId){
         Customers crossHairs = null;
         for(Customers spyGlass : allCustomers){
             if(spyGlass.customerId == customerId){

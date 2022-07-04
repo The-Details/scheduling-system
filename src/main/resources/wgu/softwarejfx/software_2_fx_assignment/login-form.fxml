@@ -66,7 +66,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="logInButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="79.0" text="Log In" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="logInButton" mnemonicParsing="false" onMouseClicked="#logInButtonOnClick" prefHeight="26.0" prefWidth="79.0" text="Log In" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -93,7 +93,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="currentLocationLabel" text="Curent Location" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="currentLocationLabel" text="Current Location" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -165,7 +165,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="exitButton" mnemonicParsing="false" prefWidth="50.0" text="Exit" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="exitButton" mnemonicParsing="false" onMouseClicked="#onExitButtonClick" prefWidth="50.0" text="Exit" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
          </children>
