@@ -12,10 +12,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static wgu.softwarejfx.software_2_fx_assignment.Customers.addCustomer;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
+import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 
 public class AddCustomer implements Initializable {
 
@@ -43,13 +48,47 @@ public class AddCustomer implements Initializable {
         addCustomerId.setPromptText("Auto Generated");
     }
 
-    public void customerNewData(Customers newCustomer){
-        allCustomers.add(newCustomer);
+    public void customerNewData(){
+
+        SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+
+        if (addCustomerName.getText() == null){
+            System.out.println("Error: CustomerName is Empty");
+        }
+        else if ((addCustomerAddress.getText().isEmpty() || addCustomerStateProvince.getText().isEmpty() || addCustomerCountry.getText().isEmpty())){
+            System.out.println("Error: One or More Address Fields are Empty");
+        }
+        else if (addCustomerZipCode.getText().isEmpty()){
+            System.out.println("Error: Zipcode is Empty");
+        }
+        else if (addCustomerPhone.getText().isEmpty()){
+            System.out.println("Error: Phone Number is Empty");
+        }
+        else {
+            Customers newCustomer = new Customers(
+                    allCustomers.size() + 1,
+                    addCustomerName.getText(),
+                    addCustomerAddress.getText() + "," + addCustomerStateProvince.getText() + "," + addCustomerCountry.getText(),
+                    addCustomerZipCode.getText(),
+                    addCustomerPhone.getText(),
+                    LocalDateTime.parse(dateTimeFormatter.format(date)),
+                    currentUser,
+                    LocalDateTime.parse(dateTimeFormatter.format(date)),
+                    currentUser,
+                    0
+            );
+
+            addCustomer(newCustomer);
+        }
+
+
     }
 
     @FXML
-    public void customerTableUpdating(MouseEvent event){
-
+    public void customerTableUpdating(MouseEvent event) throws IOException {
+        customerNewData();
+        saveButtonChangeScene(event);
     }
 
     public void saveButtonChangeScene(MouseEvent event) throws IOException {

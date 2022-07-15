@@ -16,7 +16,7 @@ public class Users {
         this.password = password;
     }
 
-    public Users lookupUser(int userId){
+    public static Users lookupUser(int userId){
         Users fbiBreakingDownYourFrontDoor = null;
         for(Users nsaBackDoor : allUsers){
             if(nsaBackDoor.getUserId() == userId){

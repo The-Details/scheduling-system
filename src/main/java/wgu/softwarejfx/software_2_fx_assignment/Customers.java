@@ -33,11 +33,11 @@ public class Customers {
         this.divisionId = divisionId;
     }
 
-    public void addCustomer(Customers newCustomer){
+    public static void addCustomer(Customers newCustomer){
         allCustomers.add(newCustomer);
     }
 
-    public void updateCustomer(int customerId, Customers customerToUpdate){
+    public static void updateCustomer(int customerId, Customers customerToUpdate){
         for(Customers waitingRoom : allCustomers){
             if(waitingRoom.getCustomerId() == customerId){
                 waitingRoom.setCustomerName(customerToUpdate.getCustomerName());
@@ -53,11 +53,11 @@ public class Customers {
         }
     }
 
-    public void deleteCustomer(Customers selectedCustomer){
+    public static void deleteCustomer(Customers selectedCustomer){
         allCustomers.remove(selectedCustomer);
     }
 
-    public ObservableList<Customers> lookupCustomerByName(String customerName){
+    public static ObservableList<Customers> lookupCustomerByName(String customerName){
         ObservableList<Customers> crossHairs = FXCollections.observableArrayList();
         for(Customers spyGlass : allCustomers){
             if(spyGlass.getCustomerName().equals(customerName)){
@@ -157,7 +157,7 @@ public class Customers {
         return divisionId;
     }
 
-    public ObservableList<Customers> getAllCustomers(){
+    public static ObservableList<Customers> getAllCustomers(){
         return allCustomers;
     }
 }

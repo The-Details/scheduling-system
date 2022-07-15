@@ -55,6 +55,8 @@ public class LoginController implements Initializable {
     public Locale currentLocale;
     public static ResourceBundle logInFormText;
 
+    public static String currentUser;
+
     public void localeHandling() throws IOException {
         Locale locale = Locale.getDefault();
         languageTextField.setDisable(true);
@@ -81,6 +83,7 @@ public class LoginController implements Initializable {
         if(validateUserInfo(usernameTextField.getText(), passwordTextField.getText())){
             loginSceneChange(event);
             activityLogger("Success");
+            currentUser = usernameTextField.getText();
         }
         else {
             System.out.println(errorMessage);
@@ -122,17 +125,17 @@ public class LoginController implements Initializable {
             SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
             Date date = new Date(System.currentTimeMillis());
 
-            File loginActivity = new File("loginActivity.txt");
+            File loginActivity = new File("login_activity.txt");
             if(loginActivity.createNewFile()){
                 System.out.println("Login Activity Log Created");
-                FileWriter logActivity = new FileWriter("loginActivity.txt");
+                FileWriter logActivity = new FileWriter("login_activity.txt");
                 logActivity.write("[" + ZoneId.systemDefault() + "][" + dateTimeFormatter.format(date) + "]: "
                         + usernameTextField.getText() + " -- " + loginStatus);
                 logActivity.close();
                 System.out.println("Login Activity Logged");
             }
             else{
-                FileWriter logActivity = new FileWriter("loginActivity.txt");
+                FileWriter logActivity = new FileWriter("login_activity.txt");
                 logActivity.write("[" + ZoneId.systemDefault() + "][" + dateTimeFormatter.format(date) + "]: "
                         + usernameTextField.getText() + " -- " + loginStatus);
                 logActivity.close();

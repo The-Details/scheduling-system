@@ -1,11 +1,36 @@
 package wgu.softwarejfx.software_2_fx_assignment;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class CustomerRecordsMainMenu {
+import static javafx.geometry.HPos.CENTER;
+import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
+import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
+import static wgu.softwarejfx.software_2_fx_assignment.Customers.deleteCustomer;
+import static wgu.softwarejfx.software_2_fx_assignment.ModifyCustomer.currentlySelectedCustomer;
+
+public class CustomerRecordsMainMenu implements Initializable {
 
     @FXML
     TextField customerSearchBar;
@@ -50,7 +75,7 @@ public class CustomerRecordsMainMenu {
     @FXML
     Tab januaryTabByMonthTabPane;
     @FXML
-    TableView<Appointments> januaryTableView;
+    TableView<Appointments> januaryTabByMonthTableView;
     @FXML
     TableColumn<Appointments, Integer> januaryAppointmentIdCol;
     @FXML
@@ -1578,52 +1603,1377 @@ public class CustomerRecordsMainMenu {
 
 
     // setting up customer cols
+    public void customerTableSetup (){
+        customersIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        customersNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        customersAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        customersPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        customersZipCodeCol.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
+        customersTableView.setItems(allCustomers);
+    }
 
     // setting up appoint cols
 
-    //customers data method
+    public void appointmentTableSetup() {
+        //January Table Setup
+        januaryTabByMonthTableView.setItems(januaryAppointments);
+        januaryWeek1TableView.setItems(januaryWeek1Appointments);
+        januaryWeek2TableView.setItems(januaryWeek2Appointments);
+        januaryWeek3TableView.setItems(januaryWeek3Appointments);
+        januaryWeek4TableView.setItems(januaryWeek4Appointments);
+        januaryAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        januaryAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        januaryAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        januaryAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        januaryAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        januaryAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        januaryAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        januaryAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        januaryAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        januaryAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        januaryAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        januaryAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        januaryAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        januaryAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        januaryAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        januaryAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        januaryAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        januaryAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        januaryAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        januaryAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        januaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        januaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        januaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        januaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        januaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        januaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        januaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        januaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        januaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        januaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        januaryAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        januaryAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        januaryAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        januaryAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        januaryAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        januaryAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        januaryAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        januaryAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        januaryAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        januaryAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        januaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        januaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        januaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        januaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        januaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //February Table Setup
+        februaryTabByMonthTableView.setItems(februaryAppointments);
+        februaryWeek1TableView.setItems(februaryWeek1Appointments);
+        februaryWeek2TableView.setItems(februaryWeek2Appointments);
+        februaryWeek3TableView.setItems(februaryWeek3Appointments);
+        februaryWeek4TableView.setItems(februaryWeek4Appointments);
+        februaryAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        februaryAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        februaryAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        februaryAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        februaryAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        februaryAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        februaryAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        februaryAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        februaryAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        februaryAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        februaryAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        februaryAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        februaryAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        februaryAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        februaryAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        februaryAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        februaryAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        februaryAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        februaryAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        februaryAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        februaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        februaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        februaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        februaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        februaryAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        februaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        februaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        februaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        februaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        februaryAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        februaryAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        februaryAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        februaryAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        februaryAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        februaryAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        februaryAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        februaryAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        februaryAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        februaryAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        februaryAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        februaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        februaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        februaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        februaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        februaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //March Table Setup
+        marchTabByMonthTableView.setItems(marchAppointments);
+        marchWeek1TableView.setItems(marchWeek1Appointments);
+        marchWeek2TableView.setItems(marchWeek2Appointments);
+        marchWeek3TableView.setItems(marchWeek3Appointments);
+        marchWeek4TableView.setItems(marchWeek4Appointments);
+        marchAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        marchAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        marchAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        marchAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        marchAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        marchAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        marchAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        marchAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        marchAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        marchAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        marchAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        marchAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        marchAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        marchAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        marchAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        marchAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        marchAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        marchAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        marchAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        marchAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        marchAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        marchAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        marchAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        marchAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        marchAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        marchAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        marchAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        marchAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        marchAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        marchAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        marchAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        marchAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        marchAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        marchAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        marchAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        marchAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        marchAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        marchAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        marchAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        marchAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        marchAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        marchAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        marchAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        marchAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        marchAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //April Table Setup
+        aprilTabByMonthTableView.setItems(aprilAppointments);
+        aprilWeek1TableView.setItems(aprilWeek1Appointments);
+        aprilWeek2TableView.setItems(aprilWeek2Appointments);
+        aprilWeek3TableView.setItems(aprilWeek3Appointments);
+        aprilWeek4TableView.setItems(aprilWeek4Appointments);
+        aprilAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        aprilAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        aprilAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        aprilAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        aprilAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        aprilAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        aprilAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        aprilAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        aprilAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        aprilAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        aprilAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        aprilAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        aprilAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        aprilAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        aprilAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        aprilAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        aprilAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        aprilAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        aprilAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        aprilAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        aprilAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        aprilAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        aprilAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        aprilAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        aprilAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        aprilAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        aprilAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        aprilAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        aprilAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        aprilAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        aprilAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        aprilAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        aprilAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        aprilAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        aprilAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        aprilAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        aprilAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        aprilAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        aprilAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        aprilAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        aprilAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        aprilAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        aprilAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        aprilAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        aprilAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //May Table Setup
+        mayTabByMonthTableView.setItems(mayAppointments);
+        mayWeek1TableView.setItems(mayWeek1Appointments);
+        mayWeek2TableView.setItems(mayWeek2Appointments);
+        mayWeek3TableView.setItems(mayWeek3Appointments);
+        mayWeek4TableView.setItems(mayWeek4Appointments);
+        mayAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        mayAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        mayAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        mayAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        mayAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        mayAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        mayAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        mayAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        mayAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        mayAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        mayAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        mayAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        mayAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        mayAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        mayAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        mayAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        mayAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        mayAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        mayAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        mayAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        mayAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        mayAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        mayAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        mayAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        mayAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        mayAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        mayAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        mayAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        mayAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        mayAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        mayAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        mayAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        mayAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        mayAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        mayAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        mayAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        mayAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        mayAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        mayAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        mayAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        mayAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        mayAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        mayAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        mayAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        mayAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //June Table Setup
+        juneTabByMonthTableView.setItems(juneAppointments);
+        juneWeek1TableView.setItems(juneWeek1Appointments);
+        juneWeek2TableView.setItems(juneWeek2Appointments);
+        juneWeek3TableView.setItems(juneWeek3Appointments);
+        juneWeek4TableView.setItems(juneWeek4Appointments);
+        juneAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        juneAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        juneAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        juneAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        juneAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        juneAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        juneAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        juneAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        juneAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        juneAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        juneAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        juneAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        juneAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        juneAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        juneAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        juneAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        juneAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        juneAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        juneAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        juneAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        juneAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        juneAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        juneAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        juneAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        juneAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        juneAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        juneAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        juneAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        juneAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        juneAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        juneAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        juneAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        juneAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        juneAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        juneAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        juneAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        juneAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        juneAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        juneAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        juneAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        juneAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        juneAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        juneAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        juneAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        juneAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //July Table Setup
+        julyTabByMonthTableView.setItems(julyAppointments);
+        julyWeek1TableView.setItems(julyWeek1Appointments);
+        julyWeek2TableView.setItems(julyWeek2Appointments);
+        julyWeek3TableView.setItems(julyWeek3Appointments);
+        julyWeek4TableView.setItems(julyWeek4Appointments);
+        julyAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        julyAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        julyAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        julyAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        julyAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        julyAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        julyAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        julyAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        julyAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        julyAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        julyAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        julyAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        julyAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        julyAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        julyAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        julyAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        julyAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        julyAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        julyAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        julyAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        julyAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        julyAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        julyAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        julyAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        julyAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        julyAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        julyAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        julyAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        julyAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        julyAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        julyAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        julyAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        julyAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        julyAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        julyAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        julyAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        julyAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        julyAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        julyAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        julyAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        julyAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        julyAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        julyAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        julyAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        julyAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //August Table Setup
+        augustTabByMonthTableView.setItems(augustAppointments);
+        augustWeek1TableView.setItems(augustWeek1Appointments);
+        augustWeek2TableView.setItems(augustWeek2Appointments);
+        augustWeek3TableView.setItems(augustWeek3Appointments);
+        augustWeek4TableView.setItems(augustWeek4Appointments);
+        augustAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        augustAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        augustAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        augustAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        augustAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        augustAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        augustAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        augustAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        augustAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        augustAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        augustAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        augustAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        augustAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        augustAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        augustAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        augustAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        augustAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        augustAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        augustAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        augustAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        augustAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        augustAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        augustAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        augustAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        augustAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        augustAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        augustAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        augustAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        augustAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        augustAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        augustAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        augustAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        augustAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        augustAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        augustAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        augustAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        augustAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        augustAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        augustAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        augustAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        augustAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        augustAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        augustAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        augustAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        augustAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //September Table Setup
+        septemberTabByMonthTableView.setItems(septemberAppointments);
+        septemberWeek1TableView.setItems(septemberWeek1Appointments);
+        septemberWeek2TableView.setItems(septemberWeek2Appointments);
+        septemberWeek3TableView.setItems(septemberWeek3Appointments);
+        septemberWeek4TableView.setItems(septemberWeek4Appointments);
+        septemberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        septemberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        septemberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        septemberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        septemberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        septemberAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        septemberAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        septemberAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        septemberAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        septemberAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        septemberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        septemberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        septemberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        septemberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        septemberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        septemberAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        septemberAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        septemberAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        septemberAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        septemberAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        septemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        septemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        septemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        septemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        septemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        septemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        septemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        septemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        septemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        septemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        septemberAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        septemberAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        septemberAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        septemberAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        septemberAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        septemberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        septemberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        septemberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        septemberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        septemberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        septemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        septemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        septemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        septemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        septemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //October Table Setup
+        octoberTabByMonthTableView.setItems(octoberAppointments);
+        octoberWeek1TableView.setItems(octoberWeek1Appointments);
+        octoberWeek2TableView.setItems(octoberWeek2Appointments);
+        octoberWeek3TableView.setItems(octoberWeek3Appointments);
+        octoberWeek4TableView.setItems(octoberWeek4Appointments);
+        octoberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        octoberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        octoberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        octoberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        octoberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        octoberAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        octoberAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        octoberAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        octoberAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        octoberAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        octoberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        octoberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        octoberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        octoberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        octoberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        octoberAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        octoberAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        octoberAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        octoberAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        octoberAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        octoberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        octoberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        octoberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        octoberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        octoberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        octoberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        octoberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        octoberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        octoberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        octoberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        octoberAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        octoberAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        octoberAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        octoberAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        octoberAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        octoberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        octoberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        octoberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        octoberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        octoberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        octoberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        octoberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        octoberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        octoberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        octoberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //November Table Setup
+        novemberTabByMonthTableView.setItems(novemberAppointments);
+        novemberWeek1TableView.setItems(novemberWeek1Appointments);
+        novemberWeek2TableView.setItems(novemberWeek2Appointments);
+        novemberWeek3TableView.setItems(novemberWeek3Appointments);
+        novemberWeek4TableView.setItems(novemberWeek4Appointments);
+        novemberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        novemberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        novemberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        novemberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        novemberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        novemberAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        novemberAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        novemberAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        novemberAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        novemberAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        novemberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        novemberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        novemberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        novemberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        novemberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        novemberAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        novemberAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        novemberAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        novemberAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        novemberAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        novemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        novemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        novemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        novemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        novemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        novemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        novemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        novemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        novemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        novemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        novemberAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        novemberAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        novemberAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        novemberAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        novemberAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        novemberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        novemberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        novemberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        novemberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        novemberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        novemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        novemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        novemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        novemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        novemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        //December Table Setup
+        decemberTabByMonthTableView.setItems(decemberAppointments);
+        decemberWeek1TableView.setItems(decemberWeek1Appointments);
+        decemberWeek2TableView.setItems(decemberWeek2Appointments);
+        decemberWeek3TableView.setItems(decemberWeek3Appointments);
+        decemberWeek4TableView.setItems(decemberWeek4Appointments);
+        decemberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        decemberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        decemberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        decemberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        decemberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+
+        decemberAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        decemberAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        decemberAppointmentTitleCol2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        decemberAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
+        decemberAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        decemberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        decemberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        decemberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        decemberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        decemberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+        decemberAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        decemberAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        decemberAppointmentTypeCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
+        decemberAppointmentTypeCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
+        decemberAppointmentTypeCol4.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        decemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        decemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        decemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        decemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        decemberAppointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        decemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        decemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        decemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        decemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        decemberAppointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        decemberAppointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        decemberAppointmentEndCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        decemberAppointmentEndCol2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        decemberAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
+        decemberAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        decemberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        decemberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        decemberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        decemberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        decemberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        decemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        decemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        decemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        decemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        decemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+    }
+
+    //import existing customer data method
 
     // add appointment method
+    @FXML
+    public void addAppointmentSceneChange(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(CustomerRecordsMainMenu.class.getResource("add-appointment.fxml")));
+        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     // add customer method
+    @FXML
+    public void addCustomerSceneChange(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(CustomerRecordsMainMenu.class.getResource("add-customer.fxml")));
+        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     // modify customer method
+    @FXML
+    public void modifyCustomerSceneChange(MouseEvent event) throws IOException {
+        if(customersTableView.getSelectionModel().getSelectedItem() != null){
+            currentlySelectedCustomer = customersTableView.getSelectionModel().getSelectedItem();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(CustomerRecordsMainMenu.class.getResource("modify-customer.fxml")));
+            Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            GridPane conformation = new GridPane();
+            Text conformationInfo = new Text("Customer not selected");
+            conformationInfo.setFont(new Font(20));
+            conformation.getChildren().add(conformationInfo);
+            GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER,Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
+            Stage popUp = new Stage();
+            Scene conformationScene = new Scene(conformation);
+            popUp.setTitle("Error");
+            popUp.setScene(conformationScene);
+            popUp.sizeToScene();
+            popUp.show();
+        }
+
+    }
 
     // delete customer method
+    @FXML
+    public void deleteCustomerData(){
+        deleteCustomer(customersTableView.getSelectionModel().getSelectedItem());
+    }
 
     // appointments searchbar methods
 
     // customer searchbar methods
 
-    // jan appointment data method
 
-    // feb appointment data method
+    // view switching method <you're gonna be working with visibility of tables>
+    @FXML
+    public void changeTableView() {
+        if(appointmentsByMonthButton.isSelected()){
+            januaryTabByMonthTableView.setVisible(true);
+            februaryTabByMonthTableView.setVisible(true);
+            marchTabByMonthTableView.setVisible(true);
+            aprilTabByMonthTableView.setVisible(true);
+            mayTabByMonthTableView.setVisible(true);
+            juneTabByMonthTableView.setVisible(true);
+            julyTabByMonthTableView.setVisible(true);
+            augustTabByMonthTableView.setVisible(true);
+            septemberTabByMonthTableView.setVisible(true);
+            octoberTabByMonthTableView.setVisible(true);
+            novemberTabByMonthTableView.setVisible(true);
+            decemberTabByMonthTableView.setVisible(true);
 
-    // mar appointment data method
+            appointmentsByWeekButton.setSelected(false);
+            januaryAccordion.setVisible(false);
+            februaryAccordion.setVisible(false);
+            marchAccordion.setVisible(false);
+            aprilAccordion.setVisible(false);
+            mayAccordion.setVisible(false);
+            juneAccordion.setVisible(false);
+            julyAccordion.setVisible(false);
+            augustAccordion.setVisible(false);
+            septemberAccordion.setVisible(false);
+            octoberAccordion.setVisible(false);
+            novemberAccordion.setVisible(false);
+            decemberAccordion.setVisible(false);
+        }
+        else if (appointmentsByWeekButton.isSelected()) {
+            appointmentsByMonthButton.setSelected(false);
+            januaryTabByMonthTableView.setVisible(false);
+            februaryTabByMonthTableView.setVisible(false);
+            marchTabByMonthTableView.setVisible(false);
+            aprilTabByMonthTableView.setVisible(false);
+            mayTabByMonthTableView.setVisible(false);
+            juneTabByMonthTableView.setVisible(false);
+            julyTabByMonthTableView.setVisible(false);
+            augustTabByMonthTableView.setVisible(false);
+            septemberTabByMonthTableView.setVisible(false);
+            octoberTabByMonthTableView.setVisible(false);
+            novemberTabByMonthTableView.setVisible(false);
+            decemberTabByMonthTableView.setVisible(false);
 
-    // apr appointment data method
 
-    // may appointment data method
+            januaryAccordion.setVisible(true);
+            februaryAccordion.setVisible(true);
+            marchAccordion.setVisible(true);
+            aprilAccordion.setVisible(true);
+            mayAccordion.setVisible(true);
+            juneAccordion.setVisible(true);
+            julyAccordion.setVisible(true);
+            augustAccordion.setVisible(true);
+            septemberAccordion.setVisible(true);
+            octoberAccordion.setVisible(true);
+            novemberAccordion.setVisible(true);
+            decemberAccordion.setVisible(true);
+            
+        } else {
+            januaryTabByMonthTableView.setVisible(true);
+            februaryTabByMonthTableView.setVisible(true);
+            marchTabByMonthTableView.setVisible(true);
+            aprilTabByMonthTableView.setVisible(true);
+            mayTabByMonthTableView.setVisible(true);
+            juneTabByMonthTableView.setVisible(true);
+            julyTabByMonthTableView.setVisible(true);
+            augustTabByMonthTableView.setVisible(true);
+            septemberTabByMonthTableView.setVisible(true);
+            octoberTabByMonthTableView.setVisible(true);
+            novemberTabByMonthTableView.setVisible(true);
+            decemberTabByMonthTableView.setVisible(true);
 
-    // jun appointment data method
-
-    // jul appointment data method
-
-    // aug appointment data method
-
-    // sep appointment data method
-
-    // oct appointment data method
-
-    // nov appointment data method
-
-    // dec appointment data method
-
-    // view switching method
+            appointmentsByWeekButton.setSelected(false);
+            januaryAccordion.setVisible(false);
+            februaryAccordion.setVisible(false);
+            marchAccordion.setVisible(false);
+            aprilAccordion.setVisible(false);
+            mayAccordion.setVisible(false);
+            juneAccordion.setVisible(false);
+            julyAccordion.setVisible(false);
+            augustAccordion.setVisible(false);
+            septemberAccordion.setVisible(false);
+            octoberAccordion.setVisible(false);
+            novemberAccordion.setVisible(false);
+            decemberAccordion.setVisible(false);
+        }
+    }
 
     // modify appointment method
+    @FXML
+    public void modifyAppointmentSceneChange(MouseEvent event) throws IOException {
+        if(
+            (januaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                januaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                januaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                januaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                januaryWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (februaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                februaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                februaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                februaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                februaryWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (marchTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                marchWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                marchWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                marchWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                marchWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (aprilTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                aprilWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                aprilWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                aprilWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                aprilWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (mayTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                mayWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                mayWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                mayWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                mayWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (juneTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                juneWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                juneWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                juneWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                juneWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (julyTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                julyWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                julyWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                julyWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                julyWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (augustTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                augustWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                augustWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                augustWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                augustWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (septemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                septemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                septemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                septemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                septemberWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (octoberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                octoberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                octoberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                octoberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                octoberWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (novemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                novemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                novemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                novemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                novemberWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                ||
+            (decemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                decemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                decemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                decemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                decemberWeek4TableView.getSelectionModel().getSelectedItem() != null )
+        ){
+            Parent root = FXMLLoader.load(Objects.requireNonNull(CustomerRecordsMainMenu.class.getResource("modify-appointment.fxml")));
+            Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            GridPane conformation = new GridPane();
+            Text conformationInfo = new Text("Appointment not selected");
+            conformationInfo.setFont(new Font(20));
+            conformation.getChildren().add(conformationInfo);
+            GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER, Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
+            Stage popUp = new Stage();
+            Scene conformationScene = new Scene(conformation);
+            popUp.setTitle("Error");
+            popUp.setScene(conformationScene);
+            popUp.sizeToScene();
+            popUp.show();
+        }
+
+    }
 
     // delete appointment method
+    @FXML
+    public void deleteSelectedAppointment(){
+        if(januaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                januaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                januaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                januaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                januaryWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+
+            if(januaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(januaryTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (januaryWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(januaryWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (januaryWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(januaryWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (januaryWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(januaryWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (januaryWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(januaryWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (februaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                februaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                februaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                februaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                februaryWeek4TableView.getSelectionModel().getSelectedItem() != null ) {
+
+            if(februaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(februaryTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (februaryWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(februaryWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (februaryWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(februaryWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (februaryWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(februaryWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (februaryWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(februaryWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (marchTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                marchWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                marchWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                marchWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                marchWeek4TableView.getSelectionModel().getSelectedItem() != null  ) {
+
+            if(marchTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(marchTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (marchWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(marchWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (marchWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(marchWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (marchWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(marchWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (marchWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(marchWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (aprilTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                aprilWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                aprilWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                aprilWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                aprilWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+
+            if(aprilTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(aprilTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (aprilWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(aprilWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (aprilWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(aprilWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (aprilWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(aprilWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (aprilWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(aprilWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (mayTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                mayWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                mayWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                mayWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                mayWeek4TableView.getSelectionModel().getSelectedItem() != null ) {
+
+            if(mayTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(mayTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (mayWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(mayWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (mayWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(mayWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (mayWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(mayWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (mayWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(mayWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (juneTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                juneWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                juneWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                juneWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                juneWeek4TableView.getSelectionModel().getSelectedItem() != null ) {
+
+            if(juneTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(juneTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (juneWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(juneWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (juneWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(juneWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (juneWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(juneWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (juneWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(juneWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (julyTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                julyWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                julyWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                julyWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                julyWeek4TableView.getSelectionModel().getSelectedItem() != null ) {
+
+            if(julyTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(julyTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (julyWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(julyWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (julyWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(julyWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (julyWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(julyWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (julyWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(julyWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (augustTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                augustWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                augustWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                augustWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                augustWeek4TableView.getSelectionModel().getSelectedItem() != null ) {
+
+            if(augustTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(augustTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (augustWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(augustWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (augustWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(augustWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (augustWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(augustWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (augustWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(augustWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (septemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                septemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                septemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                septemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                septemberWeek4TableView.getSelectionModel().getSelectedItem() != null  ) {
+
+            if(septemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(septemberTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (septemberWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(septemberWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (septemberWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(septemberWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (septemberWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(septemberWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (septemberWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(septemberWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (octoberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                octoberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                octoberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                octoberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                octoberWeek4TableView.getSelectionModel().getSelectedItem() != null ) {
+
+            if(octoberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(octoberTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (octoberWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(octoberWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (octoberWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(octoberWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (octoberWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(octoberWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (octoberWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(octoberWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (novemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                novemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                novemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                novemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                novemberWeek4TableView.getSelectionModel().getSelectedItem() != null ) {
+
+            if(novemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(novemberTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (novemberWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(novemberWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (novemberWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(novemberWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (novemberWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(novemberWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (novemberWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(novemberWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else if (decemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                decemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                decemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                decemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                decemberWeek4TableView.getSelectionModel().getSelectedItem() != null ) {
+
+            if(decemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                deleteAppointment(decemberTabByMonthTableView.getSelectionModel().getSelectedItem());
+            }
+            else if (decemberWeek1TableView.getSelectionModel().getSelectedItem() != null ) {
+                deleteAppointment(decemberWeek1TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (decemberWeek2TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(decemberWeek2TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (decemberWeek3TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(decemberWeek3TableView.getSelectionModel().getSelectedItem());
+            }
+            else if (decemberWeek4TableView.getSelectionModel().getSelectedItem() != null) {
+                deleteAppointment(decemberWeek4TableView.getSelectionModel().getSelectedItem());
+            } else {
+                System.out.println("Something went wrong print stack trace");
+            }
+        }
+        else{
+            GridPane conformation = new GridPane();
+            Text conformationInfo = new Text("Appointment not selected");
+            conformationInfo.setFont(new Font(20));
+            conformation.getChildren().add(conformationInfo);
+            GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER, Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
+            Stage popUp = new Stage();
+            Scene conformationScene = new Scene(conformation);
+            popUp.setTitle("Error");
+            popUp.setScene(conformationScene);
+            popUp.sizeToScene();
+            popUp.show();
+        }
+    }
 
     // exit customer records method
+    @FXML
+    public void onExitButtonClick(MouseEvent event) {
+        Node source = (Node) event.getSource();
+        Stage popUp = (Stage) source.getScene().getWindow();
+        popUp.close();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        customerTableSetup();
+        appointmentTableSetup();
+    }
 }

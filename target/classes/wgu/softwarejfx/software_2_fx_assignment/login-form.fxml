@@ -93,7 +93,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="currentLocationLabel" text="Curent Location" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="currentLocationLabel" text="Current Location" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="13.0" />
                      </font>
