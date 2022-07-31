@@ -2,6 +2,7 @@ package wgu.softwarejfx.software_2_fx_assignment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.MenuItem;
 
 public class Contacts {
     
@@ -10,11 +11,19 @@ public class Contacts {
     String email;
 
     public static ObservableList<Contacts> allContacts = FXCollections.observableArrayList();
+    public static ObservableList<MenuItem> contactMenuItems = FXCollections.observableArrayList();
     
     public Contacts(int contactId, String contactName, String email){
      this.contactId = contactId;
      this.contactName = contactName;
      this.email = email;
+    }
+
+    public static Contacts newContact(String contactName, String email){
+        Contacts contactInfo = new Contacts(allContacts.size() + 1, contactName, email);
+        allContacts.add(contactInfo);
+        contactMenuItems.add(new MenuItem(contactInfo.getContactName()));
+        return contactInfo;
     }
 
     /**

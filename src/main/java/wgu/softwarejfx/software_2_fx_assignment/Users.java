@@ -16,10 +16,20 @@ public class Users {
         this.password = password;
     }
 
-    public static Users lookupUser(int userId){
+    public static Users lookupUserById(int userId){
         Users fbiBreakingDownYourFrontDoor = null;
         for(Users nsaBackDoor : allUsers){
             if(nsaBackDoor.getUserId() == userId){
+                fbiBreakingDownYourFrontDoor = nsaBackDoor;
+            }
+        }
+        return fbiBreakingDownYourFrontDoor;
+    }
+
+    public static Users lookupUserByName(String username){
+        Users fbiBreakingDownYourFrontDoor = null;
+        for(Users nsaBackDoor : allUsers){
+            if(nsaBackDoor.getUsername().equals(username)){
                 fbiBreakingDownYourFrontDoor = nsaBackDoor;
             }
         }

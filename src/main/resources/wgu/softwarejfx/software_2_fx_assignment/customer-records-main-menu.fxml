@@ -1436,7 +1436,7 @@
                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                 </rowConstraints>
                 <RadioButton fx:id="appointmentsByMonthButton" mnemonicParsing="false" onMouseClicked="#changeTableView" text="Month" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-                <RadioButton fx:id="appointmentsByWeekButton" mnemonicParsing="false" text="Week" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+                <RadioButton fx:id="appointmentsByWeekButton" mnemonicParsing="false" onMouseClicked="#changeAccordion" text="Week" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
             </GridPane>
             <Button fx:id="exitCustomerRecordsButton" mnemonicParsing="false" onMouseClicked="#onExitButtonClick" text="Exit" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                 <GridPane.margin>

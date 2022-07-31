@@ -9,8 +9,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.allAppointments;
+import static wgu.softwarejfx.software_2_fx_assignment.Appointments.appointmentFilter;
 import static wgu.softwarejfx.software_2_fx_assignment.Contacts.allContacts;
 import static wgu.softwarejfx.software_2_fx_assignment.Countries.allCountries;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
@@ -20,38 +22,53 @@ import static wgu.softwarejfx.software_2_fx_assignment.Users.allUsers;
 
 public class SchedulingSystem extends Application {
 
-    public Connection lan;
-    public String divisionQuery;
-    public String customerQuery;
-    public String appointmentsQuery;
-    public String contactsQuery;
-    public String countriesQuery;
-    public String userQuery;
+    public static Connection connection;
+    public static String divisionQuery;
+    public static String customerQuery;
+    public static String appointmentsQuery;
+    public static String contactsQuery;
+    public static String countriesQuery;
+    public static String userQuery;
 
-    Statement divisionStmt;
-    Statement customerStmt;
-    Statement appointmentStmt;
-    Statement contactStmt;
-    Statement countriesStmt;
-    Statement userStmt;
+    public static Statement divisionStmt;
+    public static Statement customerStmt;
+    public static Statement appointmentStmt;
+    public static Statement contactStmt;
+    public static Statement countriesStmt;
+    public static Statement userStmt;
 
-    ResultSet divisionResultSet;
-    ResultSet customerResultSet;
-    ResultSet appointmentsResultSet;
-    ResultSet contactsResultSet;
-    ResultSet countriesResultSet;
-    ResultSet userResultSet;
+    public static ResultSet divisionResultSet;
+    public static ResultSet customerResultSet;
+    public static ResultSet appointmentsResultSet;
+    public static ResultSet contactsResultSet;
+    public static ResultSet countriesResultSet;
+    public static ResultSet userResultSet;
 
-    public void constructConnection(){
+    public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public static void constructConnection(){
         try{
-            this.lan = DriverManager.getConnection("jdbc:mysql://localhost:3306/web?useSSL=false", "sqlUser", "Passw0rd!");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/client_schedule?connectionTimeZone = SERVER", "sqlUser", "Passw0rd!");
+            System.out.println("Connection open");
         }catch(Exception e){
             e.printStackTrace();
         }
     }
 
-    public void userData() throws SQLException {
-        userStmt = lan.createStatement();
+    public static void closeConnection(){
+        try{
+            connection.close();
+            System.out.println("Connection closed");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void userData() throws SQLException {
+        userStmt = connection.createStatement();
         userQuery = "SELECT *" + "FROM users";
         userResultSet = userStmt.executeQuery(userQuery);
 
@@ -62,25 +79,25 @@ public class SchedulingSystem extends Application {
         }
     }
 
-    public void divisionData() throws SQLException {
-        divisionStmt = lan.createStatement();
+    public static void divisionData() throws SQLException {
+        divisionStmt = connection.createStatement();
         divisionQuery = "SELECT *" + "FROM first_level_division";
         divisionResultSet = divisionStmt.executeQuery(divisionQuery);
 
         while(divisionResultSet.next()){
         allFirstLevelDivisions.add(new FirstLevelDivisions(Integer.parseInt(divisionResultSet.getString("division_id")),
                 divisionResultSet.getString("division"),
-                LocalDateTime.parse(divisionResultSet.getString("create_date")),
+                LocalDateTime.parse(divisionResultSet.getString("create_date"), dateTimeFormatter),
                 divisionResultSet.getString("created_by"),
-                LocalDateTime.parse(divisionResultSet.getString("last_update")),
+                LocalDateTime.parse(divisionResultSet.getString("last_update"), dateTimeFormatter),
                 divisionResultSet.getString("last_updated_by"),
                 Integer.parseInt(divisionResultSet.getString("country_id"))));
         }
 
     }
 
-    public void appointment() throws SQLException {
-        appointmentStmt = lan.createStatement();
+    public static void appointment() throws SQLException {
+        appointmentStmt = connection.createStatement();
         appointmentsQuery = "SELECT *" + "FROM appointments";
         appointmentsResultSet = divisionStmt.executeQuery(appointmentsQuery);
 
@@ -90,20 +107,21 @@ public class SchedulingSystem extends Application {
                 appointmentsResultSet.getString("description"),
                 appointmentsResultSet.getString("location"),
                 appointmentsResultSet.getString("type"),
-                LocalDateTime.parse(appointmentsResultSet.getString("start")),
-                LocalDateTime.parse(appointmentsResultSet.getString("end")),
-                LocalDateTime.parse(appointmentsResultSet.getString("create_date")),
+                LocalDateTime.parse(appointmentsResultSet.getString("start"), dateTimeFormatter),
+                LocalDateTime.parse(appointmentsResultSet.getString("end"), dateTimeFormatter),
+                LocalDateTime.parse(appointmentsResultSet.getString("create_date"), dateTimeFormatter),
                 appointmentsResultSet.getString("create_by"),
-                LocalDateTime.parse(appointmentsResultSet.getString("last_update")),
+                LocalDateTime.parse(appointmentsResultSet.getString("last_update"), dateTimeFormatter),
                 appointmentsResultSet.getString("last_updated_by"),
                 Integer.parseInt(appointmentsResultSet.getString("customer_id")),
                 Integer.parseInt(appointmentsResultSet.getString("user_id")),
                 Integer.parseInt(appointmentsResultSet.getString("contact_id"))));
         }
+        appointmentFilter();
     }
 
-    public void customerData() throws SQLException {
-        customerStmt = lan.createStatement();
+    public static void customerData() throws SQLException {
+        customerStmt = connection.createStatement();
         customerQuery = "SELECT *" + "FROM customers";
         customerResultSet = customerStmt.executeQuery(customerQuery);
 
@@ -113,17 +131,17 @@ public class SchedulingSystem extends Application {
                 customerResultSet.getString("address"),
                 customerResultSet.getString("postal_code"),
                 customerResultSet.getString("phone"),
-                LocalDateTime.parse(customerResultSet.getString("create_date")),
+                LocalDateTime.parse(customerResultSet.getString("create_date"), dateTimeFormatter),
                 customerResultSet.getString("created_by"),
-                LocalDateTime.parse(customerResultSet.getString("last_update")),
+                LocalDateTime.parse(customerResultSet.getString("last_update"), dateTimeFormatter),
                 customerResultSet.getString("last_updated_by"),
                 Integer.parseInt(customerResultSet.getString("division_id"))
-                ));
+            ));
         }
     }
 
-    public void contactData() throws SQLException {
-        contactStmt = lan.createStatement();
+    public static void contactData() throws SQLException {
+        contactStmt = connection.createStatement();
         contactsQuery = "SELECT *" + "FROM contacts";
         contactsResultSet = contactStmt.executeQuery(contactsQuery);
 
@@ -135,32 +153,42 @@ public class SchedulingSystem extends Application {
         }
     }
 
-    public void countryData() throws SQLException{
-        countriesStmt = lan.createStatement();
+    public static void countryData() throws SQLException{
+        countriesStmt = connection.createStatement();
         countriesQuery = "SELECT *" + "FROM countries";
-        contactsResultSet = contactStmt.executeQuery(contactsQuery);
+        countriesResultSet = countriesStmt.executeQuery(countriesQuery);
 
         while (countriesResultSet.next()){
-            allCountries.add(new Countries(Integer.parseInt(contactsResultSet.getString("country_id")),
-                    contactsResultSet.getString("country"),
-                    LocalDateTime.parse(contactsResultSet.getString("create_date")),
-                    contactsResultSet.getString("created_by"),
-                    LocalDateTime.parse(contactsResultSet.getString("last_update")),
-                    contactsResultSet.getString("last_updated_by")
+            allCountries.add(new Countries(Integer.parseInt(countriesResultSet.getString("country_id")),
+                    countriesResultSet.getString("country"),
+                    LocalDateTime.parse(countriesResultSet.getString("create_date"), dateTimeFormatter),
+                    countriesResultSet.getString("created_by"),
+                    LocalDateTime.parse(countriesResultSet.getString("last_update"), dateTimeFormatter),
+                    countriesResultSet.getString("last_updated_by")
                     ));
         }
     }
 
-    @Override
-    public void start(Stage stage) throws IOException, SQLException {
-        constructConnection();
-        userData();
-        divisionData();
-        appointment();
-        customerData();
-        contactData();
-        countryData();
+    public static void testDataStarterPack() {
+        LocalDateTime localDateTime = LocalDateTime.now();
 
+        allUsers.add(new Users(1, "admin","admin"));
+        allCustomers.add(new Customers(1, "name", "address", "zipcode",
+                "000-000-0000", localDateTime, "user", localDateTime, "user", 0));
+
+        allAppointments.add(new Appointments(allAppointments.size() + 1, "title", "description",
+                "location", "type", localDateTime, localDateTime, localDateTime, "user"
+        , localDateTime, "user", 0, 0, 0));
+        allCountries.add(new Countries(0,"country name", localDateTime, "user",
+                localDateTime, "user"));
+        allContacts.add(new Contacts(0, "contact name", "email@shit.paper"));
+        allFirstLevelDivisions.add(new FirstLevelDivisions(0, "divisionName", localDateTime,
+                "user", localDateTime, "user", 0));
+
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SchedulingSystem.class.getResource("login-form.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(logInFormText.getString("windowTitle"));
@@ -168,7 +196,17 @@ public class SchedulingSystem extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+//        constructConnection();
+//        userData();
+//        divisionData();
+//        appointment();
+//        customerData();
+//        contactData();
+//        countryData();
+
+        testDataStarterPack();
+
         launch();
     }
 }

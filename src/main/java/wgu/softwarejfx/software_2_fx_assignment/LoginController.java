@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static wgu.softwarejfx.software_2_fx_assignment.Users.lookupUserByName;
 import static wgu.softwarejfx.software_2_fx_assignment.Users.validateUserInfo;
 
 //future enhancement make the event action based in order to interact keyboard actions as well as mouse clicks
@@ -56,51 +57,67 @@ public class LoginController implements Initializable {
     public static ResourceBundle logInFormText;
 
     public static String currentUser;
+    public static int currentUserId;
 
     public void localeHandling() throws IOException {
-        Locale locale = Locale.getDefault();
-        languageTextField.setDisable(true);
-        languageTextField.setText(String.valueOf(locale.getDisplayLanguage()));
+        try{
+            Locale locale = Locale.getDefault();
+            languageTextField.setDisable(true);
+            languageTextField.setText(String.valueOf(locale.getDisplayLanguage()));
 
-        currentLocale = new Locale(locale.getLanguage(), locale.getCountry());
+            currentLocale = new Locale(locale.getLanguage(), locale.getCountry());
 
-        logInFormText = ResourceBundle.getBundle("MessagesBundle", currentLocale);
+            logInFormText = ResourceBundle.getBundle("MessagesBundle", currentLocale);
 
-        welcomeLabel.setText(logInFormText.getString("welcomeLabel"));
-        usernameLabel.setText(logInFormText.getString("usernameLabel"));
-        passwordLabel.setText(logInFormText.getString("passwordLabel"));
-        logInButton.setText(logInFormText.getString("loginButton"));
-        currentLocationLabel.setText(logInFormText.getString("location"));
-        languageLabel.setText(logInFormText.getString("language"));
-        exitButton.setText(logInFormText.getString("exitButton"));
-        errorMessage = logInFormText.getString("loginError");
+            welcomeLabel.setText(logInFormText.getString("welcomeLabel"));
+            usernameLabel.setText(logInFormText.getString("usernameLabel"));
+            passwordLabel.setText(logInFormText.getString("passwordLabel"));
+            logInButton.setText(logInFormText.getString("loginButton"));
+            currentLocationLabel.setText(logInFormText.getString("location"));
+            languageLabel.setText(logInFormText.getString("language"));
+            exitButton.setText(logInFormText.getString("exitButton"));
+            errorMessage = logInFormText.getString("loginError");
 
-        System.out.println(locale);
+            System.out.println(locale);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     //credential validator with error messages
-    public void logInButtonOnClick(MouseEvent event) throws IOException {
-        if(validateUserInfo(usernameTextField.getText(), passwordTextField.getText())){
-            loginSceneChange(event);
-            activityLogger("Success");
-            currentUser = usernameTextField.getText();
+    public void logInButtonOnClick(MouseEvent event){
+        try {
+            if(validateUserInfo(usernameTextField.getText(), passwordTextField.getText())){
+                loginSceneChange(event);
+                activityLogger("Success");
+                currentUser = usernameTextField.getText();
+                currentUserId = lookupUserByName(usernameTextField.getText()).getUserId();
+            }
+            else {
+                System.out.println(errorMessage);
+                System.out.println("Error: Incorrect username and/or password!");
+                usernameTextField.setText("");
+                passwordTextField.setText("");
+                activityLogger("Failed");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        else {
-            System.out.println(errorMessage);
-            System.out.println("Error: Incorrect username and/or password!");
-            usernameTextField.setText("");
-            passwordTextField.setText("");
-            activityLogger("Failed");
-        }
+
 
     }
 
 
     public void zoneIdHandling(){
-        currentLocationTextField.setDisable(true);
-        currentLocationTextField.setText(String.valueOf(ZoneId.systemDefault()));
+        try {
+            currentLocationTextField.setDisable(true);
+            currentLocationTextField.setText(String.valueOf(ZoneId.systemDefault()));
 
-        System.out.println(ZoneId.systemDefault());
+            System.out.println(ZoneId.systemDefault());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -29,6 +29,7 @@ import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.deleteCustomer;
 import static wgu.softwarejfx.software_2_fx_assignment.ModifyCustomer.currentlySelectedCustomer;
+//import static wgu.softwarejfx.software_2_fx_assignment.SchedulingSystem.closeConnection;
 
 public class CustomerRecordsMainMenu implements Initializable {
 
@@ -1604,28 +1605,31 @@ public class CustomerRecordsMainMenu implements Initializable {
 
     // setting up customer cols
     public void customerTableSetup (){
-        customersIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        customersNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        customersIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        customersNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         customersAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        customersPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        customersZipCodeCol.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
+        customersPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        customersZipCodeCol.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
         customersTableView.setItems(allCustomers);
     }
 
     // setting up appoint cols
 
     public void appointmentTableSetup() {
+        appointmentsByMonthButton.setSelected(true);
+        appointmentsByWeekButton.setSelected(false);
+
         //January Table Setup
         januaryTabByMonthTableView.setItems(januaryAppointments);
         januaryWeek1TableView.setItems(januaryWeek1Appointments);
         januaryWeek2TableView.setItems(januaryWeek2Appointments);
         januaryWeek3TableView.setItems(januaryWeek3Appointments);
         januaryWeek4TableView.setItems(januaryWeek4Appointments);
-        januaryAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        januaryAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        januaryAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        januaryAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        januaryAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        januaryAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        januaryAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        januaryAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        januaryAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        januaryAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         januaryAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         januaryAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -1633,11 +1637,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         januaryAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         januaryAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        januaryAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        januaryAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        januaryAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        januaryAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        januaryAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        januaryAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        januaryAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        januaryAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        januaryAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        januaryAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         januaryAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         januaryAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -1663,17 +1667,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         januaryAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         januaryAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        januaryAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        januaryAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        januaryAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        januaryAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        januaryAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        januaryAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        januaryAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        januaryAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        januaryAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        januaryAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        januaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         januaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         januaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -1687,11 +1691,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         februaryWeek2TableView.setItems(februaryWeek2Appointments);
         februaryWeek3TableView.setItems(februaryWeek3Appointments);
         februaryWeek4TableView.setItems(februaryWeek4Appointments);
-        februaryAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        februaryAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        februaryAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        februaryAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        februaryAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        februaryAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        februaryAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        februaryAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        februaryAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        februaryAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         februaryAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         februaryAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -1699,11 +1703,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         februaryAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         februaryAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        februaryAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        februaryAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        februaryAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        februaryAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        februaryAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        februaryAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        februaryAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        februaryAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        februaryAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        februaryAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         februaryAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         februaryAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -1729,17 +1733,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         februaryAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         februaryAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        februaryAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        februaryAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        februaryAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        februaryAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        februaryAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        februaryAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        februaryAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        februaryAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        februaryAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        februaryAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        februaryAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         februaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         februaryAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -1753,11 +1757,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         marchWeek2TableView.setItems(marchWeek2Appointments);
         marchWeek3TableView.setItems(marchWeek3Appointments);
         marchWeek4TableView.setItems(marchWeek4Appointments);
-        marchAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        marchAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        marchAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        marchAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        marchAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        marchAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        marchAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        marchAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        marchAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        marchAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         marchAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         marchAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -1765,11 +1769,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         marchAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         marchAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        marchAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        marchAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        marchAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        marchAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        marchAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        marchAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        marchAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        marchAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        marchAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        marchAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         marchAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         marchAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -1795,17 +1799,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         marchAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         marchAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        marchAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        marchAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        marchAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        marchAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        marchAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        marchAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        marchAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        marchAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        marchAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        marchAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        marchAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         marchAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         marchAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -1819,11 +1823,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         aprilWeek2TableView.setItems(aprilWeek2Appointments);
         aprilWeek3TableView.setItems(aprilWeek3Appointments);
         aprilWeek4TableView.setItems(aprilWeek4Appointments);
-        aprilAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        aprilAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        aprilAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        aprilAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        aprilAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        aprilAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        aprilAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        aprilAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        aprilAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        aprilAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         aprilAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         aprilAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -1831,11 +1835,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         aprilAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         aprilAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        aprilAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        aprilAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        aprilAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        aprilAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        aprilAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        aprilAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        aprilAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        aprilAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        aprilAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        aprilAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         aprilAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         aprilAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -1861,17 +1865,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         aprilAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         aprilAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        aprilAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        aprilAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        aprilAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        aprilAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        aprilAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        aprilAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        aprilAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        aprilAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        aprilAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        aprilAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        aprilAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         aprilAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         aprilAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -1885,11 +1889,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         mayWeek2TableView.setItems(mayWeek2Appointments);
         mayWeek3TableView.setItems(mayWeek3Appointments);
         mayWeek4TableView.setItems(mayWeek4Appointments);
-        mayAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        mayAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        mayAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        mayAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        mayAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        mayAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        mayAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        mayAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        mayAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        mayAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         mayAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         mayAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -1897,11 +1901,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         mayAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         mayAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        mayAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        mayAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        mayAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        mayAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        mayAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        mayAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        mayAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        mayAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        mayAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        mayAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         mayAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         mayAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -1927,17 +1931,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         mayAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         mayAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        mayAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        mayAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        mayAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        mayAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        mayAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        mayAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        mayAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        mayAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        mayAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        mayAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        mayAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         mayAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         mayAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -1951,11 +1955,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         juneWeek2TableView.setItems(juneWeek2Appointments);
         juneWeek3TableView.setItems(juneWeek3Appointments);
         juneWeek4TableView.setItems(juneWeek4Appointments);
-        juneAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        juneAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        juneAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        juneAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        juneAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        juneAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        juneAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        juneAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        juneAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        juneAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         juneAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         juneAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -1963,11 +1967,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         juneAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         juneAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        juneAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        juneAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        juneAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        juneAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        juneAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        juneAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        juneAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        juneAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        juneAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        juneAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         juneAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         juneAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -1993,17 +1997,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         juneAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         juneAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        juneAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        juneAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        juneAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        juneAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        juneAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        juneAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        juneAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        juneAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        juneAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        juneAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        juneAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         juneAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         juneAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -2017,11 +2021,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         julyWeek2TableView.setItems(julyWeek2Appointments);
         julyWeek3TableView.setItems(julyWeek3Appointments);
         julyWeek4TableView.setItems(julyWeek4Appointments);
-        julyAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        julyAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        julyAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        julyAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        julyAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        julyAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        julyAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        julyAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        julyAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        julyAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         julyAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         julyAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -2029,11 +2033,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         julyAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         julyAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        julyAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        julyAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        julyAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        julyAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        julyAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        julyAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        julyAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        julyAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        julyAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        julyAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         julyAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         julyAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -2059,17 +2063,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         julyAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         julyAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        julyAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        julyAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        julyAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        julyAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        julyAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        julyAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        julyAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        julyAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        julyAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        julyAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        julyAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         julyAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         julyAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -2083,11 +2087,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         augustWeek2TableView.setItems(augustWeek2Appointments);
         augustWeek3TableView.setItems(augustWeek3Appointments);
         augustWeek4TableView.setItems(augustWeek4Appointments);
-        augustAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        augustAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        augustAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        augustAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        augustAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        augustAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        augustAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        augustAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        augustAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        augustAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         augustAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         augustAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -2095,11 +2099,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         augustAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         augustAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        augustAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        augustAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        augustAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        augustAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        augustAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        augustAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        augustAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        augustAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        augustAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        augustAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         augustAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         augustAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -2125,17 +2129,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         augustAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         augustAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        augustAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        augustAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        augustAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        augustAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        augustAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        augustAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        augustAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        augustAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        augustAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        augustAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        augustAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         augustAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         augustAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -2149,11 +2153,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         septemberWeek2TableView.setItems(septemberWeek2Appointments);
         septemberWeek3TableView.setItems(septemberWeek3Appointments);
         septemberWeek4TableView.setItems(septemberWeek4Appointments);
-        septemberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        septemberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        septemberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        septemberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        septemberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        septemberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        septemberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        septemberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        septemberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        septemberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         septemberAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         septemberAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -2161,11 +2165,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         septemberAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         septemberAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        septemberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        septemberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        septemberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        septemberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        septemberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        septemberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        septemberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        septemberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        septemberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        septemberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         septemberAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         septemberAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -2191,17 +2195,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         septemberAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         septemberAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        septemberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        septemberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        septemberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        septemberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        septemberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        septemberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        septemberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        septemberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        septemberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        septemberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        septemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         septemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         septemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -2215,11 +2219,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         octoberWeek2TableView.setItems(octoberWeek2Appointments);
         octoberWeek3TableView.setItems(octoberWeek3Appointments);
         octoberWeek4TableView.setItems(octoberWeek4Appointments);
-        octoberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        octoberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        octoberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        octoberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        octoberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        octoberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        octoberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        octoberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        octoberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        octoberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         octoberAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         octoberAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -2227,11 +2231,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         octoberAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         octoberAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        octoberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        octoberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        octoberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        octoberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        octoberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        octoberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        octoberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        octoberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        octoberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        octoberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         octoberAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         octoberAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -2257,17 +2261,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         octoberAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         octoberAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        octoberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        octoberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        octoberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        octoberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        octoberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        octoberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        octoberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        octoberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        octoberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        octoberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        octoberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         octoberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         octoberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -2281,11 +2285,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         novemberWeek2TableView.setItems(novemberWeek2Appointments);
         novemberWeek3TableView.setItems(novemberWeek3Appointments);
         novemberWeek4TableView.setItems(novemberWeek4Appointments);
-        novemberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        novemberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        novemberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        novemberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        novemberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        novemberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        novemberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        novemberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        novemberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        novemberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         novemberAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         novemberAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -2293,11 +2297,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         novemberAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         novemberAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        novemberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        novemberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        novemberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        novemberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        novemberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        novemberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        novemberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        novemberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        novemberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        novemberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         novemberAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         novemberAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -2323,17 +2327,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         novemberAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         novemberAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        novemberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        novemberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        novemberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        novemberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        novemberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        novemberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        novemberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        novemberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        novemberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        novemberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        novemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         novemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         novemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -2347,11 +2351,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         decemberWeek2TableView.setItems(decemberWeek2Appointments);
         decemberWeek3TableView.setItems(decemberWeek3Appointments);
         decemberWeek4TableView.setItems(decemberWeek4Appointments);
-        decemberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        decemberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        decemberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        decemberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-        decemberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+        decemberAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        decemberAppointmentIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        decemberAppointmentIdCol2.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        decemberAppointmentIdCol3.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        decemberAppointmentIdCol4.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
 
         decemberAppointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         decemberAppointmentTitleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -2359,11 +2363,11 @@ public class CustomerRecordsMainMenu implements Initializable {
         decemberAppointmentTitleCol3.setCellValueFactory(new PropertyValueFactory<>("title"));
         decemberAppointmentTitleCol4.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-        decemberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        decemberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        decemberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        decemberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-        decemberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        decemberAppointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        decemberAppointmentCustomerIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        decemberAppointmentCustomerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        decemberAppointmentCustomerIdCol3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        decemberAppointmentCustomerIdCol4.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         decemberAppointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         decemberAppointmentTypeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -2389,17 +2393,17 @@ public class CustomerRecordsMainMenu implements Initializable {
         decemberAppointmentEndCol3.setCellValueFactory(new PropertyValueFactory<>("end"));
         decemberAppointmentEndCol4.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        decemberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        decemberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        decemberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        decemberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        decemberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        decemberAppointmentContactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        decemberAppointmentContactIdCol1.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        decemberAppointmentContactIdCol2.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        decemberAppointmentContactIdCol3.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        decemberAppointmentContactIdCol4.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
-        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        decemberAppointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         decemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         decemberAppointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -2414,11 +2418,27 @@ public class CustomerRecordsMainMenu implements Initializable {
     // add appointment method
     @FXML
     public void addAppointmentSceneChange(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(CustomerRecordsMainMenu.class.getResource("add-appointment.fxml")));
-        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        if(customersTableView.getSelectionModel().getSelectedItem() != null){
+            currentlySelectedCustomer = customersTableView.getSelectionModel().getSelectedItem();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(CustomerRecordsMainMenu.class.getResource("add-appointment.fxml")));
+            Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        else{
+            GridPane conformation = new GridPane();
+            Text conformationInfo = new Text("Customer not selected");
+            conformationInfo.setFont(new Font(20));
+            conformation.getChildren().add(conformationInfo);
+            GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER,Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
+            Stage popUp = new Stage();
+            Scene conformationScene = new Scene(conformation);
+            popUp.setTitle("Error");
+            popUp.setScene(conformationScene);
+            popUp.sizeToScene();
+            popUp.show();
+        }
     }
 
     // add customer method
@@ -2470,9 +2490,46 @@ public class CustomerRecordsMainMenu implements Initializable {
 
 
     // view switching method <you're gonna be working with visibility of tables>
+
+    @FXML
+    public void changeAccordion() {
+
+        appointmentsByMonthButton.setSelected(false);
+        appointmentsByWeekButton.setSelected(true);
+
+        januaryTabByMonthTableView.setVisible(false);
+        februaryTabByMonthTableView.setVisible(false);
+        marchTabByMonthTableView.setVisible(false);
+        aprilTabByMonthTableView.setVisible(false);
+        mayTabByMonthTableView.setVisible(false);
+        juneTabByMonthTableView.setVisible(false);
+        julyTabByMonthTableView.setVisible(false);
+        augustTabByMonthTableView.setVisible(false);
+        septemberTabByMonthTableView.setVisible(false);
+        octoberTabByMonthTableView.setVisible(false);
+        novemberTabByMonthTableView.setVisible(false);
+        decemberTabByMonthTableView.setVisible(false);
+
+        januaryAccordion.setVisible(true);
+        februaryAccordion.setVisible(true);
+        marchAccordion.setVisible(true);
+        aprilAccordion.setVisible(true);
+        mayAccordion.setVisible(true);
+        juneAccordion.setVisible(true);
+        julyAccordion.setVisible(true);
+        augustAccordion.setVisible(true);
+        septemberAccordion.setVisible(true);
+        octoberAccordion.setVisible(true);
+        novemberAccordion.setVisible(true);
+        decemberAccordion.setVisible(true);
+    }
+
     @FXML
     public void changeTableView() {
-        if(appointmentsByMonthButton.isSelected()){
+
+            appointmentsByMonthButton.setSelected(true);
+            appointmentsByWeekButton.setSelected(false);
+
             januaryTabByMonthTableView.setVisible(true);
             februaryTabByMonthTableView.setVisible(true);
             marchTabByMonthTableView.setVisible(true);
@@ -2486,7 +2543,6 @@ public class CustomerRecordsMainMenu implements Initializable {
             novemberTabByMonthTableView.setVisible(true);
             decemberTabByMonthTableView.setVisible(true);
 
-            appointmentsByWeekButton.setSelected(false);
             januaryAccordion.setVisible(false);
             februaryAccordion.setVisible(false);
             marchAccordion.setVisible(false);
@@ -2499,64 +2555,6 @@ public class CustomerRecordsMainMenu implements Initializable {
             octoberAccordion.setVisible(false);
             novemberAccordion.setVisible(false);
             decemberAccordion.setVisible(false);
-        }
-        else if (appointmentsByWeekButton.isSelected()) {
-            appointmentsByMonthButton.setSelected(false);
-            januaryTabByMonthTableView.setVisible(false);
-            februaryTabByMonthTableView.setVisible(false);
-            marchTabByMonthTableView.setVisible(false);
-            aprilTabByMonthTableView.setVisible(false);
-            mayTabByMonthTableView.setVisible(false);
-            juneTabByMonthTableView.setVisible(false);
-            julyTabByMonthTableView.setVisible(false);
-            augustTabByMonthTableView.setVisible(false);
-            septemberTabByMonthTableView.setVisible(false);
-            octoberTabByMonthTableView.setVisible(false);
-            novemberTabByMonthTableView.setVisible(false);
-            decemberTabByMonthTableView.setVisible(false);
-
-
-            januaryAccordion.setVisible(true);
-            februaryAccordion.setVisible(true);
-            marchAccordion.setVisible(true);
-            aprilAccordion.setVisible(true);
-            mayAccordion.setVisible(true);
-            juneAccordion.setVisible(true);
-            julyAccordion.setVisible(true);
-            augustAccordion.setVisible(true);
-            septemberAccordion.setVisible(true);
-            octoberAccordion.setVisible(true);
-            novemberAccordion.setVisible(true);
-            decemberAccordion.setVisible(true);
-            
-        } else {
-            januaryTabByMonthTableView.setVisible(true);
-            februaryTabByMonthTableView.setVisible(true);
-            marchTabByMonthTableView.setVisible(true);
-            aprilTabByMonthTableView.setVisible(true);
-            mayTabByMonthTableView.setVisible(true);
-            juneTabByMonthTableView.setVisible(true);
-            julyTabByMonthTableView.setVisible(true);
-            augustTabByMonthTableView.setVisible(true);
-            septemberTabByMonthTableView.setVisible(true);
-            octoberTabByMonthTableView.setVisible(true);
-            novemberTabByMonthTableView.setVisible(true);
-            decemberTabByMonthTableView.setVisible(true);
-
-            appointmentsByWeekButton.setSelected(false);
-            januaryAccordion.setVisible(false);
-            februaryAccordion.setVisible(false);
-            marchAccordion.setVisible(false);
-            aprilAccordion.setVisible(false);
-            mayAccordion.setVisible(false);
-            juneAccordion.setVisible(false);
-            julyAccordion.setVisible(false);
-            augustAccordion.setVisible(false);
-            septemberAccordion.setVisible(false);
-            octoberAccordion.setVisible(false);
-            novemberAccordion.setVisible(false);
-            decemberAccordion.setVisible(false);
-        }
     }
 
     // modify appointment method
@@ -2969,6 +2967,7 @@ public class CustomerRecordsMainMenu implements Initializable {
         Node source = (Node) event.getSource();
         Stage popUp = (Stage) source.getScene().getWindow();
         popUp.close();
+//        closeConnection();
     }
 
     @Override

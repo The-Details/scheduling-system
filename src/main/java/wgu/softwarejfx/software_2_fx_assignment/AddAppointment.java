@@ -19,7 +19,10 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.newContact;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
+import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUserId;
+import static wgu.softwarejfx.software_2_fx_assignment.ModifyCustomer.currentlySelectedCustomer;
 
 public class AddAppointment implements Initializable {
 
@@ -40,7 +43,9 @@ public class AddAppointment implements Initializable {
     @FXML
     ComboBox<LocalTime> addAppointmentEndTime;
     @FXML
-    MenuButton addAppointmentContact;
+    TextField addAppointmentContactName;
+    @FXML
+    TextField addAppointmentContactEmail;
     @FXML
     TextArea addAppointmentDescription;
     @FXML
@@ -56,57 +61,53 @@ public class AddAppointment implements Initializable {
 
     public void appointmentNewData(){
 
-        SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
+        try {
+            SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            Date date = new Date(System.currentTimeMillis());
 
-        LocalDateTime appointmentStart = LocalDateTime.of(addAppointmentStart.getValue(), addAppointmentStartTime.getValue());
-        LocalDateTime appointmentEnd = LocalDateTime.of(addAppointmentEnd.getValue(), addAppointmentEndTime.getValue());
+            LocalDateTime appointmentStart = LocalDateTime.of(addAppointmentStart.getValue(), addAppointmentStartTime.getValue());
+            LocalDateTime appointmentEnd = LocalDateTime.of(addAppointmentEnd.getValue(), addAppointmentEndTime.getValue());
 
-        if (addAppointmentTitle.getText().isEmpty()){
-            System.out.println("Error: Title is Empty");
-        }
-        else if (addAppointmentType.getText().isEmpty()){
-            System.out.println("Error: Type is Empty");
-        }
-        else if (addAppointmentLocation.getText().isEmpty()) {
-            System.out.println("Error: Location is Empty");
-        }
-        else if (addAppointmentStart.getValue() == null) {
-            System.out.println("Error: Start Date is Empty");
-        }
-        else if (addAppointmentEnd.getValue() == null){
-            System.out.println("Error: End Date is Empty");
-        }
-        else if (addAppointmentStartTime.getValue() == null ||
-                addAppointmentEndTime.getValue() == null) {
-            System.out.println("Error: Start and/or End Time is Empty");
-        }
-        else if (addAppointmentContact.getText().isEmpty()) {
-            System.out.println("Error: Contact is Empty");
-        }
-        else if (addAppointmentDescription.getText().isEmpty()) {
-            System.out.println("Error: Description is Empty");
-        }
-        else {
-            Appointments newAppointment = new Appointments(
-                 allAppointments.size() + 1,
-                    addAppointmentTitle.getText(),
-                    addAppointmentDescription.getText(),
-                    addAppointmentLocation.getText(),
-                    addAppointmentType.getText(),
-                    appointmentStart,
-                    appointmentEnd,
-                    LocalDateTime.parse(dateTimeFormatter.format(date)),
-                    currentUser,
-                    LocalDateTime.parse(dateTimeFormatter.format(date)),
-                    currentUser,
-                    0,
-                    0,
-                    0
-            );
+            if (addAppointmentTitle.getText().isEmpty()) {
+                System.out.println("Error: Title is Empty");
+            } else if (addAppointmentType.getText().isEmpty()) {
+                System.out.println("Error: Type is Empty");
+            } else if (addAppointmentLocation.getText().isEmpty()) {
+                System.out.println("Error: Location is Empty");
+            } else if (addAppointmentStart.getValue() == null) {
+                System.out.println("Error: Start Date is Empty");
+            } else if (addAppointmentEnd.getValue() == null) {
+                System.out.println("Error: End Date is Empty");
+            } else if (addAppointmentStartTime.getValue() == null ||
+                    addAppointmentEndTime.getValue() == null) {
+                System.out.println("Error: Start and/or End Time is Empty");
+            } else if (addAppointmentContactName.getText().isEmpty() || addAppointmentContactEmail.getText().isEmpty()) {
+                System.out.println("Error: Contact is Empty");
+            } else if (addAppointmentDescription.getText().isEmpty()) {
+                System.out.println("Error: Description is Empty");
+            } else {
+                Appointments newAppointment = new Appointments(
+                        allAppointments.size() + 1,
+                        addAppointmentTitle.getText(),
+                        addAppointmentDescription.getText(),
+                        addAppointmentLocation.getText(),
+                        addAppointmentType.getText(),
+                        appointmentStart,
+                        appointmentEnd,
+                        LocalDateTime.parse(dateTimeFormatter.format(date)),
+                        currentUser,
+                        LocalDateTime.parse(dateTimeFormatter.format(date)),
+                        currentUser,
+                        currentlySelectedCustomer.getCustomerId(),
+                        currentUserId,
+                        newContact(addAppointmentContactName.getText(), addAppointmentContactEmail.getText()).contactId
+                );
 
-            addAppointment(newAppointment);
-            appointmentFilter();
+                addAppointment(newAppointment);
+                appointmentFilter();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

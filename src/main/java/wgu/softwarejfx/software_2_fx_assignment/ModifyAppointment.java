@@ -58,82 +58,78 @@ public class ModifyAppointment implements Initializable {
 
     public static Appointments currentlySelectedAppointment;
     public void appointmentDataToModifyFieldSetup(){
-        if(currentlySelectedAppointment != null){
-            modifyAppointmentId.setDisable(true);
-            modifyAppointmentId.setPromptText(String.valueOf(currentlySelectedAppointment.getAppointmentId()));
-            modifyAppointmentTitle.setText(currentlySelectedAppointment.getTitle());
-            modifyAppointmentType.setText(currentlySelectedAppointment.getType());
-            modifyAppointmentLocation.setText(currentlySelectedAppointment.getLocation());
-            modifyAppointmentStart.setPromptText("");
-            modifyAppointmentEnd.setPromptText("");
-            modifyAppointmentStartTime.setPromptText("");
-            modifyAppointmentEndTime.setPromptText("");
-            modifyAppointmentContact.setText(String.valueOf(currentlySelectedAppointment.getContactId()));
-            modifyAppointmentDescription.setText(currentlySelectedAppointment.getDescription());
-        }
-        else{
-            GridPane conformation = new GridPane();
-            Text conformationInfo = new Text("Appointment not selected");
-            conformationInfo.setFont(new Font(20));
-            conformation.getChildren().add(conformationInfo);
-            GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER, Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
-            Stage popUp = new Stage();
-            Scene conformationScene = new Scene(conformation);
-            popUp.setTitle("Error");
-            popUp.setScene(conformationScene);
-            popUp.sizeToScene();
-            popUp.show();
+        try {
+            if (currentlySelectedAppointment != null) {
+                modifyAppointmentId.setDisable(true);
+                modifyAppointmentId.setPromptText(String.valueOf(currentlySelectedAppointment.getAppointmentId()));
+                modifyAppointmentTitle.setText(currentlySelectedAppointment.getTitle());
+                modifyAppointmentType.setText(currentlySelectedAppointment.getType());
+                modifyAppointmentLocation.setText(currentlySelectedAppointment.getLocation());
+                modifyAppointmentStart.setPromptText("");
+                modifyAppointmentEnd.setPromptText("");
+                modifyAppointmentStartTime.setPromptText("");
+                modifyAppointmentEndTime.setPromptText("");
+                modifyAppointmentContact.setText(String.valueOf(currentlySelectedAppointment.getContactId()));
+                modifyAppointmentDescription.setText(currentlySelectedAppointment.getDescription());
+            } else {
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Appointment not selected");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void modifiedAppointmentRecords(){
 
-        SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
+        try {
+            SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            Date date = new Date(System.currentTimeMillis());
 
-        if (modifyAppointmentTitle.getText().isEmpty()){
-            System.out.println("Error: Title is Empty");
-        }
-        else if (modifyAppointmentType.getText().isEmpty()){
-            System.out.println("Error: Type is Empty");
-        }
-        else if (modifyAppointmentLocation.getText().isEmpty()) {
-            System.out.println("Error: Location is Empty");
-        }
-        else if (modifyAppointmentStart.getValue() == null) {
-            System.out.println("Error: Start Date is Empty");
-        }
-        else if (modifyAppointmentEnd.getValue() == null){
-            System.out.println("Error: End Date is Empty");
-        }
-        else if (modifyAppointmentStartTime == null ||
-                modifyAppointmentEndTime.getValue() == null) {
-            System.out.println("Error: Start and/or End Time is Empty");
-        }
-        else if (modifyAppointmentContact.getText().isEmpty()) {
-            System.out.println("Error: Contact is Empty");
-        }
-        else if (modifyAppointmentDescription.getText().isEmpty()) {
-            System.out.println("Error: Description is Empty");
-        }
-        else {
+            if (modifyAppointmentTitle.getText().isEmpty()) {
+                System.out.println("Error: Title is Empty");
+            } else if (modifyAppointmentType.getText().isEmpty()) {
+                System.out.println("Error: Type is Empty");
+            } else if (modifyAppointmentLocation.getText().isEmpty()) {
+                System.out.println("Error: Location is Empty");
+            } else if (modifyAppointmentStart.getValue() == null) {
+                System.out.println("Error: Start Date is Empty");
+            } else if (modifyAppointmentEnd.getValue() == null) {
+                System.out.println("Error: End Date is Empty");
+            } else if (modifyAppointmentStartTime == null ||
+                    modifyAppointmentEndTime.getValue() == null) {
+                System.out.println("Error: Start and/or End Time is Empty");
+            } else if (modifyAppointmentContact.getText().isEmpty()) {
+                System.out.println("Error: Contact is Empty");
+            } else if (modifyAppointmentDescription.getText().isEmpty()) {
+                System.out.println("Error: Description is Empty");
+            } else {
 
-            Appointments selectedAppointment = new Appointments(
-                    currentlySelectedAppointment.getAppointmentId(),
-                    currentlySelectedAppointment.getTitle(),
-                    currentlySelectedAppointment.getDescription(),
-                    currentlySelectedAppointment.getLocation(),
-                    currentlySelectedAppointment.getType(),
-                    currentlySelectedAppointment.getStart(),
-                    currentlySelectedAppointment.getEnd(),
-                    currentlySelectedAppointment.getCreateDate(),
-                    currentlySelectedAppointment.getCreatedBy(),
-                    currentlySelectedAppointment.getLast_update(),
-                    currentlySelectedAppointment.getLastUpdateBy(),
-                    currentlySelectedAppointment.getCustomerId(),
-                    currentlySelectedAppointment.getUserId(),
-                    currentlySelectedAppointment.getContactId()
-            );
+                Appointments selectedAppointment = new Appointments(
+                        currentlySelectedAppointment.getAppointmentId(),
+                        currentlySelectedAppointment.getTitle(),
+                        currentlySelectedAppointment.getDescription(),
+                        currentlySelectedAppointment.getLocation(),
+                        currentlySelectedAppointment.getType(),
+                        currentlySelectedAppointment.getStart(),
+                        currentlySelectedAppointment.getEnd(),
+                        currentlySelectedAppointment.getCreateDate(),
+                        currentlySelectedAppointment.getCreatedBy(),
+                        currentlySelectedAppointment.getLast_update(),
+                        currentlySelectedAppointment.getLastUpdateBy(),
+                        currentlySelectedAppointment.getCustomerId(),
+                        currentlySelectedAppointment.getUserId(),
+                        currentlySelectedAppointment.getContactId()
+                );
 
                 selectedAppointment.setTitle(modifyAppointmentTitle.getText());
                 selectedAppointment.setDescription(modifyAppointmentDescription.getText());
@@ -145,8 +141,11 @@ public class ModifyAppointment implements Initializable {
                 selectedAppointment.setLastUpdateBy(currentUser);
                 selectedAppointment.setContactId(Integer.parseInt(modifyAppointmentContact.getText()));
 
-            updateAppointment(Integer.parseInt(modifyAppointmentId.getText()), selectedAppointment);
-            appointmentFilter();
+                updateAppointment(Integer.parseInt(modifyAppointmentId.getText()), selectedAppointment);
+                appointmentFilter();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -175,6 +174,6 @@ public class ModifyAppointment implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-appointmentDataToModifyFieldSetup();
+        appointmentDataToModifyFieldSetup();
     }
 }

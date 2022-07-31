@@ -54,87 +54,88 @@ public class ModifyCustomer implements Initializable {
 
     public void customerDataToModifyFieldSetup(){
 
-        int customerId = currentlySelectedCustomer.getCustomerId();
+        try {
+            int customerId = currentlySelectedCustomer.getCustomerId();
 
-        Customers dataToModify = lookupCustomerById(customerId);
+            Customers dataToModify = lookupCustomerById(customerId);
 
-        String fullAddress = dataToModify.getAddress();
+            String fullAddress = dataToModify.getAddress();
 
-        String[] splitFullAddress = fullAddress.split(",", 3);
+            String[] splitFullAddress = fullAddress.split(",", 3);
 
-        String streetAddress = splitFullAddress[0];
-        String firstDivision = splitFullAddress[1];
-        String country = splitFullAddress[2];
+            String streetAddress = splitFullAddress[0];
+            String firstDivision = splitFullAddress[1];
+            String country = splitFullAddress[2];
 
-        if(currentlySelectedCustomer != null) {
-            modifyCustomerId.setDisable(true);
-            modifyCustomerId.setPromptText(String.valueOf(dataToModify.getCustomerId()));
-            modifyCustomerName.setText(dataToModify.getCustomerName());
-            modifyCustomerPhone.setText(dataToModify.getPhoneNumber());
-            modifyCustomerAddress.setText(streetAddress);
-            modifyCustomerStateProvince.setText(firstDivision);
-            modifyCustomerCountry.setText(country);
-            modifyCustomerZipCode.setText(dataToModify.getZipCode());
-        }
-        else{
-            GridPane conformation = new GridPane();
-            Text conformationInfo = new Text("Customer not selected");
-            conformationInfo.setFont(new Font(20));
-            conformation.getChildren().add(conformationInfo);
-            GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER, Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
-            Stage popUp = new Stage();
-            Scene conformationScene = new Scene(conformation);
-            popUp.setTitle("Error");
-            popUp.setScene(conformationScene);
-            popUp.sizeToScene();
-            popUp.show();
+            if (currentlySelectedCustomer != null) {
+                modifyCustomerId.setDisable(true);
+                modifyCustomerId.setPromptText(String.valueOf(dataToModify.getCustomerId()));
+                modifyCustomerName.setText(dataToModify.getCustomerName());
+                modifyCustomerPhone.setText(dataToModify.getPhoneNumber());
+                modifyCustomerAddress.setText(streetAddress);
+                modifyCustomerStateProvince.setText(firstDivision);
+                modifyCustomerCountry.setText(country);
+                modifyCustomerZipCode.setText(dataToModify.getZipCode());
+            } else {
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Customer not selected");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void modifiedCustomerRecords(){
 
-        SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
+        try {
+            SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            Date date = new Date(System.currentTimeMillis());
 
-        if (modifyCustomerName.getText().isEmpty()){
-            System.out.println("Error: Customer Name is Empty");
-        }
-        else if (modifyCustomerPhone.getText().isEmpty()){
-            System.out.println("Error: Phone Number is Empty");
-        }
-        else if (modifyCustomerAddress.getText().isEmpty()) {
-            System.out.println("Error: Address is Empty");
-        }
-        else if (modifyCustomerStateProvince.getText() == null) {
-            System.out.println("Error: State/Province is Empty");
-        }
-        else if (modifyCustomerCountry.getText() == null){
-            System.out.println("Error: Country is Empty");
-        }
-        else if (modifyCustomerZipCode.getText().isEmpty()) {
-            System.out.println("Error: Zipcode is Empty");
-        }
-        else {
-            Customers modifiedCustomer = new Customers(
-                    currentlySelectedCustomer.getCustomerId(),
-                    currentlySelectedCustomer.getCustomerName(),
-                    currentlySelectedCustomer.getAddress(),
-                    currentlySelectedCustomer.getZipCode(),
-                    currentlySelectedCustomer.getPhoneNumber(),
-                    currentlySelectedCustomer.getCreateDate(),
-                    currentlySelectedCustomer.getCreatedBy(),
-                    currentlySelectedCustomer.getLastUpdate(),
-                    currentlySelectedCustomer.getLastUpdateBy(),
-                    currentlySelectedCustomer.getDivisionId());
+            if (modifyCustomerName.getText().isEmpty()) {
+                System.out.println("Error: Customer Name is Empty");
+            } else if (modifyCustomerPhone.getText().isEmpty()) {
+                System.out.println("Error: Phone Number is Empty");
+            } else if (modifyCustomerAddress.getText().isEmpty()) {
+                System.out.println("Error: Address is Empty");
+            } else if (modifyCustomerStateProvince.getText() == null) {
+                System.out.println("Error: State/Province is Empty");
+            } else if (modifyCustomerCountry.getText() == null) {
+                System.out.println("Error: Country is Empty");
+            } else if (modifyCustomerZipCode.getText().isEmpty()) {
+                System.out.println("Error: Zipcode is Empty");
+            } else {
+                Customers modifiedCustomer = new Customers(
+                        currentlySelectedCustomer.getCustomerId(),
+                        currentlySelectedCustomer.getCustomerName(),
+                        currentlySelectedCustomer.getAddress(),
+                        currentlySelectedCustomer.getZipCode(),
+                        currentlySelectedCustomer.getPhoneNumber(),
+                        currentlySelectedCustomer.getCreateDate(),
+                        currentlySelectedCustomer.getCreatedBy(),
+                        currentlySelectedCustomer.getLastUpdate(),
+                        currentlySelectedCustomer.getLastUpdateBy(),
+                        currentlySelectedCustomer.getDivisionId());
 
-            modifiedCustomer.setCustomerName(modifyCustomerName.getText());
-            modifiedCustomer.setAddress(modifyCustomerAddress.getText() + "," + modifyCustomerStateProvince.getText() + "," + modifyCustomerCountry.getText());
-            modifiedCustomer.setZipCode(modifyCustomerZipCode.getText());
-            modifiedCustomer.setPhoneNumber(modifyCustomerPhone.getText());
-            modifiedCustomer.setLastUpdate(LocalDateTime.parse(dateTimeFormatter.format(date)));
-            modifiedCustomer.setLastUpdateBy(currentUser);
+                modifiedCustomer.setCustomerName(modifyCustomerName.getText());
+                modifiedCustomer.setAddress(modifyCustomerAddress.getText() + "," + modifyCustomerStateProvince.getText() + "," + modifyCustomerCountry.getText());
+                modifiedCustomer.setZipCode(modifyCustomerZipCode.getText());
+                modifiedCustomer.setPhoneNumber(modifyCustomerPhone.getText());
+                modifiedCustomer.setLastUpdate(LocalDateTime.parse(dateTimeFormatter.format(date)));
+                modifiedCustomer.setLastUpdateBy(currentUser);
 
-            updateCustomer(Integer.parseInt(modifyCustomerId.getText()), modifiedCustomer);
+                updateCustomer(Integer.parseInt(modifyCustomerId.getText()), modifiedCustomer);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
