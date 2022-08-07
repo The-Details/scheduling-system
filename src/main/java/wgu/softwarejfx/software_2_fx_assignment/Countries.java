@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Countries {
 
     int countryId;
-    String country;
+    String countryName;
     LocalDateTime createDate;
     String createdBy;
     LocalDateTime lastUpdate;
@@ -17,11 +17,23 @@ public class Countries {
 
     public Countries(int countryId, String countryName, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdateBy){
         this.countryId = countryId;
-        this.country = countryName;
+        this.countryName = countryName;
         this.createDate = createDate;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdateBy = lastUpdateBy;
+    }
+
+    public static Countries countryLookupByName(String countryToBeFound){
+        Countries countryFound = null;
+
+        for (Countries countriesExamination : allCountries){
+            if(countriesExamination.countryName.equals(countryToBeFound)){
+                countryFound = countriesExamination;
+            }
+        }
+
+        return countryFound;
     }
 
     public void addCountry(Countries newCountry){

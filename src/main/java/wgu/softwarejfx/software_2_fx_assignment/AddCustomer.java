@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -14,12 +15,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static wgu.softwarejfx.software_2_fx_assignment.Countries.allCountries;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.addCustomer;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
+import static wgu.softwarejfx.software_2_fx_assignment.FirstLevelDivisions.*;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 import static wgu.softwarejfx.software_2_fx_assignment.ModifyCustomer.currentlySelectedCustomer;
 
@@ -34,9 +38,13 @@ public class AddCustomer implements Initializable {
     @FXML
     TextField addCustomerAddress;
     @FXML
-    TextField addCustomerBorough;
+    ComboBox<String> addCustomerBorough;
     @FXML
     TextField addCustomerCity;
+    @FXML
+    ComboBox<FirstLevelDivisions> addCustomerStateProvince;
+    @FXML
+    ComboBox<Countries> addCustomerCountry;
     @FXML
     TextField addCustomerZipCode;
     @FXML
@@ -47,42 +55,93 @@ public class AddCustomer implements Initializable {
     public void customerFieldSetup(){
         addCustomerId.setDisable(true);
         addCustomerId.setPromptText("Auto Generated");
+        setAllBoroughs();
+        firstDivisionFilter();
+        addCustomerCountry.setItems(allCountries);
     }
 
     public void customerNewData(){
 
         try {
-            SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date date = new Date(System.currentTimeMillis());
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.now();
 
             if (addCustomerName.getText() == null) {
                 System.out.println("Error: CustomerName is Empty");
-            } else if ((addCustomerAddress.getText().isEmpty() || addCustomerCity.getText().isEmpty())) {
+            }
+            else if ((addCustomerAddress.getText().isEmpty() || addCustomerCity.getText().isEmpty())) {
                 System.out.println("Error: One or More Address Fields are Empty");
-            } else if (addCustomerZipCode.getText().isEmpty()) {
+            }
+            else if (addCustomerZipCode.getText().isEmpty()) {
                 System.out.println("Error: Zipcode is Empty");
-            } else if (addCustomerPhone.getText().isEmpty()) {
+            }
+            else if (addCustomerPhone.getText().isEmpty()) {
                 System.out.println("Error: Phone Number is Empty");
-            } else {
+            }
+            else if (addCustomerBorough.getValue() == null){
                 Customers newCustomer = new Customers(
                         allCustomers.size() + 1,
                         addCustomerName.getText(),
-                        addCustomerAddress.getText() + "," + addCustomerCity.getText(),
+                        addCustomerAddress.getText() + ", "
+                                + addCustomerCity.getText() + ", "
+                                + addCustomerStateProvince.getValue().divisionName + ", "
+                                + addCustomerCountry.getValue().countryName,
                         addCustomerZipCode.getText(),
                         addCustomerPhone.getText(),
-                        LocalDateTime.parse(dateTimeFormatter.format(date)),
+                        dateTime,
                         currentUser,
-                        LocalDateTime.parse(dateTimeFormatter.format(date)),
+                        dateTime,
                         currentUser,
-                        currentlySelectedCustomer.getDivisionId()
+                        addCustomerStateProvince.getValue().divisionId
                 );
 
                 addCustomer(newCustomer);
             }
+            else {
+                Customers newCustomer = new Customers(
+                        allCustomers.size() + 1,
+                        addCustomerName.getText(),
+                        addCustomerAddress.getText() + ", "
+                                + addCustomerBorough.getValue() + ", "
+                                + addCustomerCity.getText() + ", "
+                                + addCustomerStateProvince.getValue().divisionName + ", "
+                                + addCustomerCountry.getValue().countryName,
+                        addCustomerZipCode.getText(),
+                        addCustomerPhone.getText(),
+                        dateTime,
+                        currentUser,
+                        dateTime,
+                        currentUser,
+                        addCustomerStateProvince.getValue().divisionId
+                );
+
+                addCustomer(newCustomer);
+            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
 
+    }
+    @FXML
+    public void countrySpecifier(){
+
+        if(addCustomerCountry.getValue().toString().equals("United States")){
+            addCustomerBorough.setVisible(false);
+            addCustomerStateProvince.setItems(allUnitedStates);
+
+        }
+        else if(addCustomerCountry.getValue().toString().equals("Canada")){
+            addCustomerBorough.setVisible(false);
+            addCustomerStateProvince.setItems(allCanadianProvinces);
+
+        }
+        else if(addCustomerCountry.getValue().toString().equals("United Kingdom")){
+            addCustomerBorough.setVisible(true);
+            addCustomerStateProvince.setItems(allUnitedKingdomRegions);
+            addCustomerBorough.setItems(allBoroughs);
+
+        }
     }
 
     @FXML

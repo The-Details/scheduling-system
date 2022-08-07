@@ -25,8 +25,8 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static javafx.geometry.HPos.CENTER;
-import static wgu.softwarejfx.software_2_fx_assignment.Appointments.appointmentFilter;
-import static wgu.softwarejfx.software_2_fx_assignment.Appointments.updateAppointment;
+import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
+import static wgu.softwarejfx.software_2_fx_assignment.Appointments.appointmentTimes;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 
 public class ModifyAppointment implements Initializable {
@@ -44,9 +44,9 @@ public class ModifyAppointment implements Initializable {
     @FXML
     DatePicker modifyAppointmentEnd;
     @FXML
-    ComboBox<LocalTime> modifyAppointmentStartTime;
+    ComboBox<String> modifyAppointmentStartTime;
     @FXML
-    ComboBox<LocalTime> modifyAppointmentEndTime;
+    ComboBox<String> modifyAppointmentEndTime;
     @FXML
     MenuButton modifyAppointmentContact;
     @FXML
@@ -58,6 +58,35 @@ public class ModifyAppointment implements Initializable {
 
     public static Appointments currentlySelectedAppointment;
     public void appointmentDataToModifyFieldSetup(){
+
+        appointmentTimes.addAll("12:00AM",
+                "1:00AM",
+                "2:00AM",
+                "3:00AM",
+                "4:00AM",
+                "5:00AM",
+                "6:00AM",
+                "7:00AM",
+                "8:00AM",
+                "9:00AM",
+                "10:00AM",
+                "11:00AM",
+                "12:00PM",
+                "1:00PM",
+                "2:00PM",
+                "3:00PM",
+                "4:00PM",
+                "5:00PM",
+                "6:00PM",
+                "7:00PM",
+                "8:00PM",
+                "9:00PM",
+                "10:00PM",
+                "11:00PM"
+        );
+        modifyAppointmentStartTime.setItems(appointmentTimes);
+        modifyAppointmentEndTime.setItems(appointmentTimes);
+
         try {
             if (currentlySelectedAppointment != null) {
                 modifyAppointmentId.setDisable(true);

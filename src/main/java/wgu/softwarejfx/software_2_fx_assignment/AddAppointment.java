@@ -14,6 +14,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -39,9 +40,9 @@ public class AddAppointment implements Initializable {
     @FXML
     DatePicker addAppointmentEnd;
     @FXML
-    ComboBox<LocalTime> addAppointmentStartTime;
+    ComboBox<String> addAppointmentStartTime;
     @FXML
-    ComboBox<LocalTime> addAppointmentEndTime;
+    ComboBox<String> addAppointmentEndTime;
     @FXML
     TextField addAppointmentContactName;
     @FXML
@@ -57,16 +58,19 @@ public class AddAppointment implements Initializable {
     public void appointmentFieldSetup(){
         addAppointmentId.setDisable(true);
         addAppointmentId.setPromptText("Auto Generated");
+        setAppointmentTimes();
+        addAppointmentStartTime.setItems(appointmentTimes);
+        addAppointmentEndTime.setItems(appointmentTimes);
+
     }
 
     public void appointmentNewData(){
 
         try {
-            SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date date = new Date(System.currentTimeMillis());
 
-            LocalDateTime appointmentStart = LocalDateTime.of(addAppointmentStart.getValue(), addAppointmentStartTime.getValue());
-            LocalDateTime appointmentEnd = LocalDateTime.of(addAppointmentEnd.getValue(), addAppointmentEndTime.getValue());
+
+            LocalDateTime appointmentStart = LocalDateTime.of(addAppointmentStart.getValue(), LocalTime.parse(addAppointmentStartTime.getValue()));
+            LocalDateTime appointmentEnd = LocalDateTime.of(addAppointmentEnd.getValue(), LocalTime.parse(addAppointmentEndTime.getValue()));
 
             if (addAppointmentTitle.getText().isEmpty()) {
                 System.out.println("Error: Title is Empty");
@@ -94,9 +98,9 @@ public class AddAppointment implements Initializable {
                         addAppointmentType.getText(),
                         appointmentStart,
                         appointmentEnd,
-                        LocalDateTime.parse(dateTimeFormatter.format(date)),
+                        LocalDateTime.now(),
                         currentUser,
-                        LocalDateTime.parse(dateTimeFormatter.format(date)),
+                        LocalDateTime.now(),
                         currentUser,
                         currentlySelectedCustomer.getCustomerId(),
                         currentUserId,

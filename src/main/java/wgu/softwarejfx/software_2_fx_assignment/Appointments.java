@@ -2,6 +2,7 @@ package wgu.softwarejfx.software_2_fx_assignment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 import java.time.LocalDateTime;
 
@@ -85,8 +86,7 @@ public class Appointments {
     public static ObservableList<Appointments> decemberWeek2Appointments = FXCollections.observableArrayList();
     public static ObservableList<Appointments> decemberWeek3Appointments = FXCollections.observableArrayList();
     public static ObservableList<Appointments> decemberWeek4Appointments = FXCollections.observableArrayList();
-
-
+    public static ObservableList<String> appointmentTimes = FXCollections.observableArrayList();
 
     public Appointments(int appointmentId, String title, String description, String location, String type, LocalDateTime start,
                         LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime last_update,
@@ -105,6 +105,34 @@ public class Appointments {
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
+    }
+
+    public static void setAppointmentTimes(){
+        appointmentTimes.addAll("12:00",
+                "01:00",
+                "02:00",
+                "03:00",
+                "04:00",
+                "05:00",
+                "06:00",
+                "07:00",
+                "08:00",
+                "09:00",
+                "10:00",
+                "11:00",
+                "12:00",
+                "01:00",
+                "02:00",
+                "03:00",
+                "04:00",
+                "05:00",
+                "06:00",
+                "07:00",
+                "08:00",
+                "09:00",
+                "10:00",
+                "11:00"
+        );
     }
 
     public static void addAppointment(Appointments newAppointment){
