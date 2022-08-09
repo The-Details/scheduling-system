@@ -155,17 +155,89 @@ public class ModifyCustomer implements Initializable {
 
             if (modifyCustomerName.getText().isEmpty()) {
                 System.out.println("Error: Customer Name is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Customer Name is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyCustomerPhone.getText().isEmpty()) {
                 System.out.println("Error: Phone Number is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Phone Number is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyCustomerAddress.getText().isEmpty()) {
                 System.out.println("Error: Address is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Address is Empty\");\n");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyCustomerStateProvince.getValue() == null) {
                 System.out.println("Error: State/Province is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("State/Province is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyCustomerCountry.getValue() == null) {
                 System.out.println("Error: Country is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Country is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyCustomerZipCode.getText().isEmpty()) {
                 System.out.println("Error: Zipcode is Empty");
-            } else {
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Zipcode is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+            } else if (modifyCustomerBorough.getValue() == null){
                 Customers modifiedCustomer = new Customers(
                         currentlySelectedCustomer.getCustomerId(),
                         currentlySelectedCustomer.getCustomerName(),
@@ -179,7 +251,36 @@ public class ModifyCustomer implements Initializable {
                         currentlySelectedCustomer.getDivisionId());
 
                 modifiedCustomer.setCustomerName(modifyCustomerName.getText());
-                modifiedCustomer.setAddress(modifyCustomerAddress.getText() + "," + modifyCustomerStateProvince.getValue() + "," + modifyCustomerCountry.getValue());
+                modifiedCustomer.setAddress(modifyCustomerAddress.getText() + ", "
+                        + modifyCustomerCity.getText() + ", "
+                        + modifyCustomerStateProvince.getValue().divisionName + ", "
+                        + modifyCustomerCountry.getValue().countryName);
+                modifiedCustomer.setZipCode(modifyCustomerZipCode.getText());
+                modifiedCustomer.setPhoneNumber(modifyCustomerPhone.getText());
+                modifiedCustomer.setLastUpdate(LocalDateTime.parse(dateTimeFormatter.format(date)));
+                modifiedCustomer.setLastUpdateBy(currentUser);
+
+                updateCustomer(Integer.parseInt(modifyCustomerId.getText()), modifiedCustomer);
+            }
+            else {
+                Customers modifiedCustomer = new Customers(
+                        currentlySelectedCustomer.getCustomerId(),
+                        currentlySelectedCustomer.getCustomerName(),
+                        currentlySelectedCustomer.getAddress(),
+                        currentlySelectedCustomer.getZipCode(),
+                        currentlySelectedCustomer.getPhoneNumber(),
+                        currentlySelectedCustomer.getCreateDate(),
+                        currentlySelectedCustomer.getCreatedBy(),
+                        currentlySelectedCustomer.getLastUpdate(),
+                        currentlySelectedCustomer.getLastUpdateBy(),
+                        currentlySelectedCustomer.getDivisionId());
+
+                modifiedCustomer.setCustomerName(modifyCustomerName.getText());
+                modifiedCustomer.setAddress(modifyCustomerAddress.getText() + ", "
+                        + modifyCustomerBorough.getValue() + ", "
+                        + modifyCustomerCity.getText() + ", "
+                        + modifyCustomerStateProvince.getValue().divisionName + ", "
+                        + modifyCustomerCountry.getValue().countryName);
                 modifiedCustomer.setZipCode(modifyCustomerZipCode.getText());
                 modifiedCustomer.setPhoneNumber(modifyCustomerPhone.getText());
                 modifiedCustomer.setLastUpdate(LocalDateTime.parse(dateTimeFormatter.format(date)));

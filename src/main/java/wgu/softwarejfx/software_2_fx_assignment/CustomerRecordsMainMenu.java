@@ -2490,7 +2490,6 @@ public class CustomerRecordsMainMenu implements Initializable {
 
 
     // view switching method <you're gonna be working with visibility of tables>
-
     @FXML
     public void changeAccordion() {
 

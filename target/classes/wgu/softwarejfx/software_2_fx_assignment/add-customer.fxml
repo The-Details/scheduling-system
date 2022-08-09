@@ -197,7 +197,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
-         <ComboBox prefHeight="25.0" prefWidth="174.0" promptText="Select Country" GridPane.rowIndex="1" />
+         <ComboBox onAction="#countrySpecifier" prefHeight="25.0" prefWidth="174.0" promptText="Select Country" GridPane.rowIndex="1" />
       </GridPane>
       <GridPane GridPane.columnIndex="2" GridPane.rowIndex="4">
         <columnConstraints>

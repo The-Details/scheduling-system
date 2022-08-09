@@ -3,6 +3,8 @@ package wgu.softwarejfx.software_2_fx_assignment;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -24,6 +30,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Users.lookupUserByName;
 import static wgu.softwarejfx.software_2_fx_assignment.Users.validateUserInfo;
 
@@ -96,10 +103,21 @@ public class LoginController implements Initializable {
             }
             else {
                 System.out.println(errorMessage);
-                System.out.println("Error: Incorrect username and/or password!");
                 usernameTextField.setText("");
                 passwordTextField.setText("");
                 activityLogger("Failed");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text(errorMessage);
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             }
         }catch (Exception e){
             e.printStackTrace();

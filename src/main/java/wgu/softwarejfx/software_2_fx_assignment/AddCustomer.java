@@ -3,12 +3,18 @@ package wgu.softwarejfx.software_2_fx_assignment;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +26,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Countries.allCountries;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.addCustomer;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
@@ -68,15 +75,63 @@ public class AddCustomer implements Initializable {
 
             if (addCustomerName.getText() == null) {
                 System.out.println("Error: CustomerName is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Customer Name is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             }
             else if ((addCustomerAddress.getText().isEmpty() || addCustomerCity.getText().isEmpty())) {
                 System.out.println("Error: One or More Address Fields are Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("One or More Address Fields are Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             }
             else if (addCustomerZipCode.getText().isEmpty()) {
                 System.out.println("Error: Zipcode is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Zipcode is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             }
             else if (addCustomerPhone.getText().isEmpty()) {
                 System.out.println("Error: Phone Number is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Phone Number is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             }
             else if (addCustomerBorough.getValue() == null){
                 Customers newCustomer = new Customers(

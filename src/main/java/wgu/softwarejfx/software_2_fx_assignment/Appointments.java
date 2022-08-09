@@ -2,9 +2,23 @@ package wgu.softwarejfx.software_2_fx_assignment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import static javafx.geometry.HPos.CENTER;
 
 public class Appointments {
 
@@ -442,6 +456,137 @@ public class Appointments {
                 System.out.println("Error: Something went wrong with the Appointment filter");
             }
         }
+    }
+
+    public static LocalTime appointmentTimeConvertor(String standardTime){
+        LocalTime universalTime = null;
+
+        CharSequence amCharacterCage = "am";
+        CharSequence pmCharacterCage = "pm";
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String[] standardTimeSplitter = standardTime.split(":", 2);
+
+        if(standardTime.contains(amCharacterCage)){
+            universalTime = LocalTime.of(Integer.parseInt(standardTimeSplitter[0]), 0);
+        }
+        else if (standardTime.contains(pmCharacterCage)){
+            if (Integer.parseInt(standardTimeSplitter[0]) == 12){
+                universalTime = LocalTime.of(Integer.parseInt(standardTimeSplitter[0]), 0);
+            }
+            else {
+                universalTime = LocalTime.of(Integer.parseInt(standardTimeSplitter[0]) + 12, 0);
+            }
+        }
+
+        return universalTime;
+    }
+
+    public static boolean appointmentConflictChecker(LocalDate appointmentStartDate, LocalDate appointmentEndDate,
+                                                  LocalTime appointmentStartTime, LocalTime appointmentEndTime){
+
+        boolean isThereAConflict = false;
+
+        for (Appointments appointmentToCompare : allAppointments){
+           if (appointmentToCompare.getStart().toLocalDate() == appointmentStartDate){
+               isThereAConflict = true;
+
+               GridPane conformation = new GridPane();
+               Text conformationInfo = new Text("Conflict on: " + appointmentStartDate);
+               conformationInfo.setFont(new Font(20));
+               conformation.getChildren().add(conformationInfo);
+               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+               Stage popUp = new Stage();
+               Scene conformationScene = new Scene(conformation);
+               popUp.setTitle("Error");
+               popUp.setScene(conformationScene);
+               popUp.sizeToScene();
+               popUp.show();
+           }
+           if (appointmentToCompare.getStart().toLocalTime() == appointmentStartTime){
+               isThereAConflict = true;
+
+               GridPane conformation = new GridPane();
+               Text conformationInfo = new Text("Conflict at: " + appointmentStartTime);
+               conformationInfo.setFont(new Font(20));
+               conformation.getChildren().add(conformationInfo);
+               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+               Stage popUp = new Stage();
+               Scene conformationScene = new Scene(conformation);
+               popUp.setTitle("Error");
+               popUp.setScene(conformationScene);
+               popUp.sizeToScene();
+               popUp.show();
+           }
+           if (appointmentToCompare.getEnd().toLocalDate() == appointmentEndDate){
+               isThereAConflict = true;
+
+               GridPane conformation = new GridPane();
+               Text conformationInfo = new Text("Conflict on: " + appointmentEndDate);
+               conformationInfo.setFont(new Font(20));
+               conformation.getChildren().add(conformationInfo);
+               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+               Stage popUp = new Stage();
+               Scene conformationScene = new Scene(conformation);
+               popUp.setTitle("Error");
+               popUp.setScene(conformationScene);
+               popUp.sizeToScene();
+               popUp.show();
+           }
+           if (appointmentToCompare.getEnd().toLocalTime() == appointmentEndTime){
+               isThereAConflict = true;
+
+               GridPane conformation = new GridPane();
+               Text conformationInfo = new Text("Conflict at: " + appointmentEndTime);
+               conformationInfo.setFont(new Font(20));
+               conformation.getChildren().add(conformationInfo);
+               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+               Stage popUp = new Stage();
+               Scene conformationScene = new Scene(conformation);
+               popUp.setTitle("Error");
+               popUp.setScene(conformationScene);
+               popUp.sizeToScene();
+               popUp.show();
+           }
+           if (appointmentStartDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) || appointmentStartDate.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+               isThereAConflict = true;
+
+               GridPane conformation = new GridPane();
+               Text conformationInfo = new Text("Weekend Conflict on: " + appointmentStartDate);
+               conformationInfo.setFont(new Font(20));
+               conformation.getChildren().add(conformationInfo);
+               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+               Stage popUp = new Stage();
+               Scene conformationScene = new Scene(conformation);
+               popUp.setTitle("Error");
+               popUp.setScene(conformationScene);
+               popUp.sizeToScene();
+               popUp.show();
+           }
+            if (appointmentEndDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) || appointmentEndDate.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+                isThereAConflict = true;
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Weekend Conflict on: " + appointmentEndDate);
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+            }
+
+        }
+
+        return isThereAConflict;
+    }
+
+    public static void appointmentReminder(){
+
+
     }
 
     public void setAppointmentId(int appointmentId) {

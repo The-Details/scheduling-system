@@ -5,6 +5,9 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 
+import static wgu.softwarejfx.software_2_fx_assignment.Appointments.getAllAppointments;
+import static wgu.softwarejfx.software_2_fx_assignment.Appointments.lookupAppointmentByCustomerId;
+
 public class Customers {
 
     int customerId;
@@ -55,6 +58,10 @@ public class Customers {
 
     public static void deleteCustomer(Customers selectedCustomer){
         allCustomers.remove(selectedCustomer);
+
+        for (Appointments appointmentToDelete : lookupAppointmentByCustomerId(selectedCustomer.getCustomerId())){
+            getAllAppointments().remove(appointmentToDelete);
+        }
     }
 
     public static ObservableList<Customers> lookupCustomerByName(String customerName){

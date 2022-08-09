@@ -126,22 +126,148 @@ public class ModifyAppointment implements Initializable {
 
             if (modifyAppointmentTitle.getText().isEmpty()) {
                 System.out.println("Error: Title is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Title is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyAppointmentType.getText().isEmpty()) {
                 System.out.println("Error: Type is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Type is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyAppointmentLocation.getText().isEmpty()) {
                 System.out.println("Error: Location is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Location is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyAppointmentStart.getValue() == null) {
                 System.out.println("Error: Start Date is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Start Date is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyAppointmentEnd.getValue() == null) {
                 System.out.println("Error: End Date is Empty");
-            } else if (modifyAppointmentStartTime == null ||
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("End Date is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+            } else if (modifyAppointmentStartTime.getValue() == null ||
                     modifyAppointmentEndTime.getValue() == null) {
                 System.out.println("Error: Start and/or End Time is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Start and/or End Time is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyAppointmentContact.getText().isEmpty()) {
                 System.out.println("Error: Contact is Empty");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Contact is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
             } else if (modifyAppointmentDescription.getText().isEmpty()) {
                 System.out.println("Error: Description is Empty");
-            } else {
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Description is Empty");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+            } else if (Integer.parseInt(appointmentTimeConvertor(modifyAppointmentStartTime.getValue()).toString()) < 8 ||
+                    Integer.parseInt(appointmentTimeConvertor(modifyAppointmentEndTime.getValue()).toString()) > 22) {
+                System.out.println("Error: Start and/or End Time is Outside of Applicable Range");
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Start and/or End Time is Outside of Applicable Range");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+            }else if (appointmentConflictChecker(modifyAppointmentStart.getValue(), modifyAppointmentEnd.getValue(),
+                    LocalTime.parse(modifyAppointmentStartTime.getValue()), LocalTime.parse(modifyAppointmentEndTime.getValue()))) {
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Conflict with Appointment Scheduled Time");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+
+            }else {
 
                 Appointments selectedAppointment = new Appointments(
                         currentlySelectedAppointment.getAppointmentId(),
