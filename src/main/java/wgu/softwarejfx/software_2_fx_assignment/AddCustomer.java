@@ -1,15 +1,22 @@
 package wgu.softwarejfx.software_2_fx_assignment;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -27,7 +34,8 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static javafx.geometry.HPos.CENTER;
-import static wgu.softwarejfx.software_2_fx_assignment.Countries.allCountries;
+import static wgu.softwarejfx.software_2_fx_assignment.Countries.*;
+import static wgu.softwarejfx.software_2_fx_assignment.CustomerRecordsMainMenu.addCustomerButton;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.addCustomer;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
 import static wgu.softwarejfx.software_2_fx_assignment.FirstLevelDivisions.*;
@@ -49,9 +57,9 @@ public class AddCustomer implements Initializable {
     @FXML
     TextField addCustomerCity;
     @FXML
-    ComboBox<FirstLevelDivisions> addCustomerStateProvince;
+    ComboBox<String> addCustomerStateProvince;
     @FXML
-    ComboBox<Countries> addCustomerCountry;
+    ComboBox<String> addCustomerCountry;
     @FXML
     TextField addCustomerZipCode;
     @FXML
@@ -64,7 +72,7 @@ public class AddCustomer implements Initializable {
         addCustomerId.setPromptText("Auto Generated");
         setAllBoroughs();
         firstDivisionFilter();
-        addCustomerCountry.setItems(allCountries);
+        countrySpecifier();
     }
 
     public void customerNewData(){
@@ -139,15 +147,15 @@ public class AddCustomer implements Initializable {
                         addCustomerName.getText(),
                         addCustomerAddress.getText() + ", "
                                 + addCustomerCity.getText() + ", "
-                                + addCustomerStateProvince.getValue().divisionName + ", "
-                                + addCustomerCountry.getValue().countryName,
+                                + addCustomerStateProvince.getValue() + ", "
+                                + addCustomerCountry.getValue(),
                         addCustomerZipCode.getText(),
                         addCustomerPhone.getText(),
                         dateTime,
                         currentUser,
                         dateTime,
                         currentUser,
-                        addCustomerStateProvince.getValue().divisionId
+                        firstDivisionLookup(addCustomerStateProvince.getValue()).divisionId
                 );
 
                 addCustomer(newCustomer);
@@ -159,15 +167,15 @@ public class AddCustomer implements Initializable {
                         addCustomerAddress.getText() + ", "
                                 + addCustomerBorough.getValue() + ", "
                                 + addCustomerCity.getText() + ", "
-                                + addCustomerStateProvince.getValue().divisionName + ", "
-                                + addCustomerCountry.getValue().countryName,
+                                + addCustomerStateProvince.getValue() + ", "
+                                + addCustomerCountry.getValue(),
                         addCustomerZipCode.getText(),
                         addCustomerPhone.getText(),
                         dateTime,
                         currentUser,
                         dateTime,
                         currentUser,
-                        addCustomerStateProvince.getValue().divisionId
+                        firstDivisionLookup(addCustomerStateProvince.getValue()).divisionId
                 );
 
                 addCustomer(newCustomer);
@@ -178,25 +186,32 @@ public class AddCustomer implements Initializable {
         }
 
     }
-    @FXML
+//    @FXML
     public void countrySpecifier(){
 
-        if(addCustomerCountry.getValue().toString().equals("United States")){
-            addCustomerBorough.setVisible(false);
-            addCustomerStateProvince.setItems(allUnitedStates);
+        addCustomerCountry.setItems(getAllCountryNames());
+        addCustomerBorough.setVisible(false);
 
-        }
-        else if(addCustomerCountry.getValue().toString().equals("Canada")){
-            addCustomerBorough.setVisible(false);
-            addCustomerStateProvince.setItems(allCanadianProvinces);
+        addCustomerCountry.onActionProperty().addListener((observableValue, oldValue, newValue) -> {
 
-        }
-        else if(addCustomerCountry.getValue().toString().equals("United Kingdom")){
-            addCustomerBorough.setVisible(true);
-            addCustomerStateProvince.setItems(allUnitedKingdomRegions);
-            addCustomerBorough.setItems(allBoroughs);
+//            addCustomerCountry.getSelectionModel().getSelectedItem()
+            switch (newValue.toString()) {
+                case "US" -> {
+                    addCustomerBorough.setVisible(false);
+                    addCustomerStateProvince.setItems(allStateNames);
+                }
+                case "Canada" -> {
+                    addCustomerBorough.setVisible(false);
+                    addCustomerStateProvince.setItems(allCanadianProvinceNames);
+                }
+                case "UK" -> {
+                    addCustomerBorough.setVisible(true);
+                    addCustomerStateProvince.setItems(allUKRegionNames);
+                    addCustomerBorough.setItems(allBoroughs);
+                }
+            }
+        });
 
-        }
     }
 
     @FXML

@@ -41,7 +41,7 @@ public class CustomerRecordsMainMenu implements Initializable {
     @FXML
     Button addAppointmentButton;
     @FXML
-    Button addCustomerButton;
+    static Button addCustomerButton;
     @FXML
     Button modifyCustomerButton;
     @FXML

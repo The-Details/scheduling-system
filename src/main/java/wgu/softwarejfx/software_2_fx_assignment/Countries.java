@@ -14,6 +14,7 @@ public class Countries {
     LocalDateTime lastUpdate;
     String lastUpdateBy;
     public static ObservableList<Countries> allCountries = FXCollections.observableArrayList();
+    public static ObservableList<String> allCountryNames = FXCollections.observableArrayList();
 
     public Countries(int countryId, String countryName, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdateBy){
         this.countryId = countryId;
@@ -36,12 +37,21 @@ public class Countries {
         return countryFound;
     }
 
-    public void addCountry(Countries newCountry){
+    public static void addCountry(Countries newCountry){
         allCountries.add(newCountry);
     }
 
-    public ObservableList<Countries> getAllCountries(){
+    public static ObservableList<Countries> getAllCountries(){
         return allCountries;
+    }
+
+    public static ObservableList<String> getAllCountryNames(){
+
+        for (Countries countryCage : allCountries){
+            allCountryNames.add(countryCage.countryName);
+        }
+
+        return allCountryNames;
     }
 
 }

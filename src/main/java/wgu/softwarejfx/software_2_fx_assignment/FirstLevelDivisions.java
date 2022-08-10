@@ -20,6 +20,9 @@ public class FirstLevelDivisions {
     public static ObservableList<FirstLevelDivisions> allCanadianProvinces = FXCollections.observableArrayList();
     public static ObservableList<FirstLevelDivisions> allUnitedKingdomRegions = FXCollections.observableArrayList();
     public static ObservableList<String> allBoroughs = FXCollections.observableArrayList();
+    public static ObservableList<String> allStateNames = FXCollections.observableArrayList();
+    public static ObservableList<String> allCanadianProvinceNames = FXCollections.observableArrayList();
+    public static ObservableList<String> allUKRegionNames = FXCollections.observableArrayList();
 
 
     public FirstLevelDivisions(int divisionId, String divisionName, LocalDateTime createDate, String createdBy,LocalDateTime lastUpdate, String lastUpdateBy, int countryId){
@@ -103,4 +106,27 @@ public class FirstLevelDivisions {
     public ObservableList<FirstLevelDivisions> getAllFirstLevelDivisions() {
         return allFirstLevelDivisions;
     }
+
+    public static ObservableList<String> getAllStateNames(){
+        for (FirstLevelDivisions stateCage : allUnitedStates){
+            allStateNames.add(stateCage.divisionName);
+        }
+
+        return allStateNames;
+    }
+
+    public static ObservableList<String> getAllCanadianProvinceNames(){
+        for (FirstLevelDivisions provinceCage : allCanadianProvinces){
+            allCanadianProvinceNames.add(provinceCage.divisionName);
+        }
+        return allCanadianProvinceNames;
+    }
+
+    public static ObservableList<String> getAllUKRegionNames(){
+        for (FirstLevelDivisions regionCage : allUnitedKingdomRegions){
+            allUKRegionNames.add(regionCage.divisionName);
+        }
+        return allUKRegionNames;
+    }
+
 }
