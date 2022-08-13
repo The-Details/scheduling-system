@@ -19,16 +19,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import static javafx.geometry.HPos.CENTER;
+import static wgu.softwarejfx.software_2_fx_assignment.Countries.countryLookupById;
+import static wgu.softwarejfx.software_2_fx_assignment.Countries.countryLookupByName;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.lookupCustomerById;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.updateCustomer;
+import static wgu.softwarejfx.software_2_fx_assignment.FirstLevelDivisions.*;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 
 public class ModifyCustomer implements Initializable {
@@ -46,9 +47,9 @@ public class ModifyCustomer implements Initializable {
     @FXML
     ComboBox<String> modifyCustomerBorough;
     @FXML
-    ComboBox<FirstLevelDivisions> modifyCustomerStateProvince;
+    ComboBox<String> modifyCustomerStateProvince;
     @FXML
-    ComboBox<Countries> modifyCustomerCountry;
+    ComboBox<String> modifyCustomerCountry;
     @FXML
     TextField modifyCustomerZipCode;
     @FXML
@@ -67,30 +68,51 @@ public class ModifyCustomer implements Initializable {
 
             String fullAddress = dataToModify.getAddress();
 
-            String[] splitFullAddress = fullAddress.split(",", 4);
+            String[] splitFullAddress = fullAddress.split(",", 5);
 
             String streetAddress;
             String optionalBorough;
             String city;
-            String stateProvince;
-            String country;
 
-
-            if (splitFullAddress[1] == null){
+            if (splitFullAddress.length == 1 ){
                 streetAddress = splitFullAddress[0];
-                city = splitFullAddress[2];
-                stateProvince = splitFullAddress[3];
-                country = splitFullAddress[4];
 
-                if (currentlySelectedCustomer != null) {
+                if (customerId > 0) {
                     modifyCustomerId.setDisable(true);
-                    modifyCustomerId.setPromptText(String.valueOf(dataToModify.getCustomerId()));
+                    modifyCustomerId.setText(String.valueOf(customerId));
+                    modifyCustomerName.setText(dataToModify.getCustomerName());
+                    modifyCustomerPhone.setText(dataToModify.getPhoneNumber());
+                    modifyCustomerAddress.setText(streetAddress);
+                    modifyCustomerZipCode.setText(dataToModify.getZipCode());
+                } else {
+                    GridPane conformation = new GridPane();
+                    Text conformationInfo = new Text("Customer not selected");
+                    conformationInfo.setFont(new Font(20));
+                    conformation.getChildren().add(conformationInfo);
+                    GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                    Stage popUp = new Stage();
+                    Scene conformationScene = new Scene(conformation);
+                    popUp.setTitle("Error");
+                    popUp.setScene(conformationScene);
+                    popUp.sizeToScene();
+                    popUp.show();
+                }
+
+            }
+            else if (splitFullAddress.length == 2){
+
+                streetAddress = splitFullAddress[0];
+                city = splitFullAddress[1];
+
+                if (customerId > 0) {
+                    modifyCustomerId.setDisable(true);
+                    modifyCustomerId.setText(String.valueOf(customerId));
                     modifyCustomerName.setText(dataToModify.getCustomerName());
                     modifyCustomerPhone.setText(dataToModify.getPhoneNumber());
                     modifyCustomerAddress.setText(streetAddress);
                     modifyCustomerCity.setText(city);
-                    modifyCustomerStateProvince.setValue(FirstLevelDivisions.firstDivisionLookup(stateProvince));
-                    modifyCustomerCountry.setValue(Countries.countryLookupByName(country));
+                    modifyCustomerStateProvince.setValue(firstDivisionLookupById(dataToModify.getDivisionId()).divisionName);
+                    modifyCustomerCountry.setValue(countryLookupById(firstDivisionLookupById(dataToModify.getDivisionId()).countryId).countryName);
                     modifyCustomerZipCode.setText(dataToModify.getZipCode());
                 } else {
                     GridPane conformation = new GridPane();
@@ -111,19 +133,17 @@ public class ModifyCustomer implements Initializable {
                 streetAddress = splitFullAddress[0];
                 optionalBorough = splitFullAddress[1];
                 city = splitFullAddress[2];
-                stateProvince = splitFullAddress[3];
-                country = splitFullAddress[4];
 
-                if (currentlySelectedCustomer != null) {
+                if (customerId > 0) {
                     modifyCustomerId.setDisable(true);
-                    modifyCustomerId.setPromptText(String.valueOf(dataToModify.getCustomerId()));
+                    modifyCustomerId.setText(String.valueOf(customerId));
                     modifyCustomerName.setText(dataToModify.getCustomerName());
                     modifyCustomerPhone.setText(dataToModify.getPhoneNumber());
                     modifyCustomerAddress.setText(streetAddress);
                     modifyCustomerBorough.setValue(optionalBorough);
                     modifyCustomerCity.setText(city);
-                    modifyCustomerStateProvince.setValue(FirstLevelDivisions.firstDivisionLookup(stateProvince));
-                    modifyCustomerCountry.setValue(Countries.countryLookupByName(country));
+                    modifyCustomerStateProvince.setValue(firstDivisionLookupById(dataToModify.getDivisionId()).divisionName);
+                    modifyCustomerCountry.setValue(countryLookupById(firstDivisionLookupById(dataToModify.getDivisionId()).countryId).countryName);
                     modifyCustomerZipCode.setText(dataToModify.getZipCode());
                 } else {
                     GridPane conformation = new GridPane();
@@ -150,8 +170,7 @@ public class ModifyCustomer implements Initializable {
     public void modifiedCustomerRecords(){
 
         try {
-            SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date date = new Date(System.currentTimeMillis());
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
             if (modifyCustomerName.getText().isEmpty()) {
                 System.out.println("Error: Customer Name is Empty");
@@ -237,7 +256,7 @@ public class ModifyCustomer implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            } else if (modifyCustomerBorough.getValue() == null){
+            } else if (modifyCustomerBorough.getValue() == null && !modifyCustomerCountry.getValue().equals("UK")){
                 Customers modifiedCustomer = new Customers(
                         currentlySelectedCustomer.getCustomerId(),
                         currentlySelectedCustomer.getCustomerName(),
@@ -252,13 +271,12 @@ public class ModifyCustomer implements Initializable {
 
                 modifiedCustomer.setCustomerName(modifyCustomerName.getText());
                 modifiedCustomer.setAddress(modifyCustomerAddress.getText() + ", "
-                        + modifyCustomerCity.getText() + ", "
-                        + modifyCustomerStateProvince.getValue().divisionName + ", "
-                        + modifyCustomerCountry.getValue().countryName);
+                        + modifyCustomerCity.getText());
                 modifiedCustomer.setZipCode(modifyCustomerZipCode.getText());
                 modifiedCustomer.setPhoneNumber(modifyCustomerPhone.getText());
-                modifiedCustomer.setLastUpdate(LocalDateTime.parse(dateTimeFormatter.format(date)));
+                modifiedCustomer.setLastUpdate(LocalDateTime.now());
                 modifiedCustomer.setLastUpdateBy(currentUser);
+                modifiedCustomer.setDivisionId(firstDivisionLookupName(modifyCustomerStateProvince.getValue()).divisionId);
 
                 updateCustomer(Integer.parseInt(modifyCustomerId.getText()), modifiedCustomer);
             }
@@ -278,13 +296,12 @@ public class ModifyCustomer implements Initializable {
                 modifiedCustomer.setCustomerName(modifyCustomerName.getText());
                 modifiedCustomer.setAddress(modifyCustomerAddress.getText() + ", "
                         + modifyCustomerBorough.getValue() + ", "
-                        + modifyCustomerCity.getText() + ", "
-                        + modifyCustomerStateProvince.getValue().divisionName + ", "
-                        + modifyCustomerCountry.getValue().countryName);
+                        + modifyCustomerCity.getText());
                 modifiedCustomer.setZipCode(modifyCustomerZipCode.getText());
                 modifiedCustomer.setPhoneNumber(modifyCustomerPhone.getText());
-                modifiedCustomer.setLastUpdate(LocalDateTime.parse(dateTimeFormatter.format(date)));
+                modifiedCustomer.setLastUpdate(LocalDateTime.now());
                 modifiedCustomer.setLastUpdateBy(currentUser);
+                modifiedCustomer.setDivisionId(firstDivisionLookupName(modifyCustomerStateProvince.getValue()).divisionId);
 
                 updateCustomer(Integer.parseInt(modifyCustomerId.getText()), modifiedCustomer);
             }

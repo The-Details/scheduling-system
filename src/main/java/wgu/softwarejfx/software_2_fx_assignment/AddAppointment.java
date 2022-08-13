@@ -17,12 +17,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -192,7 +188,7 @@ public class AddAppointment implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            } else if (appointmentConflictChecker(addAppointmentStart.getValue(), addAppointmentEnd.getValue(),
+            } else if (appointmentConflictChecker(addAppointmentId.getText(), addAppointmentStart.getValue(), addAppointmentEnd.getValue(),
                     LocalTime.parse(addAppointmentStartTime.getValue()), LocalTime.parse(addAppointmentEndTime.getValue()))) {
 
                 GridPane conformation = new GridPane();

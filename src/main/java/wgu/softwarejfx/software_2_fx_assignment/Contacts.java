@@ -26,6 +26,26 @@ public class Contacts {
         return contactInfo;
     }
 
+    public static Contacts lookupContactById(int contactId){
+        Contacts foundContact = null;
+        for(Contacts contactCage: allContacts){
+            if (contactCage.contactId == contactId){
+                foundContact = contactCage;
+            }
+        }
+        return foundContact;
+    }
+
+    public static Contacts lookupContactByName(String contactName){
+        Contacts foundContact = null;
+        for(Contacts contactCage: allContacts){
+            if (contactCage.contactName.equals(contactName)){
+                foundContact = contactCage;
+            }
+        }
+        return foundContact;
+    }
+
     /**
      *
      * @param id

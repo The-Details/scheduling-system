@@ -81,7 +81,7 @@ public class SchedulingSystem extends Application {
 
     public static void divisionData() throws SQLException {
         divisionStmt = connection.createStatement();
-        divisionQuery = "SELECT *" + "FROM first_level_division";
+        divisionQuery = "SELECT *" + "FROM first_level_divisions";
         divisionResultSet = divisionStmt.executeQuery(divisionQuery);
 
         while(divisionResultSet.next()){
@@ -110,7 +110,7 @@ public class SchedulingSystem extends Application {
                 LocalDateTime.parse(appointmentsResultSet.getString("start"), dateTimeFormatter),
                 LocalDateTime.parse(appointmentsResultSet.getString("end"), dateTimeFormatter),
                 LocalDateTime.parse(appointmentsResultSet.getString("create_date"), dateTimeFormatter),
-                appointmentsResultSet.getString("create_by"),
+                appointmentsResultSet.getString("created_by"),
                 LocalDateTime.parse(appointmentsResultSet.getString("last_update"), dateTimeFormatter),
                 appointmentsResultSet.getString("last_updated_by"),
                 Integer.parseInt(appointmentsResultSet.getString("customer_id")),
@@ -197,15 +197,15 @@ public class SchedulingSystem extends Application {
     }
 
     public static void main(String[] args) throws SQLException {
-//        constructConnection();
-//        userData();
-//        divisionData();
-//        appointment();
-//        customerData();
-//        contactData();
-//        countryData();
+        constructConnection();
+        userData();
+        divisionData();
+        appointment();
+        customerData();
+        contactData();
+        countryData();
 
-        testDataStarterPack();
+//        testDataStarterPack();
 
         launch();
     }

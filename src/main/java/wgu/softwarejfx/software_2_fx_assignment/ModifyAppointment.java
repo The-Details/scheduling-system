@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -27,6 +26,8 @@ import java.util.ResourceBundle;
 import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.appointmentTimes;
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.lookupContactById;
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.lookupContactByName;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 
 public class ModifyAppointment implements Initializable {
@@ -48,7 +49,9 @@ public class ModifyAppointment implements Initializable {
     @FXML
     ComboBox<String> modifyAppointmentEndTime;
     @FXML
-    MenuButton modifyAppointmentContact;
+    TextField modifyAppointmentContactName;
+    @FXML
+    TextField modifyAppointmentContactEmail;
     @FXML
     TextArea modifyAppointmentDescription;
     @FXML
@@ -90,15 +93,16 @@ public class ModifyAppointment implements Initializable {
         try {
             if (currentlySelectedAppointment != null) {
                 modifyAppointmentId.setDisable(true);
-                modifyAppointmentId.setPromptText(String.valueOf(currentlySelectedAppointment.getAppointmentId()));
+                modifyAppointmentId.setText(String.valueOf(currentlySelectedAppointment.getAppointmentId()));
                 modifyAppointmentTitle.setText(currentlySelectedAppointment.getTitle());
                 modifyAppointmentType.setText(currentlySelectedAppointment.getType());
                 modifyAppointmentLocation.setText(currentlySelectedAppointment.getLocation());
-                modifyAppointmentStart.setPromptText("");
-                modifyAppointmentEnd.setPromptText("");
-                modifyAppointmentStartTime.setPromptText("");
-                modifyAppointmentEndTime.setPromptText("");
-                modifyAppointmentContact.setText(String.valueOf(currentlySelectedAppointment.getContactId()));
+                modifyAppointmentStart.setValue(currentlySelectedAppointment.getStart().toLocalDate());
+                modifyAppointmentEnd.setValue(currentlySelectedAppointment.getStart().toLocalDate());
+                modifyAppointmentStartTime.setValue(appointmentTimeReverser(currentlySelectedAppointment.getStart().toLocalTime().toString()));
+                modifyAppointmentEndTime.setValue(appointmentTimeReverser(currentlySelectedAppointment.getEnd().toLocalTime().toString()));
+                modifyAppointmentContactName.setText(lookupContactById(currentlySelectedAppointment.getContactId()).contactName);
+                modifyAppointmentContactEmail.setText(lookupContactById(currentlySelectedAppointment.getContactId()).email);
                 modifyAppointmentDescription.setText(currentlySelectedAppointment.getDescription());
             } else {
                 GridPane conformation = new GridPane();
@@ -121,8 +125,9 @@ public class ModifyAppointment implements Initializable {
     public void modifiedAppointmentRecords(){
 
         try {
-            SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date date = new Date(System.currentTimeMillis());
+
+            String[] startTimeSplitter = appointmentTimeConvertor(modifyAppointmentStartTime.getValue()).toString().split(":", 2);
+            String[] endTimeSplitter = appointmentTimeConvertor(modifyAppointmentEndTime.getValue()).toString().split(":", 2);
 
             if (modifyAppointmentTitle.getText().isEmpty()) {
                 System.out.println("Error: Title is Empty");
@@ -209,11 +214,11 @@ public class ModifyAppointment implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            } else if (modifyAppointmentContact.getText().isEmpty()) {
-                System.out.println("Error: Contact is Empty");
+            } else if (modifyAppointmentContactName.getText().isEmpty() || modifyAppointmentContactEmail.getText().isEmpty()) {
+                System.out.println("Error: Contact Info is Empty");
 
                 GridPane conformation = new GridPane();
-                Text conformationInfo = new Text("Contact is Empty");
+                Text conformationInfo = new Text("Contact Info is Empty");
                 conformationInfo.setFont(new Font(20));
                 conformation.getChildren().add(conformationInfo);
                 GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
@@ -237,8 +242,8 @@ public class ModifyAppointment implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            } else if (Integer.parseInt(appointmentTimeConvertor(modifyAppointmentStartTime.getValue()).toString()) < 8 ||
-                    Integer.parseInt(appointmentTimeConvertor(modifyAppointmentEndTime.getValue()).toString()) > 22) {
+            } else if (Integer.parseInt(startTimeSplitter[0]) < 8 ||
+                    Integer.parseInt(endTimeSplitter[0]) > 22) {
                 System.out.println("Error: Start and/or End Time is Outside of Applicable Range");
 
                 GridPane conformation = new GridPane();
@@ -252,8 +257,8 @@ public class ModifyAppointment implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            }else if (appointmentConflictChecker(modifyAppointmentStart.getValue(), modifyAppointmentEnd.getValue(),
-                    LocalTime.parse(modifyAppointmentStartTime.getValue()), LocalTime.parse(modifyAppointmentEndTime.getValue()))) {
+            }else if (appointmentConflictChecker(modifyAppointmentId.getText(), modifyAppointmentStart.getValue(), modifyAppointmentEnd.getValue(),
+                    appointmentTimeConvertor(modifyAppointmentStartTime.getValue()), appointmentTimeConvertor(modifyAppointmentEndTime.getValue()))) {
 
                 GridPane conformation = new GridPane();
                 Text conformationInfo = new Text("Conflict with Appointment Scheduled Time");
@@ -290,14 +295,14 @@ public class ModifyAppointment implements Initializable {
                 selectedAppointment.setDescription(modifyAppointmentDescription.getText());
                 selectedAppointment.setLocation(modifyAppointmentLocation.getText());
                 selectedAppointment.setType(modifyAppointmentType.getText());
-                selectedAppointment.setStart(LocalDateTime.from(modifyAppointmentStart.getValue()));
-                selectedAppointment.setEnd(LocalDateTime.from(modifyAppointmentEnd.getValue()));
-                selectedAppointment.setLast_update(LocalDateTime.parse(dateTimeFormatter.format(date)));
+                selectedAppointment.setStart(LocalDateTime.of(modifyAppointmentStart.getValue(), appointmentTimeConvertor(modifyAppointmentStartTime.getValue())));
+                selectedAppointment.setEnd(LocalDateTime.of(modifyAppointmentEnd.getValue(), appointmentTimeConvertor(modifyAppointmentEndTime.getValue())));
+                selectedAppointment.setLast_update(LocalDateTime.now());
                 selectedAppointment.setLastUpdateBy(currentUser);
-                selectedAppointment.setContactId(Integer.parseInt(modifyAppointmentContact.getText()));
+                selectedAppointment.setContactId(lookupContactByName(modifyAppointmentContactName.getText()).contactId);
 
                 updateAppointment(Integer.parseInt(modifyAppointmentId.getText()), selectedAppointment);
-                appointmentFilter();
+//                appointmentFilter();
             }
         }catch (Exception e){
             e.printStackTrace();

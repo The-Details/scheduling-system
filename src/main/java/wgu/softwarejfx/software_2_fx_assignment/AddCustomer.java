@@ -1,22 +1,16 @@
 package wgu.softwarejfx.software_2_fx_assignment;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -26,16 +20,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Countries.*;
-import static wgu.softwarejfx.software_2_fx_assignment.CustomerRecordsMainMenu.addCustomerButton;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.addCustomer;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
 import static wgu.softwarejfx.software_2_fx_assignment.FirstLevelDivisions.*;
@@ -146,16 +137,14 @@ public class AddCustomer implements Initializable {
                         allCustomers.size() + 1,
                         addCustomerName.getText(),
                         addCustomerAddress.getText() + ", "
-                                + addCustomerCity.getText() + ", "
-                                + addCustomerStateProvince.getValue() + ", "
-                                + addCustomerCountry.getValue(),
+                                + addCustomerCity.getText(),
                         addCustomerZipCode.getText(),
                         addCustomerPhone.getText(),
                         dateTime,
                         currentUser,
                         dateTime,
                         currentUser,
-                        firstDivisionLookup(addCustomerStateProvince.getValue()).divisionId
+                        firstDivisionLookupName(addCustomerStateProvince.getValue()).divisionId
                 );
 
                 addCustomer(newCustomer);
@@ -166,16 +155,14 @@ public class AddCustomer implements Initializable {
                         addCustomerName.getText(),
                         addCustomerAddress.getText() + ", "
                                 + addCustomerBorough.getValue() + ", "
-                                + addCustomerCity.getText() + ", "
-                                + addCustomerStateProvince.getValue() + ", "
-                                + addCustomerCountry.getValue(),
+                                + addCustomerCity.getText(),
                         addCustomerZipCode.getText(),
                         addCustomerPhone.getText(),
                         dateTime,
                         currentUser,
                         dateTime,
                         currentUser,
-                        firstDivisionLookup(addCustomerStateProvince.getValue()).divisionId
+                        firstDivisionLookupName(addCustomerStateProvince.getValue()).divisionId
                 );
 
                 addCustomer(newCustomer);
@@ -186,27 +173,27 @@ public class AddCustomer implements Initializable {
         }
 
     }
-//    @FXML
+
+
     public void countrySpecifier(){
 
         addCustomerCountry.setItems(getAllCountryNames());
         addCustomerBorough.setVisible(false);
 
-        addCustomerCountry.onActionProperty().addListener((observableValue, oldValue, newValue) -> {
+        addCustomerCountry.addEventHandler(ActionEvent.ANY ,e -> {
 
-//            addCustomerCountry.getSelectionModel().getSelectedItem()
-            switch (newValue.toString()) {
+            switch (addCustomerCountry.getValue()) {
                 case "US" -> {
                     addCustomerBorough.setVisible(false);
-                    addCustomerStateProvince.setItems(allStateNames);
+                    addCustomerStateProvince.setItems(getAllStateNames());
                 }
                 case "Canada" -> {
                     addCustomerBorough.setVisible(false);
-                    addCustomerStateProvince.setItems(allCanadianProvinceNames);
+                    addCustomerStateProvince.setItems(getAllCanadianProvinceNames());
                 }
                 case "UK" -> {
                     addCustomerBorough.setVisible(true);
-                    addCustomerStateProvince.setItems(allUKRegionNames);
+                    addCustomerStateProvince.setItems(getAllUKRegionNames());
                     addCustomerBorough.setItems(allBoroughs);
                 }
             }

@@ -88,11 +88,22 @@ public class FirstLevelDivisions {
         }
     }
 
-    public static FirstLevelDivisions firstDivisionLookup(String stateProvinceName){
+    public static FirstLevelDivisions firstDivisionLookupName(String stateProvinceName){
         FirstLevelDivisions stateProvinceData = null;
 
         for (FirstLevelDivisions stateProvincePigeonHole : allFirstLevelDivisions){
             if(stateProvincePigeonHole.divisionName.equals(stateProvinceName)){
+                stateProvinceData = stateProvincePigeonHole;
+            }
+        }
+        return stateProvinceData;
+    }
+
+    public static FirstLevelDivisions firstDivisionLookupById(int divisionId){
+        FirstLevelDivisions stateProvinceData = null;
+
+        for (FirstLevelDivisions stateProvincePigeonHole : allFirstLevelDivisions){
+            if(stateProvincePigeonHole.divisionId == divisionId){
                 stateProvinceData = stateProvincePigeonHole;
             }
         }

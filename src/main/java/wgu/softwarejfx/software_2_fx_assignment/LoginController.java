@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static javafx.geometry.HPos.CENTER;
+import static wgu.softwarejfx.software_2_fx_assignment.SchedulingSystem.closeConnection;
 import static wgu.softwarejfx.software_2_fx_assignment.Users.lookupUserByName;
 import static wgu.softwarejfx.software_2_fx_assignment.Users.validateUserInfo;
 
@@ -143,7 +144,7 @@ public class LoginController implements Initializable {
         Node source = (Node) event.getSource();
         Stage popUp = (Stage) source.getScene().getWindow();
         popUp.close();
-        //Add connection killer here
+        closeConnection();
     }
 
     public void loginSceneChange(MouseEvent event) throws IOException {

@@ -5,13 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +21,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import static javafx.geometry.HPos.CENTER;
+import static wgu.softwarejfx.software_2_fx_assignment.Customers.lookupCustomerById;
 
 public class Appointments {
 
@@ -36,6 +39,17 @@ public class Appointments {
     int customerId;
     int userId;
     int contactId;
+    static Statement insertAppointmentStmt;
+    static String insertAppointmentQuery;
+    static ResultSet insertAppointmentResultSet;
+    static Statement updateAppointmentStmt;
+    static String updateAppointmentQuery;
+    static ResultSet updateAppointmentResultSet;
+    static Statement deleteAppointmentStmt;
+    static String deleteAppointmentQuery;
+    static ResultSet deleteAppointmentResultSet;
+
+
 
 
     public static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
@@ -149,11 +163,21 @@ public class Appointments {
         );
     }
 
-    public static void addAppointment(Appointments newAppointment){
+    public static void addAppointment(Appointments newAppointment) throws SQLException {
         allAppointments.add(newAppointment);
+
+        insertAppointmentStmt = SchedulingSystem.connection.createStatement();
+        insertAppointmentQuery = "Insert INTO appointments " + "values(" + newAppointment.appointmentId
+                + ", " +newAppointment.appointmentId
+                + ", " + newAppointment.title + ", " + newAppointment.description + ", " + newAppointment.location + ", " + newAppointment.type
+                + ", " + newAppointment.start + ", " + newAppointment.end + ", " + newAppointment.createDate + ", " + newAppointment.createdBy
+                + ", " + newAppointment.last_update + ", " + newAppointment.lastUpdateBy + ", " + newAppointment.customerId
+                + ", " + newAppointment.userId + ", " + newAppointment.contactId + ")";
+        insertAppointmentResultSet = insertAppointmentStmt.executeQuery(insertAppointmentQuery);
+
     }
 
-    public static void updateAppointment(int appointmentId, Appointments selectedAppointment){
+    public static void updateAppointment(int appointmentId, Appointments selectedAppointment) throws SQLException {
         for(Appointments screener : allAppointments){
             if(screener.getAppointmentId() == appointmentId){
                 screener.setTitle(selectedAppointment.getTitle());
@@ -168,10 +192,64 @@ public class Appointments {
                 screener.setLastUpdateBy(selectedAppointment.getLastUpdateBy());
             }
         }
+
+        updateAppointmentStmt = SchedulingSystem.connection.createStatement();
+        updateAppointmentQuery = "UPDATE appointments "
+                + "SET Title = "
+                + selectedAppointment.title
+                + ", " + "Description = "
+                + selectedAppointment.description
+                + ", " + "Location = "
+                + selectedAppointment.location
+                + ", " + "Type = "
+                +  selectedAppointment.type
+                + ", " + "Start = "
+                + selectedAppointment.start
+                + ", " + "End = "
+                + selectedAppointment.end
+                + ", " + "Create_Date = "
+                + selectedAppointment.createDate
+                + ", " + "Created_By = "
+                + selectedAppointment.createdBy
+                + ", " + "Last_Update = "
+                + selectedAppointment.last_update
+                + ", " + "Title = "
+                + selectedAppointment.lastUpdateBy
+                + ", " + "Customer_ID = "
+                + selectedAppointment.customerId
+                + ", " + "User_ID = "
+                + selectedAppointment.userId
+                + ", " + "Contact_ID = "
+                + selectedAppointment.contactId
+                + "WHERE appointment_id = "
+                + selectedAppointment.appointmentId;
+        updateAppointmentResultSet = updateAppointmentStmt.executeQuery(updateAppointmentQuery);
+
+
     }
 
     public static void deleteAppointment(Appointments selectedAppointment){
         allAppointments.remove(selectedAppointment);
+        januaryAppointments.remove(selectedAppointment);
+        februaryAppointments.remove(selectedAppointment);
+        marchAppointments.remove(selectedAppointment);
+        aprilAppointments.remove(selectedAppointment);
+        mayAppointments.remove(selectedAppointment);
+        juneAppointments.remove(selectedAppointment);
+        julyAppointments.remove(selectedAppointment);
+        augustAppointments.remove(selectedAppointment);
+        octoberAppointments.remove(selectedAppointment);
+        novemberAppointments.remove(selectedAppointment);
+        decemberAppointments.remove(selectedAppointment);
+
+
+        try {
+            deleteAppointmentStmt = SchedulingSystem.connection.createStatement();
+            deleteAppointmentQuery = "DELETE FROM appointments" + "WHERE appointment_id = " + selectedAppointment.appointmentId;
+            deleteAppointmentResultSet = deleteAppointmentStmt.executeQuery(deleteAppointmentQuery);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public static ObservableList<Appointments> lookupAppointmentByCustomerId(int customerId){
@@ -461,10 +539,10 @@ public class Appointments {
     public static LocalTime appointmentTimeConvertor(String standardTime){
         LocalTime universalTime = null;
 
-        CharSequence amCharacterCage = "am";
-        CharSequence pmCharacterCage = "pm";
+        CharSequence amCharacterCage = "AM";
+        CharSequence pmCharacterCage = "PM";
 
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+//        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String[] standardTimeSplitter = standardTime.split(":", 2);
 
         if(standardTime.contains(amCharacterCage)){
@@ -482,92 +560,139 @@ public class Appointments {
         return universalTime;
     }
 
-    public static boolean appointmentConflictChecker(LocalDate appointmentStartDate, LocalDate appointmentEndDate,
+
+    public static String appointmentTimeReverser(String utcTime){
+        String[] utcTimeSplitter = utcTime.split(":", 2);
+
+        int utcTimeCage = Integer.parseInt(utcTimeSplitter[0]);
+
+        String reversedTime;
+
+        if(utcTimeCage <= 12){
+            reversedTime = utcTimeCage + ":00AM";
+        }
+        else {
+            reversedTime = (utcTimeCage - 12) + ":00PM";
+        }
+        return reversedTime;
+    }
+
+    public static boolean appointmentConflictChecker(String appointmentId, LocalDate appointmentStartDate, LocalDate appointmentEndDate,
                                                   LocalTime appointmentStartTime, LocalTime appointmentEndTime){
 
         boolean isThereAConflict = false;
 
-        for (Appointments appointmentToCompare : allAppointments){
-           if (appointmentToCompare.getStart().toLocalDate() == appointmentStartDate){
-               isThereAConflict = true;
+        try {
 
-               GridPane conformation = new GridPane();
-               Text conformationInfo = new Text("Conflict on: " + appointmentStartDate);
-               conformationInfo.setFont(new Font(20));
-               conformation.getChildren().add(conformationInfo);
-               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
-               Stage popUp = new Stage();
-               Scene conformationScene = new Scene(conformation);
-               popUp.setTitle("Error");
-               popUp.setScene(conformationScene);
-               popUp.sizeToScene();
-               popUp.show();
-           }
-           if (appointmentToCompare.getStart().toLocalTime() == appointmentStartTime){
-               isThereAConflict = true;
+            int customerIdToCompare = lookupAppointmentById(Integer.parseInt(appointmentId)).customerId;
 
-               GridPane conformation = new GridPane();
-               Text conformationInfo = new Text("Conflict at: " + appointmentStartTime);
-               conformationInfo.setFont(new Font(20));
-               conformation.getChildren().add(conformationInfo);
-               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
-               Stage popUp = new Stage();
-               Scene conformationScene = new Scene(conformation);
-               popUp.setTitle("Error");
-               popUp.setScene(conformationScene);
-               popUp.sizeToScene();
-               popUp.show();
-           }
-           if (appointmentToCompare.getEnd().toLocalDate() == appointmentEndDate){
-               isThereAConflict = true;
+            for (Appointments appointmentToCompare : allAppointments) {
+                if ((appointmentToCompare.getStart().toLocalDate() == appointmentStartDate) && (appointmentToCompare.getStart().toLocalTime().toString().equals(appointmentStartTime.toString()))) {
 
-               GridPane conformation = new GridPane();
-               Text conformationInfo = new Text("Conflict on: " + appointmentEndDate);
-               conformationInfo.setFont(new Font(20));
-               conformation.getChildren().add(conformationInfo);
-               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
-               Stage popUp = new Stage();
-               Scene conformationScene = new Scene(conformation);
-               popUp.setTitle("Error");
-               popUp.setScene(conformationScene);
-               popUp.sizeToScene();
-               popUp.show();
-           }
-           if (appointmentToCompare.getEnd().toLocalTime() == appointmentEndTime){
-               isThereAConflict = true;
+                    if(!(appointmentToCompare.appointmentId == Integer.parseInt(appointmentId))
+                            && !(appointmentToCompare.customerId == customerIdToCompare)){
+                        isThereAConflict = true;
+                    }
 
-               GridPane conformation = new GridPane();
-               Text conformationInfo = new Text("Conflict at: " + appointmentEndTime);
-               conformationInfo.setFont(new Font(20));
-               conformation.getChildren().add(conformationInfo);
-               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
-               Stage popUp = new Stage();
-               Scene conformationScene = new Scene(conformation);
-               popUp.setTitle("Error");
-               popUp.setScene(conformationScene);
-               popUp.sizeToScene();
-               popUp.show();
-           }
-           if (appointmentStartDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) || appointmentStartDate.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
-               isThereAConflict = true;
+                    GridPane conformation = new GridPane();
+                    Text conformationInfo = new Text("Conflict on: " + appointmentStartDate + " at " + appointmentStartTime);
+                    conformationInfo.setFont(new Font(20));
+                    conformation.getChildren().add(conformationInfo);
+                    GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                    Stage popUp = new Stage();
+                    Scene conformationScene = new Scene(conformation);
+                    popUp.setTitle("Error");
+                    popUp.setScene(conformationScene);
+                    popUp.sizeToScene();
+                    popUp.show();
+                }
 
-               GridPane conformation = new GridPane();
-               Text conformationInfo = new Text("Weekend Conflict on: " + appointmentStartDate);
-               conformationInfo.setFont(new Font(20));
-               conformation.getChildren().add(conformationInfo);
-               GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
-               Stage popUp = new Stage();
-               Scene conformationScene = new Scene(conformation);
-               popUp.setTitle("Error");
-               popUp.setScene(conformationScene);
-               popUp.sizeToScene();
-               popUp.show();
-           }
-            if (appointmentEndDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) || appointmentEndDate.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
-                isThereAConflict = true;
+                if ((appointmentToCompare.getEnd().toLocalDate() == appointmentEndDate) && (appointmentToCompare.getEnd().toLocalTime().toString().equals(appointmentEndTime.toString()))) {
 
+                    if((appointmentToCompare.appointmentId != Integer.parseInt(appointmentId))
+                            && (appointmentToCompare.customerId != customerIdToCompare)){
+                        isThereAConflict = true;
+                    }
+
+                    GridPane conformation = new GridPane();
+                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate);
+                    conformationInfo.setFont(new Font(20));
+                    conformation.getChildren().add(conformationInfo);
+                    GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                    Stage popUp = new Stage();
+                    Scene conformationScene = new Scene(conformation);
+                    popUp.setTitle("Error");
+                    popUp.setScene(conformationScene);
+                    popUp.sizeToScene();
+                    popUp.show();
+                }
+
+                if (appointmentStartDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) || appointmentStartDate.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+
+                    if((appointmentToCompare.appointmentId != Integer.parseInt(appointmentId))
+                            && (appointmentToCompare.customerId != customerIdToCompare)){
+                        isThereAConflict = true;
+                    }
+
+                    GridPane conformation = new GridPane();
+                    Text conformationInfo = new Text("Weekend Conflict on: " + appointmentStartDate);
+                    conformationInfo.setFont(new Font(20));
+                    conformation.getChildren().add(conformationInfo);
+                    GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                    Stage popUp = new Stage();
+                    Scene conformationScene = new Scene(conformation);
+                    popUp.setTitle("Error");
+                    popUp.setScene(conformationScene);
+                    popUp.sizeToScene();
+                    popUp.show();
+                }
+                if ((appointmentEndDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) || appointmentEndDate.getDayOfWeek().equals(DayOfWeek.SUNDAY))) {
+                    if((appointmentToCompare.appointmentId != Integer.parseInt(appointmentId))
+                            && (appointmentToCompare.customerId != customerIdToCompare)){
+                        isThereAConflict = true;
+                    }
+
+                    GridPane conformation = new GridPane();
+                    Text conformationInfo = new Text("Weekend Conflict on: " + appointmentEndDate);
+                    conformationInfo.setFont(new Font(20));
+                    conformation.getChildren().add(conformationInfo);
+                    GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                    Stage popUp = new Stage();
+                    Scene conformationScene = new Scene(conformation);
+                    popUp.setTitle("Error");
+                    popUp.setScene(conformationScene);
+                    popUp.sizeToScene();
+                    popUp.show();
+                }
+
+            }
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isThereAConflict;
+    }
+
+
+    public static void appointmentReminder(){
+
+        for(Appointments appointmentCage : getAllAppointments()){
+            String[] startTimeSplitter = appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()).split(":", 2);
+
+            int startTimeJoin = Integer.parseInt(startTimeSplitter[0] + startTimeSplitter[1]);
+
+            int startTimeFifteenMinTil = startTimeJoin - 15;
+
+            String[] nowTimeSplitter = LocalTime.now().toString().split(":", 3);
+
+            int nowTimeJoin = Integer.parseInt(nowTimeSplitter[0] + nowTimeSplitter[1]);
+
+            int notTimeFifteenMinTil = nowTimeJoin - 15;
+
+            if(startTimeFifteenMinTil == notTimeFifteenMinTil){
                 GridPane conformation = new GridPane();
-                Text conformationInfo = new Text("Weekend Conflict on: " + appointmentEndDate);
+                Text conformationInfo = new Text("Appointment with: " + lookupCustomerById(appointmentCage.customerId).customerName + " coming up in 15 minutes.");
                 conformationInfo.setFont(new Font(20));
                 conformation.getChildren().add(conformationInfo);
                 GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
@@ -580,12 +705,6 @@ public class Appointments {
             }
 
         }
-
-        return isThereAConflict;
-    }
-
-    public static void appointmentReminder(){
-
 
     }
 

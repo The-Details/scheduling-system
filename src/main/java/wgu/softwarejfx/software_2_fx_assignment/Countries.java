@@ -37,6 +37,18 @@ public class Countries {
         return countryFound;
     }
 
+    public static Countries countryLookupById(int countryToBeFound){
+        Countries countryFound = null;
+
+        for (Countries countriesExamination : allCountries){
+            if(countriesExamination.countryId == countryToBeFound){
+                countryFound = countriesExamination;
+            }
+        }
+
+        return countryFound;
+    }
+
     public static void addCountry(Countries newCountry){
         allCountries.add(newCountry);
     }

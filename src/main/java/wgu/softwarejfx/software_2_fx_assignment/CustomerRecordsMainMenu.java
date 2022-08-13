@@ -1,6 +1,7 @@
 package wgu.softwarejfx.software_2_fx_assignment;
 
-import javafx.event.ActionEvent;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,8 +30,9 @@ import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.deleteCustomer;
+import static wgu.softwarejfx.software_2_fx_assignment.ModifyAppointment.currentlySelectedAppointment;
 import static wgu.softwarejfx.software_2_fx_assignment.ModifyCustomer.currentlySelectedCustomer;
-//import static wgu.softwarejfx.software_2_fx_assignment.SchedulingSystem.closeConnection;
+import static wgu.softwarejfx.software_2_fx_assignment.SchedulingSystem.closeConnection;
 
 public class CustomerRecordsMainMenu implements Initializable {
 
@@ -41,7 +44,7 @@ public class CustomerRecordsMainMenu implements Initializable {
     @FXML
     Button addAppointmentButton;
     @FXML
-    static Button addCustomerButton;
+    Button addCustomerButton;
     @FXML
     Button modifyCustomerButton;
     @FXML
@@ -1602,6 +1605,10 @@ public class CustomerRecordsMainMenu implements Initializable {
     @FXML
     TableColumn<Appointments, String> decemberAppointmentDescriptionCol4;
 
+    Timeline timeline = new Timeline(
+        new KeyFrame(Duration.seconds(1), e -> appointmentReminder())
+    );
+
 
     // setting up customer cols
     public void customerTableSetup (){
@@ -2632,6 +2639,261 @@ public class CustomerRecordsMainMenu implements Initializable {
                 decemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
                 decemberWeek4TableView.getSelectionModel().getSelectedItem() != null )
         ){
+            if (januaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    januaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    januaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    januaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    januaryWeek4TableView.getSelectionModel().getSelectedItem() != null){
+
+                if(januaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = januaryTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (januaryWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = januaryWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (januaryWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = januaryWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (januaryWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = januaryWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (januaryWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = januaryWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+
+            }
+            else if (februaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    februaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    februaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    februaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    februaryWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+
+                if(februaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = februaryTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (februaryWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = februaryWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (februaryWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = februaryWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (februaryWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = februaryWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (februaryWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = februaryWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (marchTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    marchWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    marchWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    marchWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    marchWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(marchTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = marchTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (marchWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = marchWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (marchWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = marchWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (marchWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = marchWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (marchWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = marchWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (aprilTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    aprilWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    aprilWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    aprilWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    aprilWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                if(aprilTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = aprilTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (aprilWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = aprilWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (aprilWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = aprilWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (aprilWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = aprilWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (aprilWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = aprilWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (mayTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    mayWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    mayWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    mayWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    mayWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(mayTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = mayTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (mayWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = mayWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (mayWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = mayWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (mayWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = mayWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (mayWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = mayWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (juneTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    juneWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    juneWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    juneWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    juneWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(juneTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = juneTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (juneWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = juneWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (juneWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = juneWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (juneWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = juneWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (juneWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = juneWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (julyTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    julyWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    julyWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    julyWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    julyWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                if(julyTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = julyTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (julyWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = julyWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (julyWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = julyWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (julyWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = julyWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (julyWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = julyWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (augustTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    augustWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    augustWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    augustWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    augustWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(augustTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = augustTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (augustWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = augustWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (augustWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = augustWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (augustWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = augustWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (augustWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = augustWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (septemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    septemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    septemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    septemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    septemberWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(septemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = januaryTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (septemberWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = septemberWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (septemberWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = septemberWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (septemberWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = septemberWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (septemberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = septemberWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }else if (octoberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    octoberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    octoberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    octoberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    octoberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                if(octoberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = octoberTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (octoberWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = octoberWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (octoberWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = octoberWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (octoberWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = octoberWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (octoberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = octoberWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (novemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    novemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    novemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    novemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    novemberWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(novemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = novemberTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (novemberWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = novemberWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (novemberWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = novemberWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (novemberWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = novemberWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (novemberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = novemberWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (decemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    decemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    decemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    decemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    decemberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                if(decemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = decemberTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (decemberWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = decemberWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (decemberWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = decemberWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (decemberWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = decemberWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (decemberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    currentlySelectedAppointment = decemberWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+
             Parent root = FXMLLoader.load(Objects.requireNonNull(CustomerRecordsMainMenu.class.getResource("modify-appointment.fxml")));
             Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -2966,12 +3228,14 @@ public class CustomerRecordsMainMenu implements Initializable {
         Node source = (Node) event.getSource();
         Stage popUp = (Stage) source.getScene().getWindow();
         popUp.close();
-//        closeConnection();
+        closeConnection();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerTableSetup();
         appointmentTableSetup();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 }

@@ -3,6 +3,9 @@ package wgu.softwarejfx.software_2_fx_assignment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.getAllAppointments;
@@ -20,6 +23,15 @@ public class Customers {
     LocalDateTime lastUpdate;
     String lastUpdateBy;
     int divisionId;
+    static Statement insertCustomerStmt;
+    static String insertCustomerQuery;
+    static ResultSet insertCustomerResultSet;
+    static Statement updateCustomerStmt;
+    static String updateCustomerQuery;
+    static ResultSet updateCustomerResultSet;
+    static Statement deleteCustomerStmt;
+    static String deleteCustomerQuery;
+    static ResultSet deleteCustomerResultSet;
 
     public static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
 
@@ -36,11 +48,18 @@ public class Customers {
         this.divisionId = divisionId;
     }
 
-    public static void addCustomer(Customers newCustomer){
+    public static void addCustomer(Customers newCustomer) throws SQLException {
         allCustomers.add(newCustomer);
+
+        insertCustomerStmt = SchedulingSystem.connection.createStatement();
+        insertCustomerQuery = "Insert INTO appointments " + "values(" + newCustomer.customerId
+                + ", " + newCustomer.customerName + ", " + newCustomer.address + ", " + newCustomer.zipCode + ", " + newCustomer.phoneNumber
+                + ", " + newCustomer.createDate + ", " + newCustomer.createdBy
+                + ", " + newCustomer.lastUpdate + ", " + newCustomer.lastUpdateBy + ", " + newCustomer.divisionId + ")";
+        insertCustomerResultSet = insertCustomerStmt.executeQuery(insertCustomerQuery);
     }
 
-    public static void updateCustomer(int customerId, Customers customerToUpdate){
+    public static void updateCustomer(int customerId, Customers customerToUpdate) throws SQLException {
         for(Customers waitingRoom : allCustomers){
             if(waitingRoom.getCustomerId() == customerId){
                 waitingRoom.setCustomerName(customerToUpdate.getCustomerName());
@@ -54,6 +73,28 @@ public class Customers {
                 waitingRoom.setDivisionId(customerToUpdate.getDivisionId());
             }
         }
+
+        updateCustomerStmt = SchedulingSystem.connection.createStatement();
+        updateCustomerQuery = "UPDATE customers "
+                + "SET Customer_Name = "
+                + customerToUpdate.customerName
+                + ", " + "Address = "
+                + customerToUpdate.address
+                + ", " + "Postal_Code = "
+                + customerToUpdate.zipCode
+                + ", " + "Create_Date = "
+                + customerToUpdate.createDate
+                + ", " + "Created_By = "
+                + customerToUpdate.createdBy
+                + ", " + "Last_Update = "
+                + customerToUpdate.lastUpdate
+                + ", " + "Title = "
+                + customerToUpdate.lastUpdateBy
+                + ", " + "Division_ID = "
+                + customerToUpdate.divisionId
+                + "WHERE customer_id = "
+                + customerToUpdate.customerId;
+        updateCustomerResultSet = updateCustomerStmt.executeQuery(updateCustomerQuery);
     }
 
     public static void deleteCustomer(Customers selectedCustomer){
@@ -61,6 +102,14 @@ public class Customers {
 
         for (Appointments appointmentToDelete : lookupAppointmentByCustomerId(selectedCustomer.getCustomerId())){
             getAllAppointments().remove(appointmentToDelete);
+        }
+
+        try {
+            deleteCustomerStmt = SchedulingSystem.connection.createStatement();
+            deleteCustomerQuery = "DELETE customers " + "WHERE customer_id = " + selectedCustomer.customerId;
+            deleteCustomerResultSet = deleteCustomerStmt.executeQuery(deleteCustomerQuery);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
