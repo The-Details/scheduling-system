@@ -29,6 +29,9 @@ import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUs
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUserId;
 import static wgu.softwarejfx.software_2_fx_assignment.ModifyCustomer.currentlySelectedCustomer;
 
+/**
+ * This class manipulates new appointment data
+ */
 public class AddAppointment implements Initializable {
 
     @FXML
@@ -59,6 +62,9 @@ public class AddAppointment implements Initializable {
     Button cancelNewAppointmentButton;
 
 
+    /**
+     * This method set up the appointment form to collect new data
+     */
     public void appointmentFieldSetup(){
         addAppointmentId.setDisable(true);
         addAppointmentId.setPromptText("Auto Generated");
@@ -68,6 +74,9 @@ public class AddAppointment implements Initializable {
 
     }
 
+    /**
+     * This method collects new appointment data and spots errors in the data on submission
+     */
     public void appointmentNewData(){
 
         try {

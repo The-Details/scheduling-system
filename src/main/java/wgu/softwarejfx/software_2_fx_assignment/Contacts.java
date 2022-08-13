@@ -4,6 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
 
+/**
+ * This class serves as a basis for manipulating contact data
+ */
 public class Contacts {
     
     int contactId;
@@ -19,6 +22,15 @@ public class Contacts {
      this.email = email;
     }
 
+    /**
+     *
+     * @param contactName
+     * A string of the cotact name is collect from an add customer form textfield
+     * @param email
+     * A string of the cotact email is collect from an add customer form textfield
+     * @return
+     * The data collect is used to make a new contact
+     */
     public static Contacts newContact(String contactName, String email){
         Contacts contactInfo = new Contacts(allContacts.size() + 1, contactName, email);
         allContacts.add(contactInfo);
@@ -26,6 +38,13 @@ public class Contacts {
         return contactInfo;
     }
 
+    /**
+     *
+     * @param contactId
+     * This method is used find a contact using the associated contact id
+     * @return
+     * A contact is returned
+     */
     public static Contacts lookupContactById(int contactId){
         Contacts foundContact = null;
         for(Contacts contactCage: allContacts){
@@ -36,6 +55,13 @@ public class Contacts {
         return foundContact;
     }
 
+    /**
+     *
+     * @param contactName
+     * This method is used find a contact using the associated contact name
+     * @return
+     * A contact is returned
+     */
     public static Contacts lookupContactByName(String contactName){
         Contacts foundContact = null;
         for(Contacts contactCage: allContacts){
@@ -54,10 +80,7 @@ public class Contacts {
        this.contactId = id;
     }
 
-    /**
-     *
-     * @param name
-     */
+
     private void setContactName(String name){
         this.contactName = name;
     }

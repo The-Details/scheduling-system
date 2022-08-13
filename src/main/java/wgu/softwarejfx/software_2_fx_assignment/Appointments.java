@@ -19,10 +19,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.lookupCustomerById;
 
+/**
+ * This class serves as a basis for manipulating appointment data
+ */
 public class Appointments {
 
     int appointmentId;
@@ -135,6 +139,9 @@ public class Appointments {
         this.contactId = contactId;
     }
 
+    /**
+     * This method add standard time strings to an array for appointment manipulation.
+     */
     public static void setAppointmentTimes(){
         appointmentTimes.addAll("12:00",
                 "01:00",
@@ -163,6 +170,12 @@ public class Appointments {
         );
     }
 
+    /**
+     *
+     * @param newAppointment
+     * The newAppointment is the collection of new data from the textfields in the new appointment form
+     * @throws SQLException
+     */
     public static void addAppointment(Appointments newAppointment) throws SQLException {
         allAppointments.add(newAppointment);
 
@@ -177,6 +190,14 @@ public class Appointments {
 
     }
 
+    /**
+     *
+     * @param appointmentId
+     * This method takes the appointmentId and uses it to find the pre-existing matching appointment to be updated.
+     * @param selectedAppointment
+     * The selectedAppointment is the updated data from the modify appointment form to be useed to alter the pre-existing appointment information.
+     * @throws SQLException
+     */
     public static void updateAppointment(int appointmentId, Appointments selectedAppointment) throws SQLException {
         for(Appointments screener : allAppointments){
             if(screener.getAppointmentId() == appointmentId){
@@ -228,6 +249,11 @@ public class Appointments {
 
     }
 
+    /**
+     *
+     * @param selectedAppointment
+     * In this method the selectedAppointment will be used to remove the appointment from all tables and the database
+     */
     public static void deleteAppointment(Appointments selectedAppointment){
         allAppointments.remove(selectedAppointment);
         januaryAppointments.remove(selectedAppointment);
@@ -252,6 +278,13 @@ public class Appointments {
         }
     }
 
+    /**
+     *
+     * @param customerId
+     * This method is used find appointments using the associated customer id
+     * @return
+     * An array of appointments is returned
+     */
     public static ObservableList<Appointments> lookupAppointmentByCustomerId(int customerId){
         ObservableList<Appointments> verifiedAppointment = FXCollections.observableArrayList();
             for(Appointments screener : allAppointments){
@@ -262,6 +295,13 @@ public class Appointments {
             return verifiedAppointment;
     }
 
+    /**
+     *
+     * @param appointmentId
+     * This method is used find appointments using the associated appointment id
+     * @return
+     * An array of appointments is returned
+     */
     public static Appointments lookupAppointmentById(int appointmentId){
         Appointments verifiedAppointment = null;
         for(Appointments screener : allAppointments){
@@ -271,10 +311,19 @@ public class Appointments {
         }
         return verifiedAppointment;
     }
+
+    /**
+     *
+     * @return
+     * This method return all appointments
+     */
     public static ObservableList<Appointments> getAllAppointments(){
         return allAppointments;
     }
 
+    /**
+     * This method takes all the appointments and filters them into there respective months
+     */
     public static void appointmentFilter(){
 
         for (Appointments monthFilter : getAllAppointments()){
@@ -536,6 +585,12 @@ public class Appointments {
         }
     }
 
+    /**
+     *
+     * @param standardTime
+     * This method takes standard time element (PST, EST) and converts them to universal time (UTC)
+     * @return
+     */
     public static LocalTime appointmentTimeConvertor(String standardTime){
         LocalTime universalTime = null;
 
@@ -560,7 +615,12 @@ public class Appointments {
         return universalTime;
     }
 
-
+    /**
+     *
+     * @param utcTime
+     * This method takes universal time and converts it to standard time (EST, PST)
+     * @return
+     */
     public static String appointmentTimeReverser(String utcTime){
         String[] utcTimeSplitter = utcTime.split(":", 2);
 
@@ -577,6 +637,16 @@ public class Appointments {
         return reversedTime;
     }
 
+    /**
+     *
+     * @param appointmentId
+     * @param appointmentStartDate
+     * @param appointmentEndDate
+     * @param appointmentStartTime
+     * @param appointmentEndTime
+     * This method uses the appointment elements to determine whether or not there is a conflict in the appointment scheduling
+     * @return
+     */
     public static boolean appointmentConflictChecker(String appointmentId, LocalDate appointmentStartDate, LocalDate appointmentEndDate,
                                                   LocalTime appointmentStartTime, LocalTime appointmentEndTime){
 
@@ -675,10 +745,13 @@ public class Appointments {
     }
 
 
+    /**
+     * This method reminders the current user that there is an appointment coming up 15 minutes from the current time
+     */
     public static void appointmentReminder(){
 
         for(Appointments appointmentCage : getAllAppointments()){
-            String[] startTimeSplitter = appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()).split(":", 2);
+            String[] startTimeSplitter = appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()).split(":|AM|PM", 3);
 
             int startTimeJoin = Integer.parseInt(startTimeSplitter[0] + startTimeSplitter[1]);
 
@@ -707,6 +780,220 @@ public class Appointments {
         }
 
     }
+
+    public static String appointmentTotalDataByMonth(){
+        String totals = null;
+
+        String janCustomerAppointments = String.valueOf(januaryAppointments.size());
+        String febCustomerAppointments = String.valueOf(februaryAppointments.size());
+        String marCustomerAppointments = String.valueOf(marchAppointments.size());
+        String aprCustomerAppointments = String.valueOf(aprilAppointments.size());
+        String mayCustomerAppointments = String.valueOf(mayAppointments.size());
+        String junCustomerAppointments = String.valueOf(juneAppointments.size());
+        String julCustomerAppointments = String.valueOf(julyAppointments.size());
+        String augCustomerAppointments = String.valueOf(augustAppointments.size());
+        String sepCustomerAppointments = String.valueOf(septemberAppointments.size());
+        String octCustomerAppointments = String.valueOf(octoberAppointments.size());
+        String novCustomerAppointments = String.valueOf(novemberAppointments.size());
+        String decCustomerAppointments = String.valueOf(decemberAppointments.size());
+
+        String[] janTypes = {""};
+        int janTypeCount = 0;
+
+        for (Appointments typeCage : januaryAppointments){
+            for (String typeCheck : janTypes) {
+                if (!(typeCheck.equals(typeCage.type)) && !(typeCheck.equals(""))) {
+                    janTypes[janTypeCount] = typeCage.type;
+                    janTypeCount++;
+                }
+            }
+        }
+
+        String[] febTypes = {""};
+        int febTypeCount = 0;
+
+        for (Appointments febTypeCage : februaryAppointments){
+            for (String febTypeCheck : febTypes) {
+                if (!(febTypeCheck.equals(febTypeCage.type)) && !(febTypeCheck.equals(""))) {
+                    febTypes[febTypeCount] = febTypeCage.type;
+                    febTypeCount++;
+                }
+            }
+        }
+
+        String[] marTypes = {""};
+        int marTypeCount = 0;
+
+        for (Appointments marTypeCage : marchAppointments){
+            for (String marTypeCheck : marTypes) {
+                if (!(marTypeCheck.equals(marTypeCage.type)) && !(marTypeCheck.equals(""))) {
+                    marTypes[marTypeCount] = marTypeCage.type;
+                    marTypeCount++;
+                }
+            }
+        }
+
+        String[] aprTypes = {""};
+        int aprTypeCount = 0;
+
+        for (Appointments aprTypeCage : aprilAppointments){
+            for (String aprTypeCheck : aprTypes) {
+                if (!(aprTypeCheck.equals(aprTypeCage.type)) && !(aprTypeCheck.equals(""))) {
+                    aprTypes[aprTypeCount] = aprTypeCage.type;
+                    aprTypeCount++;
+                }
+            }
+        }
+
+        String[] mayTypes = {""};
+        int mayTypeCount = 0;
+
+        for (Appointments mayTypeCage : mayAppointments){
+            for (String mayTypeCheck : mayTypes) {
+                if (!(mayTypeCheck.equals(mayTypeCage.type)) && !(mayTypeCheck.equals(""))) {
+                    mayTypes[mayTypeCount] = mayTypeCage.type;
+                    mayTypeCount++;
+                }
+            }
+        }
+
+        String[] junTypes = {""};
+        int junTypeCount = 0;
+
+        for (Appointments junTypeCage : juneAppointments){
+            for (String junTypeCheck : junTypes) {
+                if (!(junTypeCheck.equals(junTypeCage.type)) && !(junTypeCheck.equals(""))) {
+                    junTypes[junTypeCount] = junTypeCage.type;
+                    junTypeCount++;
+                }
+            }
+        }
+
+        String[] julTypes = {""};
+        int julTypeCount = 0;
+
+        for (Appointments julTypeCage : julyAppointments){
+            for (String julTypeCheck : julTypes) {
+                if (!(julTypeCheck.equals(julTypeCage.type)) && !(julTypeCheck.equals(""))) {
+                    julTypes[julTypeCount] = julTypeCage.type;
+                    julTypeCount++;
+                }
+            }
+        }
+
+        String[] augTypes = {""};
+        int augTypeCount = 0;
+
+        for (Appointments augTypeCage : augustAppointments){
+            for (String augTypeCheck : augTypes) {
+                if (!(augTypeCheck.equals(augTypeCage.type)) && !(augTypeCheck.equals(""))) {
+                    augTypes[augTypeCount] = augTypeCage.type;
+                    augTypeCount++;
+                }
+            }
+        }
+
+        String[] sepTypes = {""};
+        int sepTypeCount = 0;
+
+        for (Appointments sepTypeCage : septemberAppointments){
+            for (String sepTypeCheck : sepTypes) {
+                if (!(sepTypeCheck.equals(sepTypeCage.type)) && !(sepTypeCheck.equals(""))) {
+                    sepTypes[sepTypeCount] = sepTypeCage.type;
+                    sepTypeCount++;
+                }
+            }
+        }
+
+        String[] octTypes = {""};
+        int octTypeCount = 0;
+
+        for (Appointments octTypeCage : octoberAppointments){
+            for (String octTypeCheck : octTypes) {
+                if (!(octTypeCheck.equals(octTypeCage.type)) && !(octTypeCheck.equals(""))) {
+                    octTypes[octTypeCount] = octTypeCage.type;
+                    octTypeCount++;
+                }
+            }
+        }
+
+
+        String[] novTypes = {""};
+        int novTypeCount = 0;
+
+        for (Appointments novTypeCage : novemberAppointments){
+            for (String novTypeCheck : novTypes) {
+                if (!(novTypeCheck.equals(novTypeCage.type)) && !(novTypeCheck.equals(""))) {
+                    novTypes[novTypeCount] = novTypeCage.type;
+                    novTypeCount++;
+                }
+            }
+        }
+
+        String[] decTypes = {""};
+        int decTypeCount = 0;
+
+        for (Appointments decTypeCage : decemberAppointments){
+            for (String decTypeCheck : decTypes) {
+                if (!(decTypeCheck.equals(decTypeCage.type)) && !(decTypeCheck.equals(""))) {
+                    decTypes[decTypeCount] = decTypeCage.type;
+                    decTypeCount++;
+                }
+            }
+        }
+
+        totals = "Jan: \n" +
+                "  - Types: " + Arrays.toString(janTypes) + "\n" +
+                "  - Total: " + janCustomerAppointments + "\n" +
+//                "\n" +
+                "Feb: \n" +
+                "  - Types: " + Arrays.toString(febTypes) + "\n" +
+                "  - Total: " + febCustomerAppointments + "\n" +
+//                "\n" +
+                "Mar: \n" +
+                "  - Types: " + Arrays.toString(marTypes) + "\n" +
+                "  - Total: " + marCustomerAppointments + "\n" +
+//                "\n" +
+                "Apr: \n" +
+                "  - Types: " + Arrays.toString(aprTypes) + "\n" +
+                "  - Total: " + aprCustomerAppointments + "\n" +
+//                "\n" +
+                "May: \n" +
+                "  - Types: " + Arrays.toString(mayTypes) + "\n" +
+                "  - Total: " + mayCustomerAppointments + "\n" +
+//                "\n" +
+                "Jun: \n" +
+                "  - Types: " + Arrays.toString(junTypes) + "\n" +
+                "  - Total: " + junCustomerAppointments + "\n" +
+//                "\n" +
+                "Jul: \n" +
+                "  - Types: " + Arrays.toString(julTypes) + "\n" +
+                "  - Total: " + julCustomerAppointments + "\n" +
+//                "\n" +
+                "Aug: \n" +
+                "  - Types: " + Arrays.toString(augTypes) + "\n" +
+                "  - Total: " + augCustomerAppointments + "\n" +
+//                "\n" +
+                "Sep: \n" +
+                "  - Types: " + Arrays.toString(sepTypes) + "\n" +
+                "  - Total: " + sepCustomerAppointments + "\n" +
+//                "\n" +
+                "Oct: \n" +
+                "  - Types: " + Arrays.toString(octTypes) + "\n" +
+                "  - Total: " + octCustomerAppointments + "\n" +
+//                "\n" +
+                "Nov: \n" +
+                "  - Types: " + Arrays.toString(novTypes) + "\n" +
+                "  - Total: " + novCustomerAppointments + "\n" +
+//                "\n" +
+                "Dec: \n" +
+                "  - Types: " + Arrays.toString(decTypes) + "\n" +
+                "  - Total: " + decCustomerAppointments + "\n" +
+                "\n";
+
+        return totals;
+    }
+
 
     public void setAppointmentId(int appointmentId) {
         this.appointmentId = appointmentId;

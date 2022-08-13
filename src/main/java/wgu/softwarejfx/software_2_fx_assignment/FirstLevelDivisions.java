@@ -5,6 +5,9 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 
+/**
+ * This class serves as a basis for manipulating FirstLevelDivisions data
+ */
 public class FirstLevelDivisions {
 
     int divisionId;
@@ -35,6 +38,9 @@ public class FirstLevelDivisions {
         this.countryId = countryId;
     }
 
+    /**
+     * This method add United Kingdom borough strings to an array for customer manipulation.
+     */
     public static void setAllBoroughs(){
         allBoroughs.addAll(
                 "Barking and Dagenham",
@@ -73,6 +79,9 @@ public class FirstLevelDivisions {
         );
     }
 
+    /**
+     * This method filters country's first division data into corresponding arrays
+     */
     public static void firstDivisionFilter(){
 
         for (FirstLevelDivisions region : allFirstLevelDivisions){
@@ -88,6 +97,13 @@ public class FirstLevelDivisions {
         }
     }
 
+    /**
+     *
+     * @param stateProvinceName
+     * This method is used find first division data by using the associated state or province name
+     * @return
+     * The data for that first division is returned
+     */
     public static FirstLevelDivisions firstDivisionLookupName(String stateProvinceName){
         FirstLevelDivisions stateProvinceData = null;
 
@@ -99,6 +115,13 @@ public class FirstLevelDivisions {
         return stateProvinceData;
     }
 
+    /**
+     *
+     * @param divisionId
+     * This method is used find first division data using the associated division id
+     * @return
+     * The data for that first division is returned
+     */
     public static FirstLevelDivisions firstDivisionLookupById(int divisionId){
         FirstLevelDivisions stateProvinceData = null;
 
@@ -118,6 +141,11 @@ public class FirstLevelDivisions {
         return allFirstLevelDivisions;
     }
 
+    /**
+     * This method get all United States names and returns them
+     * @return
+     * An array of stringed state names are returned
+     */
     public static ObservableList<String> getAllStateNames(){
         for (FirstLevelDivisions stateCage : allUnitedStates){
             allStateNames.add(stateCage.divisionName);
@@ -126,6 +154,11 @@ public class FirstLevelDivisions {
         return allStateNames;
     }
 
+    /**
+     * This method get all Canadian province names and returns them
+     * @return
+     *  An array of stringed province names are returned
+     */
     public static ObservableList<String> getAllCanadianProvinceNames(){
         for (FirstLevelDivisions provinceCage : allCanadianProvinces){
             allCanadianProvinceNames.add(provinceCage.divisionName);
@@ -133,6 +166,11 @@ public class FirstLevelDivisions {
         return allCanadianProvinceNames;
     }
 
+    /**
+     * This method get all United Kingdom region names and returns them
+     * @return
+     *  An array of stringed region names are returned
+     */
     public static ObservableList<String> getAllUKRegionNames(){
         for (FirstLevelDivisions regionCage : allUnitedKingdomRegions){
             allUKRegionNames.add(regionCage.divisionName);

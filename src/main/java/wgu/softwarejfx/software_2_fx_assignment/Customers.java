@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.getAllAppointments;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.lookupAppointmentByCustomerId;
 
+/**
+ * This class serves as a basis for manipulating customer data
+ */
 public class Customers {
 
     int customerId;
@@ -48,6 +51,12 @@ public class Customers {
         this.divisionId = divisionId;
     }
 
+    /**
+     *
+     * @param newCustomer
+     * This method adds new customer info to the database and the appropriate table
+     * @throws SQLException
+     */
     public static void addCustomer(Customers newCustomer) throws SQLException {
         allCustomers.add(newCustomer);
 
@@ -59,6 +68,14 @@ public class Customers {
         insertCustomerResultSet = insertCustomerStmt.executeQuery(insertCustomerQuery);
     }
 
+    /**
+     *
+     * @param customerId
+     * This method takes the customerId and uses it to find the pre-existing matching customer to be updated.
+     * @param customerToUpdate
+     * The customerToUpdate is the updated data from the modify customer form to be useed to alter the pre-existing customer information.
+     * @throws SQLException
+     */
     public static void updateCustomer(int customerId, Customers customerToUpdate) throws SQLException {
         for(Customers waitingRoom : allCustomers){
             if(waitingRoom.getCustomerId() == customerId){
@@ -97,6 +114,11 @@ public class Customers {
         updateCustomerResultSet = updateCustomerStmt.executeQuery(updateCustomerQuery);
     }
 
+    /**
+     *
+     * @param selectedCustomer
+     * This method is used to delete the selected customer from the database along with all associated appointments
+     */
     public static void deleteCustomer(Customers selectedCustomer){
         allCustomers.remove(selectedCustomer);
 
@@ -113,6 +135,13 @@ public class Customers {
         }
     }
 
+    /**
+     *
+     * @param customerName
+     * This method takes the customer's name and finds the matching record(s) with that name
+     * @return
+     * An array of customers is returned
+     */
     public static ObservableList<Customers> lookupCustomerByName(String customerName){
         ObservableList<Customers> crossHairs = FXCollections.observableArrayList();
         for(Customers spyGlass : allCustomers){
@@ -123,6 +152,13 @@ public class Customers {
         return crossHairs;
     }
 
+    /**
+     *
+     * @param customerId
+     * This method takes the customer's id and finds the matching record(s) with that id
+     * @return
+     * An array of customers is returned
+     */
     public static Customers lookupCustomerById(int customerId){
         Customers crossHairs = null;
         for(Customers spyGlass : allCustomers){

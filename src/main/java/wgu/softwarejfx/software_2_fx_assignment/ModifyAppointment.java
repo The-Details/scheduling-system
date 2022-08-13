@@ -59,7 +59,14 @@ public class ModifyAppointment implements Initializable {
     @FXML
     Button cancelModifiedAppointmentButton;
 
+    /**
+     * This class manipulates existing appointment data
+     */
     public static Appointments currentlySelectedAppointment;
+
+    /**
+     * This method set up the appointment form to update existing data
+     */
     public void appointmentDataToModifyFieldSetup(){
 
         appointmentTimes.addAll("12:00AM",
@@ -122,6 +129,9 @@ public class ModifyAppointment implements Initializable {
         }
     }
 
+    /**
+     * This method collects updated appointment data and spots errors in the data on submission
+     */
     public void modifiedAppointmentRecords(){
 
         try {

@@ -33,6 +33,9 @@ import static wgu.softwarejfx.software_2_fx_assignment.FirstLevelDivisions.*;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 import static wgu.softwarejfx.software_2_fx_assignment.ModifyCustomer.currentlySelectedCustomer;
 
+/**
+ * This class manipulates new customer data
+ */
 public class AddCustomer implements Initializable {
 
     @FXML
@@ -58,6 +61,9 @@ public class AddCustomer implements Initializable {
     @FXML
     Button cancelNewCustomerButton;
 
+    /**
+     * This method set up the customer form to collect new data
+     */
     public void customerFieldSetup(){
         addCustomerId.setDisable(true);
         addCustomerId.setPromptText("Auto Generated");
@@ -66,6 +72,9 @@ public class AddCustomer implements Initializable {
         countrySpecifier();
     }
 
+    /**
+     * This method collects new customer data and spots errors in the data on submission
+     */
     public void customerNewData(){
 
         try {
@@ -175,6 +184,9 @@ public class AddCustomer implements Initializable {
     }
 
 
+    /**
+     * This method is used to determine which country in the add customer form has been selected to serve as the basis for the address
+     */
     public void countrySpecifier(){
 
         addCustomerCountry.setItems(getAllCountryNames());

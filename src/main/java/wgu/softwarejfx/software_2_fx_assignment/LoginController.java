@@ -35,7 +35,11 @@ import static wgu.softwarejfx.software_2_fx_assignment.SchedulingSystem.closeCon
 import static wgu.softwarejfx.software_2_fx_assignment.Users.lookupUserByName;
 import static wgu.softwarejfx.software_2_fx_assignment.Users.validateUserInfo;
 
-//future enhancement make the event action based in order to interact keyboard actions as well as mouse clicks
+/**
+ * This class manipulates incoming user data
+ *
+ * FUTURE ENHANCEMENTS: make the event action based in order to interact keyboard actions as well as mouse clicks
+ */
 public class LoginController implements Initializable {
 
     @FXML
@@ -67,6 +71,10 @@ public class LoginController implements Initializable {
     public static String currentUser;
     public static int currentUserId;
 
+    /**
+     * This method login text language conversion with the help of a message bundle
+     * @throws IOException
+     */
     public void localeHandling() throws IOException {
         try{
             Locale locale = Locale.getDefault();
@@ -93,6 +101,11 @@ public class LoginController implements Initializable {
 
     }
 
+    /**
+     *
+     * @param event
+     * This method is responsible for checking the validity of the user credentials
+     */
     //credential validator with error messages
     public void logInButtonOnClick(MouseEvent event){
         try {
@@ -128,6 +141,9 @@ public class LoginController implements Initializable {
     }
 
 
+    /**
+     * This method sets the zone Id textfield
+     */
     public void zoneIdHandling(){
         try {
             currentLocationTextField.setDisable(true);
@@ -139,6 +155,11 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param event
+     * This takes a mouse event called event when the exit button is click to close the login form
+     */
     @FXML
     protected void onExitButtonClick(MouseEvent event) {
         Node source = (Node) event.getSource();
@@ -155,8 +176,15 @@ public class LoginController implements Initializable {
         stage.show();
     }
 
+    /**
+     *
+     * @param loginStatus
+     * This method logs the information generated when logging or the failure to tdo so
+     */
     //login activity logging file
     public void activityLogger(String loginStatus){
+        int attemptCount = 1;
+
         try{
             SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
             Date date = new Date(System.currentTimeMillis());
@@ -166,14 +194,14 @@ public class LoginController implements Initializable {
                 System.out.println("Login Activity Log Created");
                 FileWriter logActivity = new FileWriter("login_activity.txt");
                 logActivity.write("[" + ZoneId.systemDefault() + "][" + dateTimeFormatter.format(date) + "]: "
-                        + usernameTextField.getText() + " -- " + loginStatus);
+                        + usernameTextField.getText() + " -- " + loginStatus + " - Attempts: " + attemptCount);
                 logActivity.close();
                 System.out.println("Login Activity Logged");
             }
             else{
                 FileWriter logActivity = new FileWriter("login_activity.txt");
                 logActivity.write("[" + ZoneId.systemDefault() + "][" + dateTimeFormatter.format(date) + "]: "
-                        + usernameTextField.getText() + " -- " + loginStatus);
+                        + usernameTextField.getText() + " -- " + loginStatus + " - Attempts: " + attemptCount);
                 logActivity.close();
                 System.out.println("Login Activity Logged");
             }
@@ -182,8 +210,15 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
 
+        attemptCount++;
     }
 
+    /**
+     *
+     * @param url
+     * @param resourceBundle
+     * This method is run at the start of the program to collect any information needed
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

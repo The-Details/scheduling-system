@@ -61,6 +61,9 @@ public class CustomerRecordsMainMenu implements Initializable {
     Button exitCustomerRecordsButton;
 
     @FXML
+    Button appointmentTotalData;
+
+    @FXML
     TableView<Customers> customersTableView;
     @FXML
     TableColumn<Customers, Integer> customersIdCol;
@@ -2494,6 +2497,21 @@ public class CustomerRecordsMainMenu implements Initializable {
     // appointments searchbar methods
 
     // customer searchbar methods
+
+    @FXML
+    public void appointmentTotalDataByMonthButton() {
+        GridPane conformation = new GridPane();
+        Text conformationInfo = new Text(appointmentTotalDataByMonth());
+        conformationInfo.setFont(new Font(20));
+        conformation.getChildren().add(conformationInfo);
+        GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER,Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
+        Stage popUp = new Stage();
+        Scene conformationScene = new Scene(conformation);
+        popUp.setTitle("Appointment Data");
+        popUp.setScene(conformationScene);
+        popUp.sizeToScene();
+        popUp.show();
+    }
 
 
     // view switching method <you're gonna be working with visibility of tables>

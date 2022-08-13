@@ -32,6 +32,9 @@ import static wgu.softwarejfx.software_2_fx_assignment.Customers.updateCustomer;
 import static wgu.softwarejfx.software_2_fx_assignment.FirstLevelDivisions.*;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 
+/**
+ * This class manipulates existing customer data
+ */
 public class ModifyCustomer implements Initializable {
 
     @FXML
@@ -59,6 +62,9 @@ public class ModifyCustomer implements Initializable {
 
     public static Customers currentlySelectedCustomer;
 
+    /**
+     * This method set up the customer form to update existing data
+     */
     public void customerDataToModifyFieldSetup(){
 
         try {
@@ -167,6 +173,9 @@ public class ModifyCustomer implements Initializable {
         }
     }
 
+    /**
+     * This method collects updated customer data and spots errors in the data on submission
+     */
     public void modifiedCustomerRecords(){
 
         try {
