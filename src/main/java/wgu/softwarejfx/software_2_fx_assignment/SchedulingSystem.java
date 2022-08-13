@@ -178,7 +178,7 @@ public class SchedulingSystem extends Application {
 
         allAppointments.add(new Appointments(allAppointments.size() + 1, "title", "description",
                 "location", "type", localDateTime, localDateTime, localDateTime, "user"
-        , localDateTime, "user", 0, 0, 0));
+        , localDateTime, "user", 1, 0, 0));
         allCountries.add(new Countries(0,"country name", localDateTime, "user",
                 localDateTime, "user"));
         allContacts.add(new Contacts(0, "contact name", "email@shit.paper"));

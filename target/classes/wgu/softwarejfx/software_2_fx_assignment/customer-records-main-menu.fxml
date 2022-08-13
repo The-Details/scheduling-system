@@ -1403,6 +1403,7 @@
                 <Button fx:id="addAppointmentButton" mnemonicParsing="false" onMouseClicked="#addAppointmentSceneChange" text="Add Appointment" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                 <Button fx:id="deleteCustomerButton" mnemonicParsing="false" onMouseClicked="#deleteCustomerData" text="Delete" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             </GridPane>
+         <Button fx:id="appointmentTotalData" mnemonicParsing="false" onMouseClicked="#appointmentTotalDataByMonthButton" text="Total Data" />
         </GridPane>
         <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
             <columnConstraints>

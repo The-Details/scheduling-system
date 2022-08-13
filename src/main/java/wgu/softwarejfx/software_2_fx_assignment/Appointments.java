@@ -761,11 +761,24 @@ public class Appointments {
 
             int nowTimeJoin = Integer.parseInt(nowTimeSplitter[0] + nowTimeSplitter[1]);
 
-            int notTimeFifteenMinTil = nowTimeJoin - 15;
+            int nowTimeFifteenMinTil = nowTimeJoin - 15;
 
-            if(startTimeFifteenMinTil == notTimeFifteenMinTil){
+            if(startTimeFifteenMinTil == nowTimeFifteenMinTil || (startTimeJoin > nowTimeFifteenMinTil && startTimeJoin < nowTimeJoin)){
                 GridPane conformation = new GridPane();
-                Text conformationInfo = new Text("Appointment with: " + lookupCustomerById(appointmentCage.customerId).customerName + " coming up in 15 minutes.");
+                Text conformationInfo = new Text("Appointment with: " + lookupCustomerById(appointmentCage.customerId).customerName + " coming up in 15 minutes or less.");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+            }
+            else {
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("No Upcoming Appointments");
                 conformationInfo.setFont(new Font(20));
                 conformation.getChildren().add(conformationInfo);
                 GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));

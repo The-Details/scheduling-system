@@ -1609,7 +1609,7 @@ public class CustomerRecordsMainMenu implements Initializable {
     TableColumn<Appointments, String> decemberAppointmentDescriptionCol4;
 
     Timeline timeline = new Timeline(
-        new KeyFrame(Duration.seconds(1), e -> appointmentReminder())
+        new KeyFrame(Duration.minutes(1), e -> appointmentReminder())
     );
 
 
