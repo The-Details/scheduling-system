@@ -84,7 +84,7 @@ public class FirstLevelDivisions {
      */
     public static void firstDivisionFilter(){
 
-        for (FirstLevelDivisions region : allFirstLevelDivisions){
+        for (FirstLevelDivisions region : getAllFirstLevelDivisions()){
             if(region.countryId == 1){
                 allUnitedStates.add(region);
             }
@@ -107,7 +107,7 @@ public class FirstLevelDivisions {
     public static FirstLevelDivisions firstDivisionLookupName(String stateProvinceName){
         FirstLevelDivisions stateProvinceData = null;
 
-        for (FirstLevelDivisions stateProvincePigeonHole : allFirstLevelDivisions){
+        for (FirstLevelDivisions stateProvincePigeonHole : getAllFirstLevelDivisions()){
             if(stateProvincePigeonHole.divisionName.equals(stateProvinceName)){
                 stateProvinceData = stateProvincePigeonHole;
             }
@@ -125,7 +125,7 @@ public class FirstLevelDivisions {
     public static FirstLevelDivisions firstDivisionLookupById(int divisionId){
         FirstLevelDivisions stateProvinceData = null;
 
-        for (FirstLevelDivisions stateProvincePigeonHole : allFirstLevelDivisions){
+        for (FirstLevelDivisions stateProvincePigeonHole : getAllFirstLevelDivisions()){
             if(stateProvincePigeonHole.divisionId == divisionId){
                 stateProvinceData = stateProvincePigeonHole;
             }
@@ -134,10 +134,10 @@ public class FirstLevelDivisions {
     }
 
     public void addFirstLevelDivisions(FirstLevelDivisions newDivision){
-        allFirstLevelDivisions.add(newDivision);
+        getAllFirstLevelDivisions().add(newDivision);
     }
 
-    public ObservableList<FirstLevelDivisions> getAllFirstLevelDivisions() {
+    public static ObservableList<FirstLevelDivisions> getAllFirstLevelDivisions() {
         return allFirstLevelDivisions;
     }
 

@@ -58,7 +58,7 @@ public class Customers {
      * @throws SQLException
      */
     public static void addCustomer(Customers newCustomer) throws SQLException {
-        allCustomers.add(newCustomer);
+        getAllCustomers().add(newCustomer);
 
         insertCustomerStmt = SchedulingSystem.connection.createStatement();
         insertCustomerQuery = "Insert INTO appointments " + "values(" + newCustomer.customerId
@@ -77,7 +77,7 @@ public class Customers {
      * @throws SQLException
      */
     public static void updateCustomer(int customerId, Customers customerToUpdate) throws SQLException {
-        for(Customers waitingRoom : allCustomers){
+        for(Customers waitingRoom : getAllCustomers()){
             if(waitingRoom.getCustomerId() == customerId){
                 waitingRoom.setCustomerName(customerToUpdate.getCustomerName());
                 waitingRoom.setAddress(customerToUpdate.getAddress());
@@ -120,7 +120,7 @@ public class Customers {
      * This method is used to delete the selected customer from the database along with all associated appointments
      */
     public static void deleteCustomer(Customers selectedCustomer){
-        allCustomers.remove(selectedCustomer);
+        getAllCustomers().remove(selectedCustomer);
 
         for (Appointments appointmentToDelete : lookupAppointmentByCustomerId(selectedCustomer.getCustomerId())){
             getAllAppointments().remove(appointmentToDelete);
@@ -144,7 +144,7 @@ public class Customers {
      */
     public static ObservableList<Customers> lookupCustomerByName(String customerName){
         ObservableList<Customers> crossHairs = FXCollections.observableArrayList();
-        for(Customers spyGlass : allCustomers){
+        for(Customers spyGlass : getAllCustomers()){
             if(spyGlass.getCustomerName().equals(customerName)){
                 crossHairs.add(spyGlass);
             }
@@ -161,7 +161,7 @@ public class Customers {
      */
     public static Customers lookupCustomerById(int customerId){
         Customers crossHairs = null;
-        for(Customers spyGlass : allCustomers){
+        for(Customers spyGlass : getAllCustomers()){
             if(spyGlass.customerId == customerId){
                 crossHairs = spyGlass;
             }

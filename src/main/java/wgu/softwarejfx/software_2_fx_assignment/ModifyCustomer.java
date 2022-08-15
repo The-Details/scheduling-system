@@ -1,5 +1,6 @@
 package wgu.softwarejfx.software_2_fx_assignment;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,13 +21,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static javafx.geometry.HPos.CENTER;
-import static wgu.softwarejfx.software_2_fx_assignment.Countries.countryLookupById;
-import static wgu.softwarejfx.software_2_fx_assignment.Countries.countryLookupByName;
+import static wgu.softwarejfx.software_2_fx_assignment.Countries.*;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.lookupCustomerById;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.updateCustomer;
 import static wgu.softwarejfx.software_2_fx_assignment.FirstLevelDivisions.*;
@@ -66,6 +65,8 @@ public class ModifyCustomer implements Initializable {
      * This method set up the customer form to update existing data
      */
     public void customerDataToModifyFieldSetup(){
+
+        countrySpecifier();
 
         try {
             int customerId = currentlySelectedCustomer.getCustomerId();
@@ -179,7 +180,6 @@ public class ModifyCustomer implements Initializable {
     public void modifiedCustomerRecords(){
 
         try {
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
             if (modifyCustomerName.getText().isEmpty()) {
                 System.out.println("Error: Customer Name is Empty");
@@ -318,6 +318,33 @@ public class ModifyCustomer implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void countrySpecifier(){
+
+        modifyCustomerCountry.setItems(getAllCountryNames());
+        modifyCustomerBorough.setVisible(false);
+
+        modifyCustomerCountry.addEventHandler(ActionEvent.ANY , e -> {
+
+            switch (modifyCustomerCountry.getValue()) {
+                case "US" -> {
+                    modifyCustomerBorough.setVisible(false);
+                    modifyCustomerStateProvince.setItems(getAllStateNames());
+                }
+                case "Canada" -> {
+                    modifyCustomerBorough.setVisible(false);
+                    modifyCustomerStateProvince.setItems(getAllCanadianProvinceNames());
+                }
+                case "UK" -> {
+                    modifyCustomerBorough.setVisible(true);
+                    modifyCustomerStateProvince.setItems(getAllUKRegionNames());
+                    modifyCustomerBorough.setItems(allBoroughs);
+                }
+            }
+        });
+
+    }
+
 
     @FXML
     public void updateCustomerRecords(MouseEvent event) throws IOException{

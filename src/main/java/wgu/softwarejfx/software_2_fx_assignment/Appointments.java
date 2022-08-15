@@ -18,7 +18,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import static javafx.geometry.HPos.CENTER;
@@ -177,7 +176,7 @@ public class Appointments {
      * @throws SQLException
      */
     public static void addAppointment(Appointments newAppointment) throws SQLException {
-        allAppointments.add(newAppointment);
+        getAllAppointments().add(newAppointment);
 
         insertAppointmentStmt = SchedulingSystem.connection.createStatement();
         insertAppointmentQuery = "Insert INTO appointments " + "values(" + newAppointment.appointmentId
@@ -199,7 +198,7 @@ public class Appointments {
      * @throws SQLException
      */
     public static void updateAppointment(int appointmentId, Appointments selectedAppointment) throws SQLException {
-        for(Appointments screener : allAppointments){
+        for(Appointments screener : getAllAppointments()){
             if(screener.getAppointmentId() == appointmentId){
                 screener.setTitle(selectedAppointment.getTitle());
                 screener.setDescription(selectedAppointment.getDescription());
@@ -287,7 +286,7 @@ public class Appointments {
      */
     public static ObservableList<Appointments> lookupAppointmentByCustomerId(int customerId){
         ObservableList<Appointments> verifiedAppointment = FXCollections.observableArrayList();
-            for(Appointments screener : allAppointments){
+            for(Appointments screener : getAllAppointments()){
                 if(screener.getCustomerId() == customerId){
                     verifiedAppointment.add(screener);
                 }
@@ -304,7 +303,7 @@ public class Appointments {
      */
     public static Appointments lookupAppointmentById(int appointmentId){
         Appointments verifiedAppointment = null;
-        for(Appointments screener : allAppointments){
+        for(Appointments screener : getAllAppointments()){
             if(screener.getAppointmentId() == appointmentId){
                 verifiedAppointment = screener;
             }
@@ -597,7 +596,6 @@ public class Appointments {
         CharSequence amCharacterCage = "AM";
         CharSequence pmCharacterCage = "PM";
 
-//        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String[] standardTimeSplitter = standardTime.split(":", 2);
 
         if(standardTime.contains(amCharacterCage)){
@@ -656,7 +654,7 @@ public class Appointments {
 
             int customerIdToCompare = lookupAppointmentById(Integer.parseInt(appointmentId)).customerId;
 
-            for (Appointments appointmentToCompare : allAppointments) {
+            for (Appointments appointmentToCompare : getAllAppointments()) {
                 if ((appointmentToCompare.getStart().toLocalDate() == appointmentStartDate) && (appointmentToCompare.getStart().toLocalTime().toString().equals(appointmentStartTime.toString()))) {
 
                     if(!(appointmentToCompare.appointmentId == Integer.parseInt(appointmentId))
@@ -795,7 +793,7 @@ public class Appointments {
     }
 
     public static String appointmentTotalDataByMonth(){
-        String totals = null;
+        String totals;
 
         String janCustomerAppointments = String.valueOf(januaryAppointments.size());
         String febCustomerAppointments = String.valueOf(februaryAppointments.size());

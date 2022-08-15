@@ -21,7 +21,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -31,7 +30,6 @@ import static wgu.softwarejfx.software_2_fx_assignment.Customers.addCustomer;
 import static wgu.softwarejfx.software_2_fx_assignment.Customers.allCustomers;
 import static wgu.softwarejfx.software_2_fx_assignment.FirstLevelDivisions.*;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
-import static wgu.softwarejfx.software_2_fx_assignment.ModifyCustomer.currentlySelectedCustomer;
 
 /**
  * This class manipulates new customer data
@@ -78,7 +76,6 @@ public class AddCustomer implements Initializable {
     public void customerNewData(){
 
         try {
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime dateTime = LocalDateTime.now();
 
             if (addCustomerName.getText() == null) {

@@ -28,7 +28,7 @@ public class Countries {
     public static Countries countryLookupByName(String countryToBeFound){
         Countries countryFound = null;
 
-        for (Countries countriesExamination : allCountries){
+        for (Countries countriesExamination : getAllCountries()){
             if(countriesExamination.countryName.equals(countryToBeFound)){
                 countryFound = countriesExamination;
             }
@@ -40,7 +40,7 @@ public class Countries {
     public static Countries countryLookupById(int countryToBeFound){
         Countries countryFound = null;
 
-        for (Countries countriesExamination : allCountries){
+        for (Countries countriesExamination : getAllCountries()){
             if(countriesExamination.countryId == countryToBeFound){
                 countryFound = countriesExamination;
             }
@@ -50,7 +50,7 @@ public class Countries {
     }
 
     public static void addCountry(Countries newCountry){
-        allCountries.add(newCountry);
+        getAllCountries().add(newCountry);
     }
 
     public static ObservableList<Countries> getAllCountries(){
@@ -59,7 +59,7 @@ public class Countries {
 
     public static ObservableList<String> getAllCountryNames(){
 
-        for (Countries countryCage : allCountries){
+        for (Countries countryCage : getAllCountries()){
             allCountryNames.add(countryCage.countryName);
         }
 
