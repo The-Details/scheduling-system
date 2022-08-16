@@ -27,13 +27,13 @@ public class Customers {
     String lastUpdateBy;
     int divisionId;
     static Statement insertCustomerStmt;
-    static String insertCustomerQuery;
-    static ResultSet insertCustomerResultSet;
+    static String insertCustomerUpdate;
+    static int insertCustomerResultSet;
     static Statement updateCustomerStmt;
-    static String updateCustomerQuery;
+    static String updateCustomerUpdate;
     static ResultSet updateCustomerResultSet;
     static Statement deleteCustomerStmt;
-    static String deleteCustomerQuery;
+    static String deleteCustomerUpdate;
     static ResultSet deleteCustomerResultSet;
 
     public static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
@@ -61,11 +61,11 @@ public class Customers {
         getAllCustomers().add(newCustomer);
 
         insertCustomerStmt = SchedulingSystem.connection.createStatement();
-        insertCustomerQuery = "Insert INTO appointments " + "values(" + newCustomer.customerId
-                + ", " + newCustomer.customerName + ", " + newCustomer.address + ", " + newCustomer.zipCode + ", " + newCustomer.phoneNumber
-                + ", " + newCustomer.createDate + ", " + newCustomer.createdBy
-                + ", " + newCustomer.lastUpdate + ", " + newCustomer.lastUpdateBy + ", " + newCustomer.divisionId + ")";
-        insertCustomerResultSet = insertCustomerStmt.executeQuery(insertCustomerQuery);
+        insertCustomerUpdate = "Insert INTO customers (customer_id, customer_name, address, postal_code, phone, create_date, created_by, last_update, last_updated_by, division_id) " + "values('" + newCustomer.customerId
+                + "', '" + newCustomer.customerName + "', '" + newCustomer.address + "', '" + newCustomer.zipCode + "', '" + newCustomer.phoneNumber
+                + "', '" + newCustomer.createDate + "', '" + newCustomer.createdBy
+                + "', '" + newCustomer.lastUpdate + "', '" + newCustomer.lastUpdateBy + "', '" + newCustomer.divisionId + "')";
+        insertCustomerResultSet = insertCustomerStmt.executeUpdate(insertCustomerUpdate);
     }
 
     /**
@@ -92,26 +92,26 @@ public class Customers {
         }
 
         updateCustomerStmt = SchedulingSystem.connection.createStatement();
-        updateCustomerQuery = "UPDATE customers "
-                + "SET Customer_Name = "
+        updateCustomerUpdate = "UPDATE customers "
+                + "SET Customer_Name = '"
                 + customerToUpdate.customerName
-                + ", " + "Address = "
+                + "', " + "Address = '"
                 + customerToUpdate.address
-                + ", " + "Postal_Code = "
+                + "', " + "Postal_Code = '"
                 + customerToUpdate.zipCode
-                + ", " + "Create_Date = "
+                + "', " + "Create_Date = '"
                 + customerToUpdate.createDate
-                + ", " + "Created_By = "
+                + "', " + "Created_By = '"
                 + customerToUpdate.createdBy
-                + ", " + "Last_Update = "
+                + "', " + "Last_Update = '"
                 + customerToUpdate.lastUpdate
-                + ", " + "Title = "
+                + "', " + "Title = '"
                 + customerToUpdate.lastUpdateBy
-                + ", " + "Division_ID = "
+                + "', " + "Division_ID = '"
                 + customerToUpdate.divisionId
-                + "WHERE customer_id = "
+                + "' WHERE customer_id = "
                 + customerToUpdate.customerId;
-        updateCustomerResultSet = updateCustomerStmt.executeQuery(updateCustomerQuery);
+        updateCustomerResultSet = updateCustomerStmt.executeQuery(updateCustomerUpdate);
     }
 
     /**
@@ -128,8 +128,8 @@ public class Customers {
 
         try {
             deleteCustomerStmt = SchedulingSystem.connection.createStatement();
-            deleteCustomerQuery = "DELETE customers " + "WHERE customer_id = " + selectedCustomer.customerId;
-            deleteCustomerResultSet = deleteCustomerStmt.executeQuery(deleteCustomerQuery);
+            deleteCustomerUpdate = "DELETE customers " + "WHERE customer_id = " + selectedCustomer.customerId;
+            deleteCustomerResultSet = deleteCustomerStmt.executeQuery(deleteCustomerUpdate);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

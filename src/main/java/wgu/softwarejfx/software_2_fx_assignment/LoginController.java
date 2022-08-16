@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
@@ -71,6 +72,8 @@ public class LoginController implements Initializable {
     public static String currentUser;
     public static int currentUserId;
 
+    public int attemptCount = 1;
+
     /**
      * This method login text language conversion with the help of a message bundle
      * @throws IOException
@@ -107,6 +110,7 @@ public class LoginController implements Initializable {
      * This method is responsible for checking the validity of the user credentials
      */
     //credential validator with error messages
+    @FXML
     public void logInButtonOnClick(MouseEvent event){
         try {
             if(validateUserInfo(usernameTextField.getText(), passwordTextField.getText())){
@@ -117,9 +121,9 @@ public class LoginController implements Initializable {
             }
             else {
                 System.out.println(errorMessage);
+                activityLogger("Failed");
                 usernameTextField.setText("");
                 passwordTextField.setText("");
-                activityLogger("Failed");
 
                 GridPane conformation = new GridPane();
                 Text conformationInfo = new Text(errorMessage);
@@ -183,34 +187,41 @@ public class LoginController implements Initializable {
      */
     //login activity logging file
     public void activityLogger(String loginStatus){
-        int attemptCount = 1;
 
         try{
             SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
             Date date = new Date(System.currentTimeMillis());
 
-            File loginActivity = new File("login_activity.txt");
-            if(loginActivity.createNewFile()){
+            File  loginFile = new File("login_activity.txt");
+            FileWriter loginActivity = new FileWriter(loginFile, true);
+            PrintWriter logActivity = new PrintWriter(loginActivity);
+
+            if(loginStatus.equals("Success")){
                 System.out.println("Login Activity Log Created");
-                FileWriter logActivity = new FileWriter("login_activity.txt");
                 logActivity.write("[" + ZoneId.systemDefault() + "][" + dateTimeFormatter.format(date) + "]: "
                         + usernameTextField.getText() + " -- " + loginStatus + " - Attempts: " + attemptCount);
+                logActivity.println();
                 logActivity.close();
                 System.out.println("Login Activity Logged");
             }
-            else{
-                FileWriter logActivity = new FileWriter("login_activity.txt");
+            else if (loginStatus.equals("Failed")){
+
                 logActivity.write("[" + ZoneId.systemDefault() + "][" + dateTimeFormatter.format(date) + "]: "
                         + usernameTextField.getText() + " -- " + loginStatus + " - Attempts: " + attemptCount);
+                logActivity.println();
                 logActivity.close();
+                attemptCount++;
                 System.out.println("Login Activity Logged");
+            }
+            else {
+                System.out.println("An error occurred. Login Status might be null");
             }
         }catch (Exception e){
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
 
-        attemptCount++;
+
     }
 
     /**

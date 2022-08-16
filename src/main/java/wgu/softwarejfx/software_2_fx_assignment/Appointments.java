@@ -11,7 +11,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.DayOfWeek;
@@ -43,14 +42,14 @@ public class Appointments {
     int userId;
     int contactId;
     static Statement insertAppointmentStmt;
-    static String insertAppointmentQuery;
-    static ResultSet insertAppointmentResultSet;
+    static String insertAppointment;
+    static int insertAppointmentResultSet;
     static Statement updateAppointmentStmt;
-    static String updateAppointmentQuery;
-    static ResultSet updateAppointmentResultSet;
+    static String updateAppointment;
+    static int updateAppointmentResultSet;
     static Statement deleteAppointmentStmt;
-    static String deleteAppointmentQuery;
-    static ResultSet deleteAppointmentResultSet;
+    static String deleteAppointment;
+    static int deleteAppointmentResultSet;
 
 
 
@@ -176,16 +175,21 @@ public class Appointments {
      * @throws SQLException
      */
     public static void addAppointment(Appointments newAppointment) throws SQLException {
-        getAllAppointments().add(newAppointment);
+        allAppointments.add(newAppointment);
 
         insertAppointmentStmt = SchedulingSystem.connection.createStatement();
-        insertAppointmentQuery = "Insert INTO appointments " + "values(" + newAppointment.appointmentId
-                + ", " +newAppointment.appointmentId
-                + ", " + newAppointment.title + ", " + newAppointment.description + ", " + newAppointment.location + ", " + newAppointment.type
-                + ", " + newAppointment.start + ", " + newAppointment.end + ", " + newAppointment.createDate + ", " + newAppointment.createdBy
-                + ", " + newAppointment.last_update + ", " + newAppointment.lastUpdateBy + ", " + newAppointment.customerId
-                + ", " + newAppointment.userId + ", " + newAppointment.contactId + ")";
-        insertAppointmentResultSet = insertAppointmentStmt.executeQuery(insertAppointmentQuery);
+        insertAppointment = "Insert INTO appointments (appointment_id, title, description, " +
+                "location, type, start, end, create_date, created_by, " +
+                "last_update, last_updated_by, customer_id, user_id, contact_id)"
+                + "values('" + newAppointment.appointmentId
+                + "', '" + newAppointment.title + "', '" + newAppointment.description + "', '" + newAppointment.location
+                + "', '" + newAppointment.type
+                + "', '" + newAppointment.start + "', '" + newAppointment.end + "', '" + newAppointment.createDate
+                + "', '" + newAppointment.createdBy
+                + "', '" + newAppointment.last_update + "', '" + newAppointment.lastUpdateBy
+                + "', '" + newAppointment.customerId
+                + "', '" + newAppointment.userId + "', ' " + newAppointment.contactId + "')";
+        insertAppointmentResultSet = insertAppointmentStmt.executeUpdate(insertAppointment);
 
     }
 
@@ -198,7 +202,7 @@ public class Appointments {
      * @throws SQLException
      */
     public static void updateAppointment(int appointmentId, Appointments selectedAppointment) throws SQLException {
-        for(Appointments screener : getAllAppointments()){
+        for(Appointments screener : allAppointments){
             if(screener.getAppointmentId() == appointmentId){
                 screener.setTitle(selectedAppointment.getTitle());
                 screener.setDescription(selectedAppointment.getDescription());
@@ -214,36 +218,36 @@ public class Appointments {
         }
 
         updateAppointmentStmt = SchedulingSystem.connection.createStatement();
-        updateAppointmentQuery = "UPDATE appointments "
-                + "SET Title = "
+        updateAppointment = "UPDATE appointments "
+                + "SET Title = '"
                 + selectedAppointment.title
-                + ", " + "Description = "
+                + "', " + "Description = '"
                 + selectedAppointment.description
-                + ", " + "Location = "
+                + "', " + "Location = '"
                 + selectedAppointment.location
-                + ", " + "Type = "
+                + "', " + "Type = '"
                 +  selectedAppointment.type
-                + ", " + "Start = "
+                + "', " + "Start = '"
                 + selectedAppointment.start
-                + ", " + "End = "
+                + "', " + "End = '"
                 + selectedAppointment.end
-                + ", " + "Create_Date = "
+                + "', " + "Create_Date = '"
                 + selectedAppointment.createDate
-                + ", " + "Created_By = "
+                + "', " + "Created_By = '"
                 + selectedAppointment.createdBy
-                + ", " + "Last_Update = "
+                + "', " + "Last_Update = '"
                 + selectedAppointment.last_update
-                + ", " + "Title = "
+                + "', " + "Title = '"
                 + selectedAppointment.lastUpdateBy
-                + ", " + "Customer_ID = "
+                + "', " + "Customer_ID = '"
                 + selectedAppointment.customerId
-                + ", " + "User_ID = "
+                + "', " + "User_ID = '"
                 + selectedAppointment.userId
-                + ", " + "Contact_ID = "
+                + "', " + "Contact_ID = '"
                 + selectedAppointment.contactId
-                + "WHERE appointment_id = "
+                + "' WHERE appointment_id = "
                 + selectedAppointment.appointmentId;
-        updateAppointmentResultSet = updateAppointmentStmt.executeQuery(updateAppointmentQuery);
+        updateAppointmentResultSet = updateAppointmentStmt.executeUpdate(updateAppointment);
 
 
     }
@@ -270,8 +274,8 @@ public class Appointments {
 
         try {
             deleteAppointmentStmt = SchedulingSystem.connection.createStatement();
-            deleteAppointmentQuery = "DELETE FROM appointments" + "WHERE appointment_id = " + selectedAppointment.appointmentId;
-            deleteAppointmentResultSet = deleteAppointmentStmt.executeQuery(deleteAppointmentQuery);
+            deleteAppointment = "DELETE FROM appointments" + "WHERE appointment_id = " + selectedAppointment.appointmentId;
+            deleteAppointmentResultSet = deleteAppointmentStmt.executeUpdate(deleteAppointment);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -286,7 +290,7 @@ public class Appointments {
      */
     public static ObservableList<Appointments> lookupAppointmentByCustomerId(int customerId){
         ObservableList<Appointments> verifiedAppointment = FXCollections.observableArrayList();
-            for(Appointments screener : getAllAppointments()){
+            for(Appointments screener : allAppointments){
                 if(screener.getCustomerId() == customerId){
                     verifiedAppointment.add(screener);
                 }
@@ -303,7 +307,7 @@ public class Appointments {
      */
     public static Appointments lookupAppointmentById(int appointmentId){
         Appointments verifiedAppointment = null;
-        for(Appointments screener : getAllAppointments()){
+        for(Appointments screener : allAppointments){
             if(screener.getAppointmentId() == appointmentId){
                 verifiedAppointment = screener;
             }
@@ -325,7 +329,7 @@ public class Appointments {
      */
     public static void appointmentFilter(){
 
-        for (Appointments monthFilter : getAllAppointments()){
+        for (Appointments monthFilter : allAppointments){
             if(monthFilter.getStart().getMonthValue() == 1){
                 januaryAppointments.add(monthFilter);
 
@@ -646,7 +650,7 @@ public class Appointments {
      * @return
      */
     public static boolean appointmentConflictChecker(String appointmentId, LocalDate appointmentStartDate, LocalDate appointmentEndDate,
-                                                  LocalTime appointmentStartTime, LocalTime appointmentEndTime){
+                                                        LocalTime appointmentStartTime, LocalTime appointmentEndTime){
 
         boolean isThereAConflict = false;
 
@@ -654,7 +658,7 @@ public class Appointments {
 
             int customerIdToCompare = lookupAppointmentById(Integer.parseInt(appointmentId)).customerId;
 
-            for (Appointments appointmentToCompare : getAllAppointments()) {
+            for (Appointments appointmentToCompare : allAppointments) {
                 if ((appointmentToCompare.getStart().toLocalDate() == appointmentStartDate) && (appointmentToCompare.getStart().toLocalTime().toString().equals(appointmentStartTime.toString()))) {
 
                     if(!(appointmentToCompare.appointmentId == Integer.parseInt(appointmentId))
@@ -742,13 +746,109 @@ public class Appointments {
         return isThereAConflict;
     }
 
+    /**
+     *
+     * @param appointmentStartDate
+     * @param appointmentEndDate
+     * @param appointmentStartTime
+     * @param appointmentEndTime
+     * This method uses the appointment elements to determine whether or not there is a conflict in the appointment scheduling
+     * @return
+     */
+    public static boolean appointmentConflictChecker(LocalDate appointmentStartDate, LocalDate appointmentEndDate,
+                                                  LocalTime appointmentStartTime, LocalTime appointmentEndTime){
+
+        boolean isThereAConflict = false;
+
+        try {
+
+            for (Appointments appointmentToCompare : allAppointments) {
+                if ((appointmentToCompare.getStart().toLocalDate() == appointmentStartDate) && (appointmentToCompare.getStart().toLocalTime().toString().equals(appointmentStartTime.toString()))) {
+
+
+                        isThereAConflict = true;
+
+                    GridPane conformation = new GridPane();
+                    Text conformationInfo = new Text("Conflict on: " + appointmentStartDate + " at " + appointmentStartTime);
+                    conformationInfo.setFont(new Font(20));
+                    conformation.getChildren().add(conformationInfo);
+                    GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                    Stage popUp = new Stage();
+                    Scene conformationScene = new Scene(conformation);
+                    popUp.setTitle("Error");
+                    popUp.setScene(conformationScene);
+                    popUp.sizeToScene();
+                    popUp.show();
+                }
+
+                if ((appointmentToCompare.getEnd().toLocalDate() == appointmentEndDate) && (appointmentToCompare.getEnd().toLocalTime().toString().equals(appointmentEndTime.toString()))) {
+
+
+                        isThereAConflict = true;
+
+
+                    GridPane conformation = new GridPane();
+                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate);
+                    conformationInfo.setFont(new Font(20));
+                    conformation.getChildren().add(conformationInfo);
+                    GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                    Stage popUp = new Stage();
+                    Scene conformationScene = new Scene(conformation);
+                    popUp.setTitle("Error");
+                    popUp.setScene(conformationScene);
+                    popUp.sizeToScene();
+                    popUp.show();
+                }
+
+                if (appointmentStartDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) || appointmentStartDate.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+
+                        isThereAConflict = true;
+
+                    GridPane conformation = new GridPane();
+                    Text conformationInfo = new Text("Weekend Conflict on: " + appointmentStartDate);
+                    conformationInfo.setFont(new Font(20));
+                    conformation.getChildren().add(conformationInfo);
+                    GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                    Stage popUp = new Stage();
+                    Scene conformationScene = new Scene(conformation);
+                    popUp.setTitle("Error");
+                    popUp.setScene(conformationScene);
+                    popUp.sizeToScene();
+                    popUp.show();
+                }
+                if ((appointmentEndDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) || appointmentEndDate.getDayOfWeek().equals(DayOfWeek.SUNDAY))) {
+                        isThereAConflict = true;
+
+
+                    GridPane conformation = new GridPane();
+                    Text conformationInfo = new Text("Weekend Conflict on: " + appointmentEndDate);
+                    conformationInfo.setFont(new Font(20));
+                    conformation.getChildren().add(conformationInfo);
+                    GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                    Stage popUp = new Stage();
+                    Scene conformationScene = new Scene(conformation);
+                    popUp.setTitle("Error");
+                    popUp.setScene(conformationScene);
+                    popUp.sizeToScene();
+                    popUp.show();
+                }
+
+            }
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isThereAConflict;
+    }
+
 
     /**
      * This method reminders the current user that there is an appointment coming up 15 minutes from the current time
      */
     public static void appointmentReminder(){
 
-        for(Appointments appointmentCage : getAllAppointments()){
+        for(Appointments appointmentCage : allAppointments){
             String[] startTimeSplitter = appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()).split(":|AM|PM", 3);
 
             int startTimeJoin = Integer.parseInt(startTimeSplitter[0] + startTimeSplitter[1]);

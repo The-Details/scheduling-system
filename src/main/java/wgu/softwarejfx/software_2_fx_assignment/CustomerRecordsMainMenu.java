@@ -1608,6 +1608,9 @@ public class CustomerRecordsMainMenu implements Initializable {
     @FXML
     TableColumn<Appointments, String> decemberAppointmentDescriptionCol4;
 
+    /**
+     * Lambda Justification: A lambda expression is used here to run an appointment reminder method everytime 5 minutes has passed
+     */
     Timeline timeline = new Timeline(
         new KeyFrame(Duration.minutes(5), e -> appointmentReminder())
     );

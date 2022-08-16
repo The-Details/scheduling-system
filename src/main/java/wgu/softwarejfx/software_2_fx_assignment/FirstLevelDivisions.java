@@ -107,7 +107,7 @@ public class FirstLevelDivisions {
     public static FirstLevelDivisions firstDivisionLookupName(String stateProvinceName){
         FirstLevelDivisions stateProvinceData = null;
 
-        for (FirstLevelDivisions stateProvincePigeonHole : getAllFirstLevelDivisions()){
+        for (FirstLevelDivisions stateProvincePigeonHole : allFirstLevelDivisions){
             if(stateProvincePigeonHole.divisionName.equals(stateProvinceName)){
                 stateProvinceData = stateProvincePigeonHole;
             }

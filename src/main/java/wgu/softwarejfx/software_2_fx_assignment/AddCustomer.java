@@ -183,6 +183,9 @@ public class AddCustomer implements Initializable {
 
     /**
      * This method is used to determine which country in the add customer form has been selected to serve as the basis for the address
+     *
+     * Lambda Justification: The reason why a lambda expression is used in
+     * this method is because it is unknown what the user will choose and presenting every option available is not an option
      */
     public void countrySpecifier(){
 
@@ -192,7 +195,7 @@ public class AddCustomer implements Initializable {
         addCustomerCountry.addEventHandler(ActionEvent.ANY ,e -> {
 
             switch (addCustomerCountry.getValue()) {
-                case "US" -> {
+                case "U.S" -> {
                     addCustomerBorough.setVisible(false);
                     addCustomerStateProvince.setItems(getAllStateNames());
                 }

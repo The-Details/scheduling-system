@@ -319,6 +319,10 @@ public class ModifyCustomer implements Initializable {
         }
     }
 
+    /**
+     * Lambda Justification: The reason why a lambda expression is used in
+     * this method is because it is unknown what the user will change and presenting every option available is not an option
+     */
     public void countrySpecifier(){
 
         modifyCustomerCountry.setItems(getAllCountryNames());
@@ -327,7 +331,7 @@ public class ModifyCustomer implements Initializable {
         modifyCustomerCountry.addEventHandler(ActionEvent.ANY , e -> {
 
             switch (modifyCustomerCountry.getValue()) {
-                case "US" -> {
+                case "U.S" -> {
                     modifyCustomerBorough.setVisible(false);
                     modifyCustomerStateProvince.setItems(getAllStateNames());
                 }

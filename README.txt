@@ -39,4 +39,4 @@ Description:
     - To check user login attempts check login activity text file
 
 MySQL Connector Driver Version:
-    - mysql-connector-java-8.0.29
+    - mysql-connector-java-8.0.25 and later

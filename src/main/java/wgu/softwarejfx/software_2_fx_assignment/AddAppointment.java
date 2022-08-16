@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 
 import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.contactExistenceChecker;
 import static wgu.softwarejfx.software_2_fx_assignment.Contacts.newContact;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUserId;
@@ -197,7 +198,7 @@ public class AddAppointment implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            } else if (appointmentConflictChecker(addAppointmentId.getText(), addAppointmentStart.getValue(), addAppointmentEnd.getValue(),
+            } else if (appointmentConflictChecker(addAppointmentStart.getValue(), addAppointmentEnd.getValue(),
                     LocalTime.parse(addAppointmentStartTime.getValue()), LocalTime.parse(addAppointmentEndTime.getValue()))) {
 
                 GridPane conformation = new GridPane();
@@ -227,7 +228,7 @@ public class AddAppointment implements Initializable {
                         currentUser,
                         currentlySelectedCustomer.getCustomerId(),
                         currentUserId,
-                        newContact(addAppointmentContactName.getText(), addAppointmentContactEmail.getText()).contactId
+                        contactExistenceChecker(addAppointmentContactName.getText(), addAppointmentContactEmail.getText()).contactId
                 );
 
                 addAppointment(newAppointment);
