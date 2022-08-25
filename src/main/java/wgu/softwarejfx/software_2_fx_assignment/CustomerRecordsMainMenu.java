@@ -3612,7 +3612,7 @@ public class CustomerRecordsMainMenu implements Initializable {
         Node source = (Node) event.getSource();
         Stage popUp = (Stage) source.getScene().getWindow();
         popUp.close();
-//        closeConnection();
+        closeConnection();
     }
 
     @Override

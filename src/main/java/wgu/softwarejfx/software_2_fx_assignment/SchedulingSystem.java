@@ -197,15 +197,15 @@ public class SchedulingSystem extends Application {
     }
 
     public static void main(String[] args) throws SQLException {
-//        constructConnection();
-//        userData();
-//        divisionData();
-//        appointment();
-//        customerData();
-//        contactData();
-//        countryData();
+        constructConnection();
+        userData();
+        divisionData();
+        appointment();
+        customerData();
+        contactData();
+        countryData();
 
-        testDataStarterPack();
+//        testDataStarterPack();
 
         launch();
     }
