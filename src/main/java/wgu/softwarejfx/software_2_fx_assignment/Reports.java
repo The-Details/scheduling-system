@@ -1,7 +1,5 @@
 package wgu.softwarejfx.software_2_fx_assignment;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -13,23 +11,23 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
-import static wgu.softwarejfx.software_2_fx_assignment.Contacts.allContacts;
-import static wgu.softwarejfx.software_2_fx_assignment.Contacts.getAssociatedAppointments;
+import static wgu.softwarejfx.software_2_fx_assignment.Report.generateReportData;
+
 
 public class Reports implements Initializable {
 
     @FXML
-    TableView<Reports> contactAssociatedAppointmentsTableView;
+    TableView<Report> contactAssociatedAppointmentsTableView;
     @FXML
-    TableColumn<Reports, Integer> contactIdCol;
+    TableColumn<Report, Integer> contactIdCol;
     @FXML
-    TableColumn<Reports, String> contactNameCol;
+    TableColumn<Report, String> contactNameCol;
     @FXML
-    TableColumn<Reports, String> contactEmailCol;
+    TableColumn<Report, String> contactEmailCol;
     @FXML
-    TableColumn<Reports, Integer> contactAppointmentCountCol;
+    TableColumn<Report, Integer> contactAppointmentCountCol;
     @FXML
-    TableColumn<Reports, Integer> contactAssociatedAppointmentCol;
+    TableColumn<Report, Integer> contactAssociatedAppointmentCol;
     @FXML
     Label janTypes;
     @FXML
@@ -79,40 +77,6 @@ public class Reports implements Initializable {
     @FXML
     Label decCount;
 
-    int contactId;
-    String contactName;
-    String contactEmail;
-    int appointmentCount;
-    ObservableList<Integer> associatedAppointments;
-
-
-    Reports(int contactId, String contactName, String email, int appointmentCount, ObservableList<Integer> associatedAppointments){
-        this.contactId = contactId;
-        this.contactName = contactName;
-        this.contactEmail = email;
-        this.appointmentCount = appointmentCount;
-        this.associatedAppointments = associatedAppointments;
-    }
-
-
-    public ObservableList<Reports> generateReportData(){
-
-        ObservableList<Reports> newContactReportData = FXCollections.observableArrayList();
-
-        for(Contacts contactCage : allContacts){
-            if(!newContactReportData.contains(new Reports(contactCage.contactId,
-                    contactCage.contactName, contactCage.email,
-                    getAssociatedAppointments(contactCage).size(), getAssociatedAppointments(contactCage)))){
-
-                newContactReportData.add(new Reports(contactCage.contactId,
-                        contactCage.contactName, contactCage.email,
-                        getAssociatedAppointments(contactCage).size(), getAssociatedAppointments(contactCage)));
-            }
-        }
-
-        return newContactReportData;
-    }
-
 
     public void reportSetup() {
 
@@ -148,7 +112,7 @@ public class Reports implements Initializable {
         octCount.setText(octCustomerAppointments);
         novCount.setText(novCustomerAppointments);
         decCount.setText(decCustomerAppointments);
-
+//
     }
 
     @Override

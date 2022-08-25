@@ -106,7 +106,7 @@ public class Contacts {
     }
 
 
-    public static ObservableList<Integer> getAssociatedAppointments(Contacts selectedContact){
+    public static ObservableList<Integer> findAssociatedAppointments(Contacts selectedContact){
         ObservableList<Integer> associatedAppointmentsList = FXCollections.observableArrayList();
 
         for(Appointments appointmentCage : allAppointments){

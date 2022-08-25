@@ -61,7 +61,7 @@ public class CustomerRecordsMainMenu implements Initializable {
     Button exitCustomerRecordsButton;
 
     @FXML
-    Button appointmentTotalData;
+    Button reportsButton;
 
     @FXML
     TableView<Customers> customersTableView;
@@ -2502,7 +2502,7 @@ public class CustomerRecordsMainMenu implements Initializable {
     // customer searchbar methods
 
     @FXML
-    public void appointmentTotalDataByMonthButton(MouseEvent event) throws IOException {
+    public void reports(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(CustomerRecordsMainMenu.class.getResource("reports.fxml")));
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -3243,7 +3243,7 @@ public class CustomerRecordsMainMenu implements Initializable {
         Node source = (Node) event.getSource();
         Stage popUp = (Stage) source.getScene().getWindow();
         popUp.close();
-        closeConnection();
+//        closeConnection();
     }
 
     @Override
