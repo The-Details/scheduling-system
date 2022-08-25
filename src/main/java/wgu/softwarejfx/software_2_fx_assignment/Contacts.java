@@ -7,6 +7,8 @@ import javafx.scene.control.MenuItem;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static wgu.softwarejfx.software_2_fx_assignment.Appointments.allAppointments;
+
 /**
  * This class serves as a basis for manipulating contact data
  */
@@ -102,6 +104,19 @@ public class Contacts {
 
         return contact;
     }
+
+
+    public static ObservableList<Integer> getAssociatedAppointments(Contacts selectedContact){
+        ObservableList<Integer> associatedAppointmentsList = FXCollections.observableArrayList();
+
+        for(Appointments appointmentCage : allAppointments){
+            if(!associatedAppointmentsList.contains(appointmentCage.appointmentId) && appointmentCage.contactId == selectedContact.contactId){
+                associatedAppointmentsList.add(appointmentCage.appointmentId);
+            }
+        }
+        return  associatedAppointmentsList;
+    }
+
 
     /**
      *

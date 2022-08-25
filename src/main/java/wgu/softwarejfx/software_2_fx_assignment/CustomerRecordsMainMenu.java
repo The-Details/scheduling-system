@@ -2502,18 +2502,12 @@ public class CustomerRecordsMainMenu implements Initializable {
     // customer searchbar methods
 
     @FXML
-    public void appointmentTotalDataByMonthButton() {
-        GridPane conformation = new GridPane();
-        Text conformationInfo = new Text(appointmentTotalDataByMonth());
-        conformationInfo.setFont(new Font(20));
-        conformation.getChildren().add(conformationInfo);
-        GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER,Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
-        Stage popUp = new Stage();
-        Scene conformationScene = new Scene(conformation);
-        popUp.setTitle("Appointment Data");
-        popUp.setScene(conformationScene);
-        popUp.sizeToScene();
-        popUp.show();
+    public void appointmentTotalDataByMonthButton(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(CustomerRecordsMainMenu.class.getResource("reports.fxml")));
+        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
@@ -3256,7 +3250,8 @@ public class CustomerRecordsMainMenu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerTableSetup();
         appointmentTableSetup();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        appointmentReminder();
+//        timeline.setCycleCount(Timeline.INDEFINITE);
+//        timeline.play();
     }
 }

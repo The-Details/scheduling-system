@@ -35,7 +35,7 @@ How to run the program:
 
 Description:
     - To find the total number of customer appointments by type and month run the total data method in main menu
-    - To schedule individual contacts use normal scheduling features
+    - To check individual contacts association with current appointments
     - To check user login attempts check login activity text file
 
 MySQL Connector Driver Version:

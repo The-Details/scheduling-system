@@ -147,9 +147,13 @@ public class FirstLevelDivisions {
      * An array of stringed state names are returned
      */
     public static ObservableList<String> getAllStateNames(){
+
         for (FirstLevelDivisions stateCage : allUnitedStates){
-            allStateNames.add(stateCage.divisionName);
+            if(!allStateNames.contains(stateCage.divisionName)){
+                allStateNames.add(stateCage.divisionName);
+            }
         }
+
 
         return allStateNames;
     }
@@ -161,7 +165,9 @@ public class FirstLevelDivisions {
      */
     public static ObservableList<String> getAllCanadianProvinceNames(){
         for (FirstLevelDivisions provinceCage : allCanadianProvinces){
-            allCanadianProvinceNames.add(provinceCage.divisionName);
+            if(!allCanadianProvinceNames.contains(provinceCage.divisionName)){
+                allCanadianProvinceNames.add(provinceCage.divisionName);
+            }
         }
         return allCanadianProvinceNames;
     }
@@ -173,7 +179,9 @@ public class FirstLevelDivisions {
      */
     public static ObservableList<String> getAllUKRegionNames(){
         for (FirstLevelDivisions regionCage : allUnitedKingdomRegions){
-            allUKRegionNames.add(regionCage.divisionName);
+            if(!allUKRegionNames.contains(regionCage.divisionName)){
+                allUKRegionNames.add(regionCage.divisionName);
+            }
         }
         return allUKRegionNames;
     }

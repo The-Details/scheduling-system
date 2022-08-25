@@ -2,12 +2,21 @@ package wgu.softwarejfx.software_2_fx_assignment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 
+import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.getAllAppointments;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.lookupAppointmentByCustomerId;
 
@@ -128,11 +137,23 @@ public class Customers {
 
         try {
             deleteCustomerStmt = SchedulingSystem.connection.createStatement();
-            deleteCustomerUpdate = "DELETE customers " + "WHERE customer_id = " + selectedCustomer.customerId;
+            deleteCustomerUpdate = "DELETE FROM customers " + "WHERE customer_id = " + selectedCustomer.customerId;
             deleteCustomerResultSet = deleteCustomerStmt.executeQuery(deleteCustomerUpdate);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        GridPane conformation = new GridPane();
+        Text conformationInfo = new Text("Customer: ID#: " + selectedCustomer.customerId + " has been deleted.");
+        conformationInfo.setFont(new Font(20));
+        conformation.getChildren().add(conformationInfo);
+        GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+        Stage popUp = new Stage();
+        Scene conformationScene = new Scene(conformation);
+        popUp.setTitle("Error");
+        popUp.setScene(conformationScene);
+        popUp.sizeToScene();
+        popUp.show();
     }
 
     /**

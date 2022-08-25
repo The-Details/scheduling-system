@@ -141,30 +141,30 @@ public class Appointments {
      * This method add standard time strings to an array for appointment manipulation.
      */
     public static void setAppointmentTimes(){
-        appointmentTimes.addAll("12:00",
-                "01:00",
-                "02:00",
-                "03:00",
-                "04:00",
-                "05:00",
-                "06:00",
-                "07:00",
-                "08:00",
-                "09:00",
-                "10:00",
-                "11:00",
-                "12:00",
-                "01:00",
-                "02:00",
-                "03:00",
-                "04:00",
-                "05:00",
-                "06:00",
-                "07:00",
-                "08:00",
-                "09:00",
-                "10:00",
-                "11:00"
+        appointmentTimes.addAll("12:00AM",
+                "1:00AM",
+                "2:00AM",
+                "3:00AM",
+                "4:00AM",
+                "5:00AM",
+                "6:00AM",
+                "7:00AM",
+                "8:00AM",
+                "9:00AM",
+                "10:00AM",
+                "11:00AM",
+                "12:00PM",
+                "1:00PM",
+                "2:00PM",
+                "3:00PM",
+                "4:00PM",
+                "5:00PM",
+                "6:00PM",
+                "7:00PM",
+                "8:00PM",
+                "9:00PM",
+                "10:00PM",
+                "11:00PM"
         );
     }
 
@@ -279,6 +279,18 @@ public class Appointments {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        GridPane conformation = new GridPane();
+        Text conformationInfo = new Text("Appointment: ID#: " + selectedAppointment.appointmentId + " on " + selectedAppointment.getStart().toLocalDate() + " at " + selectedAppointment.start.toLocalTime() + " has been cancelled.");
+        conformationInfo.setFont(new Font(20));
+        conformation.getChildren().add(conformationInfo);
+        GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+        Stage popUp = new Stage();
+        Scene conformationScene = new Scene(conformation);
+        popUp.setTitle("Error");
+        popUp.setScene(conformationScene);
+        popUp.sizeToScene();
+        popUp.show();
     }
 
     /**
@@ -334,41 +346,44 @@ public class Appointments {
                 januaryAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : januaryAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        januaryWeek1Appointments.add(weekFilter);
+                    if(!januaryWeek1Appointments.contains(weekFilter) && !januaryWeek2Appointments.contains(weekFilter)
+                            && !januaryWeek3Appointments.contains(weekFilter) && !januaryWeek4Appointments.contains(weekFilter)){
+                        if (weekFilter.getStart().getDayOfMonth() <= 7){
+                            januaryWeek1Appointments.add(weekFilter);
+                        }
+                        else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            januaryWeek2Appointments.add(weekFilter);
+                        }
+                        else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            januaryWeek3Appointments.add(weekFilter);
+                        }
+                        else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            januaryWeek4Appointments.add(weekFilter);
+                        }
+                        else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        januaryWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        januaryWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        januaryWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
-                    }
+
                 }
             }
             else if(monthFilter.getStart().getMonthValue() == 2){
                 februaryAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : februaryAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        februaryWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        februaryWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        februaryWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        februaryWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!februaryWeek1Appointments.contains(weekFilter) && !februaryWeek2Appointments.contains(weekFilter)
+                            && !februaryWeek3Appointments.contains(weekFilter) && !februaryWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            februaryWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            februaryWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            februaryWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            februaryWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -376,20 +391,19 @@ public class Appointments {
                 marchAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : marchAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        marchWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        marchWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        marchWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        marchWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!marchWeek1Appointments.contains(weekFilter) && !marchWeek2Appointments.contains(weekFilter)
+                            && !marchWeek3Appointments.contains(weekFilter) && !marchWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            marchWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            marchWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            marchWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            marchWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -397,20 +411,19 @@ public class Appointments {
                 aprilAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : aprilAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        aprilWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        aprilWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        aprilWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        aprilWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!aprilWeek1Appointments.contains(weekFilter) && !aprilWeek2Appointments.contains(weekFilter)
+                            && !aprilWeek3Appointments.contains(weekFilter) && !aprilWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            aprilWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            aprilWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            aprilWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            aprilWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -418,20 +431,19 @@ public class Appointments {
                 mayAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : mayAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        mayWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        mayWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        mayWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        mayWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!mayWeek1Appointments.contains(weekFilter) && !mayWeek2Appointments.contains(weekFilter)
+                            && !mayWeek3Appointments.contains(weekFilter) && !mayWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            mayWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            mayWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            mayWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            mayWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -439,20 +451,19 @@ public class Appointments {
                 juneAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : juneAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        juneWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        juneWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        juneWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        juneWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!juneWeek1Appointments.contains(weekFilter) && !juneWeek2Appointments.contains(weekFilter)
+                            && !juneWeek3Appointments.contains(weekFilter) && !juneWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            juneWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            juneWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            juneWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            juneWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -460,20 +471,19 @@ public class Appointments {
                 julyAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : julyAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        julyWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        julyWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        julyWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        julyWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!julyWeek1Appointments.contains(weekFilter) && !julyWeek2Appointments.contains(weekFilter)
+                            && !julyWeek3Appointments.contains(weekFilter) && !julyWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            julyWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            julyWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            julyWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            julyWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -481,20 +491,19 @@ public class Appointments {
                 augustAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : augustAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        augustWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        augustWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        augustWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        augustWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!augustWeek1Appointments.contains(weekFilter) && !augustWeek2Appointments.contains(weekFilter)
+                            && !augustWeek3Appointments.contains(weekFilter) && !augustWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            augustWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            augustWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            augustWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            augustWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -502,20 +511,19 @@ public class Appointments {
                 septemberAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : septemberAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        septemberWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        septemberWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        septemberWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        septemberWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!septemberWeek1Appointments.contains(weekFilter) && !septemberWeek2Appointments.contains(weekFilter)
+                            && !septemberWeek3Appointments.contains(weekFilter) && !septemberWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            septemberWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            septemberWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            septemberWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            septemberWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -523,20 +531,19 @@ public class Appointments {
                 octoberAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : octoberAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        octoberWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        octoberWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        octoberWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        octoberWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!octoberWeek1Appointments.contains(weekFilter) && !octoberWeek2Appointments.contains(weekFilter)
+                            && !octoberWeek3Appointments.contains(weekFilter) && !octoberWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            octoberWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            octoberWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            octoberWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            octoberWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -544,20 +551,19 @@ public class Appointments {
                 novemberAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : novemberAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        novemberWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        novemberWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        novemberWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        novemberWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!novemberWeek1Appointments.contains(weekFilter) && !novemberWeek2Appointments.contains(weekFilter)
+                            && !novemberWeek3Appointments.contains(weekFilter) && !novemberWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            novemberWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            novemberWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            novemberWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            novemberWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -565,20 +571,19 @@ public class Appointments {
                 decemberAppointments.add(monthFilter);
 
                 for (Appointments weekFilter : decemberAppointments){
-                    if (weekFilter.getStart().getDayOfMonth() <= 7){
-                        decemberWeek1Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
-                        decemberWeek2Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
-                        decemberWeek3Appointments.add(weekFilter);
-                    }
-                    else if (weekFilter.getStart().getDayOfMonth() >= 23) {
-                        decemberWeek4Appointments.add(weekFilter);
-                    }
-                    else {
-                        System.out.println("Error: Something went wrong with the appointment week filter");
+                    if(!decemberWeek1Appointments.contains(weekFilter) && !decemberWeek2Appointments.contains(weekFilter)
+                            && !decemberWeek3Appointments.contains(weekFilter) && !decemberWeek4Appointments.contains(weekFilter)) {
+                        if (weekFilter.getStart().getDayOfMonth() <= 7) {
+                            decemberWeek1Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 14 && weekFilter.getStart().getDayOfMonth() >= 8) {
+                            decemberWeek2Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() <= 22 && weekFilter.getStart().getDayOfMonth() >= 15) {
+                            decemberWeek3Appointments.add(weekFilter);
+                        } else if (weekFilter.getStart().getDayOfMonth() >= 23) {
+                            decemberWeek4Appointments.add(weekFilter);
+                        } else {
+                            System.out.println("Error: Something went wrong with the appointment week filter");
+                        }
                     }
                 }
             }
@@ -659,7 +664,7 @@ public class Appointments {
             int customerIdToCompare = lookupAppointmentById(Integer.parseInt(appointmentId)).customerId;
 
             for (Appointments appointmentToCompare : allAppointments) {
-                if ((appointmentToCompare.getStart().toLocalDate() == appointmentStartDate) && (appointmentToCompare.getStart().toLocalTime().toString().equals(appointmentStartTime.toString()))) {
+                if ((appointmentToCompare.getStart().toLocalDate().getDayOfMonth() == appointmentStartDate.getDayOfMonth()) && (appointmentToCompare.getStart().toLocalTime().getHour() == appointmentStartTime.getHour())) {
 
                     if(!(appointmentToCompare.appointmentId == Integer.parseInt(appointmentId))
                             && !(appointmentToCompare.customerId == customerIdToCompare)){
@@ -679,7 +684,7 @@ public class Appointments {
                     popUp.show();
                 }
 
-                if ((appointmentToCompare.getEnd().toLocalDate() == appointmentEndDate) && (appointmentToCompare.getEnd().toLocalTime().toString().equals(appointmentEndTime.toString()))) {
+                if ((appointmentToCompare.getEnd().toLocalDate().getDayOfMonth() == appointmentEndDate.getDayOfMonth()) && (appointmentToCompare.getEnd().toLocalTime().getHour() == appointmentEndTime.getHour())) {
 
                     if((appointmentToCompare.appointmentId != Integer.parseInt(appointmentId))
                             && (appointmentToCompare.customerId != customerIdToCompare)){
@@ -687,7 +692,7 @@ public class Appointments {
                     }
 
                     GridPane conformation = new GridPane();
-                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate);
+                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate + " at " + appointmentEndTime);
                     conformationInfo.setFont(new Font(20));
                     conformation.getChildren().add(conformationInfo);
                     GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
@@ -763,7 +768,7 @@ public class Appointments {
         try {
 
             for (Appointments appointmentToCompare : allAppointments) {
-                if ((appointmentToCompare.getStart().toLocalDate() == appointmentStartDate) && (appointmentToCompare.getStart().toLocalTime().toString().equals(appointmentStartTime.toString()))) {
+                if ((appointmentToCompare.getStart().toLocalDate().getDayOfMonth() == appointmentStartDate.getDayOfMonth()) && (appointmentToCompare.getStart().toLocalTime().getHour() == appointmentStartTime.getHour())) {
 
 
                         isThereAConflict = true;
@@ -781,14 +786,14 @@ public class Appointments {
                     popUp.show();
                 }
 
-                if ((appointmentToCompare.getEnd().toLocalDate() == appointmentEndDate) && (appointmentToCompare.getEnd().toLocalTime().toString().equals(appointmentEndTime.toString()))) {
+                if ((appointmentToCompare.getEnd().toLocalDate().getDayOfMonth() == appointmentEndDate.getDayOfMonth()) && (appointmentToCompare.getEnd().toLocalTime().getHour() == appointmentEndTime.getHour())) {
 
 
                         isThereAConflict = true;
 
 
                     GridPane conformation = new GridPane();
-                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate);
+                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate + " at " + appointmentEndTime);
                     conformationInfo.setFont(new Font(20));
                     conformation.getChildren().add(conformationInfo);
                     GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
@@ -847,6 +852,7 @@ public class Appointments {
      * This method reminders the current user that there is an appointment coming up 15 minutes from the current time
      */
     public static void appointmentReminder(){
+        int upcomingAppointmentCount = 0;
 
         for(Appointments appointmentCage : allAppointments){
             String[] startTimeSplitter = appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()).split(":|AM|PM", 3);
@@ -862,6 +868,7 @@ public class Appointments {
             int nowTimeFifteenMinTil = nowTimeJoin - 15;
 
             if(startTimeFifteenMinTil == nowTimeFifteenMinTil || (startTimeJoin > nowTimeFifteenMinTil && startTimeJoin < nowTimeJoin)){
+                upcomingAppointmentCount++;
                 GridPane conformation = new GridPane();
                 Text conformationInfo = new Text("Appointment with: " + lookupCustomerById(appointmentCage.customerId).customerName + " coming up in 15 minutes or less.");
                 conformationInfo.setFont(new Font(20));
@@ -874,235 +881,163 @@ public class Appointments {
                 popUp.sizeToScene();
                 popUp.show();
             }
-            else {
-                GridPane conformation = new GridPane();
-                Text conformationInfo = new Text("No Upcoming Appointments");
-                conformationInfo.setFont(new Font(20));
-                conformation.getChildren().add(conformationInfo);
-                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
-                Stage popUp = new Stage();
-                Scene conformationScene = new Scene(conformation);
-                popUp.setTitle("Error");
-                popUp.setScene(conformationScene);
-                popUp.sizeToScene();
-                popUp.show();
-            }
 
+        }
+        if (upcomingAppointmentCount == 0){
+            GridPane conformation = new GridPane();
+            Text conformationInfo = new Text("No Upcoming Appointments");
+            conformationInfo.setFont(new Font(20));
+            conformation.getChildren().add(conformationInfo);
+            GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+            Stage popUp = new Stage();
+            Scene conformationScene = new Scene(conformation);
+            popUp.setTitle("Error");
+            popUp.setScene(conformationScene);
+            popUp.sizeToScene();
+            popUp.show();
         }
 
     }
 
-    public static String appointmentTotalDataByMonth(){
-        String totals;
+    public static String janCustomerAppointments = String.valueOf(januaryAppointments.size());
+    public static String febCustomerAppointments = String.valueOf(februaryAppointments.size());
+    public static String marCustomerAppointments = String.valueOf(marchAppointments.size());
+    public static String aprCustomerAppointments = String.valueOf(aprilAppointments.size());
+    public static String mayCustomerAppointments = String.valueOf(mayAppointments.size());
+    public static String junCustomerAppointments = String.valueOf(juneAppointments.size());
+    public static String julCustomerAppointments = String.valueOf(julyAppointments.size());
+    public static String augCustomerAppointments = String.valueOf(augustAppointments.size());
+    public static String sepCustomerAppointments = String.valueOf(septemberAppointments.size());
+    public static String octCustomerAppointments = String.valueOf(octoberAppointments.size());
+    public static String novCustomerAppointments = String.valueOf(novemberAppointments.size());
+    public static String decCustomerAppointments = String.valueOf(decemberAppointments.size());
 
-        String janCustomerAppointments = String.valueOf(januaryAppointments.size());
-        String febCustomerAppointments = String.valueOf(februaryAppointments.size());
-        String marCustomerAppointments = String.valueOf(marchAppointments.size());
-        String aprCustomerAppointments = String.valueOf(aprilAppointments.size());
-        String mayCustomerAppointments = String.valueOf(mayAppointments.size());
-        String junCustomerAppointments = String.valueOf(juneAppointments.size());
-        String julCustomerAppointments = String.valueOf(julyAppointments.size());
-        String augCustomerAppointments = String.valueOf(augustAppointments.size());
-        String sepCustomerAppointments = String.valueOf(septemberAppointments.size());
-        String octCustomerAppointments = String.valueOf(octoberAppointments.size());
-        String novCustomerAppointments = String.valueOf(novemberAppointments.size());
-        String decCustomerAppointments = String.valueOf(decemberAppointments.size());
+    public static ObservableList<String> janTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> febTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> marTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> aprTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> mayTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> junTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> julTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> augTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> sepTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> octTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> novTypesList = FXCollections.observableArrayList();
+    public static ObservableList<String> decTypesList = FXCollections.observableArrayList();
+    
+    public static void appointmentTotalDataByMonth(){
 
-        String[] janTypes = {""};
-        int janTypeCount = 0;
+        
+
+
 
         for (Appointments typeCage : januaryAppointments){
-            for (String typeCheck : janTypes) {
+            for (String typeCheck : janTypesList) {
                 if (!(typeCheck.equals(typeCage.type)) && !(typeCheck.equals(""))) {
-                    janTypes[janTypeCount] = typeCage.type;
-                    janTypeCount++;
+                    janTypesList.add(typeCage.type);
                 }
             }
         }
 
-        String[] febTypes = {""};
-        int febTypeCount = 0;
 
         for (Appointments febTypeCage : februaryAppointments){
-            for (String febTypeCheck : febTypes) {
+            for (String febTypeCheck : febTypesList) {
                 if (!(febTypeCheck.equals(febTypeCage.type)) && !(febTypeCheck.equals(""))) {
-                    febTypes[febTypeCount] = febTypeCage.type;
-                    febTypeCount++;
+                    febTypesList.add(febTypeCage.type);
                 }
             }
         }
 
-        String[] marTypes = {""};
-        int marTypeCount = 0;
 
         for (Appointments marTypeCage : marchAppointments){
-            for (String marTypeCheck : marTypes) {
+            for (String marTypeCheck : marTypesList) {
                 if (!(marTypeCheck.equals(marTypeCage.type)) && !(marTypeCheck.equals(""))) {
-                    marTypes[marTypeCount] = marTypeCage.type;
-                    marTypeCount++;
+                    marTypesList.add(marTypeCage.type);
                 }
             }
         }
 
-        String[] aprTypes = {""};
-        int aprTypeCount = 0;
 
         for (Appointments aprTypeCage : aprilAppointments){
-            for (String aprTypeCheck : aprTypes) {
+            for (String aprTypeCheck : aprTypesList) {
                 if (!(aprTypeCheck.equals(aprTypeCage.type)) && !(aprTypeCheck.equals(""))) {
-                    aprTypes[aprTypeCount] = aprTypeCage.type;
-                    aprTypeCount++;
+                    aprTypesList.add(aprTypeCage.type);
                 }
             }
         }
 
-        String[] mayTypes = {""};
-        int mayTypeCount = 0;
 
         for (Appointments mayTypeCage : mayAppointments){
-            for (String mayTypeCheck : mayTypes) {
+            for (String mayTypeCheck : mayTypesList) {
                 if (!(mayTypeCheck.equals(mayTypeCage.type)) && !(mayTypeCheck.equals(""))) {
-                    mayTypes[mayTypeCount] = mayTypeCage.type;
-                    mayTypeCount++;
+                    mayTypesList.add(mayTypeCage.type);
                 }
             }
         }
 
-        String[] junTypes = {""};
-        int junTypeCount = 0;
 
         for (Appointments junTypeCage : juneAppointments){
-            for (String junTypeCheck : junTypes) {
+            for (String junTypeCheck : junTypesList) {
                 if (!(junTypeCheck.equals(junTypeCage.type)) && !(junTypeCheck.equals(""))) {
-                    junTypes[junTypeCount] = junTypeCage.type;
-                    junTypeCount++;
+                    junTypesList.add(junTypeCage.type);
                 }
             }
         }
 
-        String[] julTypes = {""};
-        int julTypeCount = 0;
 
         for (Appointments julTypeCage : julyAppointments){
-            for (String julTypeCheck : julTypes) {
+            for (String julTypeCheck : julTypesList) {
                 if (!(julTypeCheck.equals(julTypeCage.type)) && !(julTypeCheck.equals(""))) {
-                    julTypes[julTypeCount] = julTypeCage.type;
-                    julTypeCount++;
+                    julTypesList.add(julTypeCage.type);
                 }
             }
         }
 
-        String[] augTypes = {""};
-        int augTypeCount = 0;
 
         for (Appointments augTypeCage : augustAppointments){
-            for (String augTypeCheck : augTypes) {
+            for (String augTypeCheck : augTypesList) {
                 if (!(augTypeCheck.equals(augTypeCage.type)) && !(augTypeCheck.equals(""))) {
-                    augTypes[augTypeCount] = augTypeCage.type;
-                    augTypeCount++;
+                    augTypesList.add(augTypeCage.type);
                 }
             }
         }
 
-        String[] sepTypes = {""};
-        int sepTypeCount = 0;
 
         for (Appointments sepTypeCage : septemberAppointments){
-            for (String sepTypeCheck : sepTypes) {
+            for (String sepTypeCheck : sepTypesList) {
                 if (!(sepTypeCheck.equals(sepTypeCage.type)) && !(sepTypeCheck.equals(""))) {
-                    sepTypes[sepTypeCount] = sepTypeCage.type;
-                    sepTypeCount++;
+                    sepTypesList.add(sepTypeCage.type);
                 }
             }
         }
 
-        String[] octTypes = {""};
-        int octTypeCount = 0;
 
         for (Appointments octTypeCage : octoberAppointments){
-            for (String octTypeCheck : octTypes) {
+            for (String octTypeCheck : octTypesList) {
                 if (!(octTypeCheck.equals(octTypeCage.type)) && !(octTypeCheck.equals(""))) {
-                    octTypes[octTypeCount] = octTypeCage.type;
-                    octTypeCount++;
+                    octTypesList.add(octTypeCage.type);
                 }
             }
         }
 
 
-        String[] novTypes = {""};
-        int novTypeCount = 0;
 
         for (Appointments novTypeCage : novemberAppointments){
-            for (String novTypeCheck : novTypes) {
+            for (String novTypeCheck : novTypesList) {
                 if (!(novTypeCheck.equals(novTypeCage.type)) && !(novTypeCheck.equals(""))) {
-                    novTypes[novTypeCount] = novTypeCage.type;
-                    novTypeCount++;
+                    novTypesList.add(novTypeCage.type);
                 }
             }
         }
 
-        String[] decTypes = {""};
-        int decTypeCount = 0;
 
         for (Appointments decTypeCage : decemberAppointments){
-            for (String decTypeCheck : decTypes) {
+            for (String decTypeCheck : decTypesList) {
                 if (!(decTypeCheck.equals(decTypeCage.type)) && !(decTypeCheck.equals(""))) {
-                    decTypes[decTypeCount] = decTypeCage.type;
-                    decTypeCount++;
+                    decTypesList.add(decTypeCage.type);
                 }
             }
-        }
-
-        totals = "Jan: \n" +
-                "  - Types: " + Arrays.toString(janTypes) + "\n" +
-                "  - Total: " + janCustomerAppointments + "\n" +
-//                "\n" +
-                "Feb: \n" +
-                "  - Types: " + Arrays.toString(febTypes) + "\n" +
-                "  - Total: " + febCustomerAppointments + "\n" +
-//                "\n" +
-                "Mar: \n" +
-                "  - Types: " + Arrays.toString(marTypes) + "\n" +
-                "  - Total: " + marCustomerAppointments + "\n" +
-//                "\n" +
-                "Apr: \n" +
-                "  - Types: " + Arrays.toString(aprTypes) + "\n" +
-                "  - Total: " + aprCustomerAppointments + "\n" +
-//                "\n" +
-                "May: \n" +
-                "  - Types: " + Arrays.toString(mayTypes) + "\n" +
-                "  - Total: " + mayCustomerAppointments + "\n" +
-//                "\n" +
-                "Jun: \n" +
-                "  - Types: " + Arrays.toString(junTypes) + "\n" +
-                "  - Total: " + junCustomerAppointments + "\n" +
-//                "\n" +
-                "Jul: \n" +
-                "  - Types: " + Arrays.toString(julTypes) + "\n" +
-                "  - Total: " + julCustomerAppointments + "\n" +
-//                "\n" +
-                "Aug: \n" +
-                "  - Types: " + Arrays.toString(augTypes) + "\n" +
-                "  - Total: " + augCustomerAppointments + "\n" +
-//                "\n" +
-                "Sep: \n" +
-                "  - Types: " + Arrays.toString(sepTypes) + "\n" +
-                "  - Total: " + sepCustomerAppointments + "\n" +
-//                "\n" +
-                "Oct: \n" +
-                "  - Types: " + Arrays.toString(octTypes) + "\n" +
-                "  - Total: " + octCustomerAppointments + "\n" +
-//                "\n" +
-                "Nov: \n" +
-                "  - Types: " + Arrays.toString(novTypes) + "\n" +
-                "  - Total: " + novCustomerAppointments + "\n" +
-//                "\n" +
-                "Dec: \n" +
-                "  - Types: " + Arrays.toString(decTypes) + "\n" +
-                "  - Total: " + decCustomerAppointments + "\n" +
-                "\n";
-
-        return totals;
+        }        
     }
 
 

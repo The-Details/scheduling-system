@@ -60,7 +60,9 @@ public class Countries {
     public static ObservableList<String> getAllCountryNames(){
 
         for (Countries countryCage : getAllCountries()){
-            allCountryNames.add(countryCage.countryName);
+            if(!allCountryNames.contains(countryCage.countryName)){
+                allCountryNames.add(countryCage.countryName);
+            }
         }
 
         return allCountryNames;
