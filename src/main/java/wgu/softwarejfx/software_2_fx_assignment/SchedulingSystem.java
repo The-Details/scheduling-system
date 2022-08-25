@@ -174,16 +174,16 @@ public class SchedulingSystem extends Application {
 
         allUsers.add(new Users(1, "admin","admin"));
         allCustomers.add(new Customers(1, "name", "address", "zipcode",
-                "000-000-0000", localDateTime, "user", localDateTime, "user", 0));
+                "000-000-0000", localDateTime, "user", localDateTime, "user", 1));
 
         allAppointments.add(new Appointments(allAppointments.size() + 1, "title", "description",
                 "location", "type", localDateTime, localDateTime, localDateTime, "user"
-        , localDateTime, "user", 1, 0, 0));
-        allCountries.add(new Countries(0,"country name", localDateTime, "user",
+        , localDateTime, "user", 1, 0, 1));
+        allCountries.add(new Countries(1,"country name", localDateTime, "user",
                 localDateTime, "user"));
-        allContacts.add(new Contacts(0, "contact name", "email@shit.paper"));
-        allFirstLevelDivisions.add(new FirstLevelDivisions(0, "divisionName", localDateTime,
-                "user", localDateTime, "user", 0));
+        allContacts.add(new Contacts(1, "contact name", "email@shit.paper"));
+        allFirstLevelDivisions.add(new FirstLevelDivisions(1, "divisionName", localDateTime,
+                "user", localDateTime, "user", 1));
 
     }
 

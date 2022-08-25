@@ -40,7 +40,7 @@ public class Customers {
     static int insertCustomerResultSet;
     static Statement updateCustomerStmt;
     static String updateCustomerUpdate;
-    static ResultSet updateCustomerResultSet;
+    static int updateCustomerResultSet;
     static Statement deleteCustomerStmt;
     static String deleteCustomerUpdate;
     static ResultSet deleteCustomerResultSet;
@@ -120,7 +120,7 @@ public class Customers {
                 + customerToUpdate.divisionId
                 + "' WHERE customer_id = "
                 + customerToUpdate.customerId;
-        updateCustomerResultSet = updateCustomerStmt.executeQuery(updateCustomerUpdate);
+        updateCustomerResultSet = updateCustomerStmt.executeUpdate(updateCustomerUpdate);
     }
 
     /**
@@ -137,7 +137,7 @@ public class Customers {
 
         try {
             deleteCustomerStmt = SchedulingSystem.connection.createStatement();
-            deleteCustomerUpdate = "DELETE FROM customers " + "WHERE customer_id = " + selectedCustomer.customerId;
+            deleteCustomerUpdate = "DELETE FROM customers WHERE customer_id = " + selectedCustomer.customerId;
             deleteCustomerResultSet = deleteCustomerStmt.executeQuery(deleteCustomerUpdate);
         } catch (SQLException throwables) {
             throwables.printStackTrace();

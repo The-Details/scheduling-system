@@ -82,8 +82,8 @@ public class AddAppointment implements Initializable {
 
         try {
 
-            LocalDateTime appointmentStart = LocalDateTime.of(addAppointmentStart.getValue(), LocalTime.parse(addAppointmentStartTime.getValue()));
-            LocalDateTime appointmentEnd = LocalDateTime.of(addAppointmentEnd.getValue(), LocalTime.parse(addAppointmentEndTime.getValue()));
+            LocalDateTime appointmentStart = LocalDateTime.of(addAppointmentStart.getValue(), LocalTime.parse(appointmentTimeConvertor(addAppointmentStartTime.getValue()).toString()));
+            LocalDateTime appointmentEnd = LocalDateTime.of(addAppointmentEnd.getValue(), LocalTime.parse(appointmentTimeConvertor(addAppointmentEndTime.getValue()).toString()));
 
             if (addAppointmentTitle.getText().isEmpty()) {
                 System.out.println("Error: Title is Empty");
@@ -199,10 +199,25 @@ public class AddAppointment implements Initializable {
                 popUp.sizeToScene();
                 popUp.show();
             } else if (appointmentConflictChecker(addAppointmentStart.getValue(), addAppointmentEnd.getValue(),
-                    LocalTime.parse(addAppointmentStartTime.getValue()), LocalTime.parse(addAppointmentEndTime.getValue()))) {
+                    LocalTime.parse(appointmentTimeConvertor(addAppointmentStartTime.getValue()).toString()), LocalTime.parse(appointmentTimeConvertor(addAppointmentEndTime.getValue()).toString()))) {
 
                 GridPane conformation = new GridPane();
                 Text conformationInfo = new Text("Conflict with Appointment Scheduled Time");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+
+            } else if (LocalTime.parse(appointmentTimeConvertor(addAppointmentStartTime.getValue()).toString()).getHour() < 8
+                    || LocalTime.parse(appointmentTimeConvertor(addAppointmentEndTime.getValue()).toString()).getHour() > 22) {
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Conflict with Appointment Scheduled Outside of Business Hours: 8:00AM - 10:00PM");
                 conformationInfo.setFont(new Font(20));
                 conformation.getChildren().add(conformationInfo);
                 GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));

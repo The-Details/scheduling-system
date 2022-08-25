@@ -66,8 +66,6 @@ public class ModifyCustomer implements Initializable {
      */
     public void customerDataToModifyFieldSetup(){
 
-        countrySpecifier();
-
         try {
             int customerId = currentlySelectedCustomer.getCustomerId();
 
@@ -167,7 +165,9 @@ public class ModifyCustomer implements Initializable {
                 }
             }
 
-
+            setAllBoroughs();
+            firstDivisionFilter();
+            countrySpecifier();
 
         }catch (Exception e){
             e.printStackTrace();

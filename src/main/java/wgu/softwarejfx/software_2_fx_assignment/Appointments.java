@@ -274,7 +274,7 @@ public class Appointments {
 
         try {
             deleteAppointmentStmt = SchedulingSystem.connection.createStatement();
-            deleteAppointment = "DELETE FROM appointments" + "WHERE appointment_id = " + selectedAppointment.appointmentId;
+            deleteAppointment = "DELETE FROM appointments WHERE appointment_id = " + selectedAppointment.appointmentId;
             deleteAppointmentResultSet = deleteAppointmentStmt.executeUpdate(deleteAppointment);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -899,18 +899,6 @@ public class Appointments {
 
     }
 
-    public static String janCustomerAppointments = String.valueOf(januaryAppointments.size());
-    public static String febCustomerAppointments = String.valueOf(februaryAppointments.size());
-    public static String marCustomerAppointments = String.valueOf(marchAppointments.size());
-    public static String aprCustomerAppointments = String.valueOf(aprilAppointments.size());
-    public static String mayCustomerAppointments = String.valueOf(mayAppointments.size());
-    public static String junCustomerAppointments = String.valueOf(juneAppointments.size());
-    public static String julCustomerAppointments = String.valueOf(julyAppointments.size());
-    public static String augCustomerAppointments = String.valueOf(augustAppointments.size());
-    public static String sepCustomerAppointments = String.valueOf(septemberAppointments.size());
-    public static String octCustomerAppointments = String.valueOf(octoberAppointments.size());
-    public static String novCustomerAppointments = String.valueOf(novemberAppointments.size());
-    public static String decCustomerAppointments = String.valueOf(decemberAppointments.size());
 
     public static ObservableList<String> janTypesList = FXCollections.observableArrayList();
     public static ObservableList<String> febTypesList = FXCollections.observableArrayList();
@@ -927,116 +915,76 @@ public class Appointments {
     
     public static void appointmentTotalDataByMonth(){
 
-        
-
-
-
         for (Appointments typeCage : januaryAppointments){
-            for (String typeCheck : janTypesList) {
-                if (!(typeCheck.equals(typeCage.type)) && !(typeCheck.equals(""))) {
+                if (!janTypesList.contains(typeCage.type)) {
                     janTypesList.add(typeCage.type);
                 }
-            }
         }
-
 
         for (Appointments febTypeCage : februaryAppointments){
-            for (String febTypeCheck : febTypesList) {
-                if (!(febTypeCheck.equals(febTypeCage.type)) && !(febTypeCheck.equals(""))) {
+                if (!febTypesList.contains(febTypeCage.type)) {
                     febTypesList.add(febTypeCage.type);
                 }
-            }
         }
-
 
         for (Appointments marTypeCage : marchAppointments){
-            for (String marTypeCheck : marTypesList) {
-                if (!(marTypeCheck.equals(marTypeCage.type)) && !(marTypeCheck.equals(""))) {
+                if (!marTypesList.contains(marTypeCage.type)) {
                     marTypesList.add(marTypeCage.type);
                 }
-            }
         }
-
 
         for (Appointments aprTypeCage : aprilAppointments){
-            for (String aprTypeCheck : aprTypesList) {
-                if (!(aprTypeCheck.equals(aprTypeCage.type)) && !(aprTypeCheck.equals(""))) {
+                if (!aprTypesList.contains(aprTypeCage.type)) {
                     aprTypesList.add(aprTypeCage.type);
                 }
-            }
         }
-
 
         for (Appointments mayTypeCage : mayAppointments){
-            for (String mayTypeCheck : mayTypesList) {
-                if (!(mayTypeCheck.equals(mayTypeCage.type)) && !(mayTypeCheck.equals(""))) {
+                if (!mayTypesList.contains(mayTypeCage.type)) {
                     mayTypesList.add(mayTypeCage.type);
                 }
-            }
         }
-
 
         for (Appointments junTypeCage : juneAppointments){
-            for (String junTypeCheck : junTypesList) {
-                if (!(junTypeCheck.equals(junTypeCage.type)) && !(junTypeCheck.equals(""))) {
+                if (!junTypesList.contains(junTypeCage.type)) {
                     junTypesList.add(junTypeCage.type);
                 }
-            }
         }
-
 
         for (Appointments julTypeCage : julyAppointments){
-            for (String julTypeCheck : julTypesList) {
-                if (!(julTypeCheck.equals(julTypeCage.type)) && !(julTypeCheck.equals(""))) {
+                if (!julTypesList.contains(julTypeCage.type)) {
                     julTypesList.add(julTypeCage.type);
                 }
-            }
         }
-
 
         for (Appointments augTypeCage : augustAppointments){
-            for (String augTypeCheck : augTypesList) {
-                if (!(augTypeCheck.equals(augTypeCage.type)) && !(augTypeCheck.equals(""))) {
+                if (!augTypesList.contains(augTypeCage.type)) {
                     augTypesList.add(augTypeCage.type);
                 }
-            }
         }
-
 
         for (Appointments sepTypeCage : septemberAppointments){
-            for (String sepTypeCheck : sepTypesList) {
-                if (!(sepTypeCheck.equals(sepTypeCage.type)) && !(sepTypeCheck.equals(""))) {
+                if (!sepTypesList.contains(sepTypeCage.type)) {
                     sepTypesList.add(sepTypeCage.type);
                 }
-            }
         }
-
 
         for (Appointments octTypeCage : octoberAppointments){
-            for (String octTypeCheck : octTypesList) {
-                if (!(octTypeCheck.equals(octTypeCage.type)) && !(octTypeCheck.equals(""))) {
+                if (!octTypesList.contains(octTypeCage.type)) {
                     octTypesList.add(octTypeCage.type);
                 }
-            }
         }
-
-
 
         for (Appointments novTypeCage : novemberAppointments){
-            for (String novTypeCheck : novTypesList) {
-                if (!(novTypeCheck.equals(novTypeCage.type)) && !(novTypeCheck.equals(""))) {
+                if (!novTypesList.contains(novTypeCage.type)) {
                     novTypesList.add(novTypeCage.type);
                 }
-            }
         }
 
-
         for (Appointments decTypeCage : decemberAppointments){
-            for (String decTypeCheck : decTypesList) {
-                if (!(decTypeCheck.equals(decTypeCage.type)) && !(decTypeCheck.equals(""))) {
+                if (!decTypesList.contains(decTypeCage.type)) {
                     decTypesList.add(decTypeCage.type);
                 }
-            }
         }        
     }
 

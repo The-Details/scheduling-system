@@ -23,6 +23,8 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -62,6 +64,8 @@ public class CustomerRecordsMainMenu implements Initializable {
 
     @FXML
     Button reportsButton;
+    @FXML
+    Button timeZoneChangeButton;
 
     @FXML
     TableView<Customers> customersTableView;
@@ -2509,6 +2513,371 @@ public class CustomerRecordsMainMenu implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    public void timeZoneChange(){
+        Appointments timeZoneChangeAppointment = null;
+
+        if(
+                (januaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                        januaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                        januaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                        januaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                        januaryWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (februaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                februaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                februaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                februaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                februaryWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (marchTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                marchWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                marchWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                marchWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                marchWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (aprilTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                aprilWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                aprilWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                aprilWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                aprilWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (mayTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                mayWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                mayWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                mayWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                mayWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (juneTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                juneWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                juneWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                juneWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                juneWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (julyTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                julyWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                julyWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                julyWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                julyWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (augustTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                augustWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                augustWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                augustWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                augustWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (septemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                septemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                septemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                septemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                septemberWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (octoberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                octoberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                octoberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                octoberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                octoberWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (novemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                novemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                novemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                novemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                novemberWeek4TableView.getSelectionModel().getSelectedItem() != null )
+                        ||
+                        (decemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                                decemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                                decemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                                decemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                                decemberWeek4TableView.getSelectionModel().getSelectedItem() != null )
+        ){
+            if (januaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    januaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    januaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    januaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    januaryWeek4TableView.getSelectionModel().getSelectedItem() != null){
+
+                if(januaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = januaryTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (januaryWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = januaryWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (januaryWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = januaryWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (januaryWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = januaryWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (januaryWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = januaryWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+
+            }
+            else if (februaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    februaryWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    februaryWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    februaryWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    februaryWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+
+                if(februaryTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = februaryTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (februaryWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = februaryWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (februaryWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = februaryWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (februaryWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = februaryWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (februaryWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = februaryWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (marchTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    marchWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    marchWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    marchWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    marchWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(marchTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = marchTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (marchWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = marchWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (marchWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = marchWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (marchWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = marchWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (marchWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = marchWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (aprilTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    aprilWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    aprilWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    aprilWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    aprilWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                if(aprilTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = aprilTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (aprilWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = aprilWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (aprilWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = aprilWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (aprilWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = aprilWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (aprilWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = aprilWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (mayTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    mayWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    mayWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    mayWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    mayWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(mayTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = mayTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (mayWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = mayWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (mayWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = mayWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (mayWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = mayWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (mayWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = mayWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (juneTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    juneWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    juneWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    juneWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    juneWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(juneTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = juneTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (juneWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = juneWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (juneWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = juneWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (juneWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = juneWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (juneWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = juneWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (julyTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    julyWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    julyWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    julyWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    julyWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                if(julyTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = julyTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (julyWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = julyWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (julyWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = julyWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (julyWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = julyWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (julyWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = julyWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (augustTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    augustWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    augustWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    augustWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    augustWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(augustTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = augustTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (augustWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = augustWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (augustWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = augustWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (augustWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = augustWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (augustWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = augustWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (septemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    septemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    septemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    septemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    septemberWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(septemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = januaryTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (septemberWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = septemberWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (septemberWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = septemberWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (septemberWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = septemberWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (septemberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = septemberWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }else if (octoberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    octoberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    octoberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    octoberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    octoberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                if(octoberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = octoberTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (octoberWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = octoberWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (octoberWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = octoberWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (octoberWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = octoberWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (octoberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = octoberWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (novemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    novemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    novemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    novemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    novemberWeek4TableView.getSelectionModel().getSelectedItem() != null ){
+                if(novemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = novemberTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (novemberWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = novemberWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (novemberWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = novemberWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (novemberWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = novemberWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (novemberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = novemberWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+            else if (decemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null ||
+                    decemberWeek1TableView.getSelectionModel().getSelectedItem() != null ||
+                    decemberWeek2TableView.getSelectionModel().getSelectedItem() != null ||
+                    decemberWeek3TableView.getSelectionModel().getSelectedItem() != null ||
+                    decemberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                if(decemberTabByMonthTableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = decemberTabByMonthTableView.getSelectionModel().getSelectedItem();
+                }
+                else if (decemberWeek1TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = decemberWeek1TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (decemberWeek2TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = decemberWeek2TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (decemberWeek3TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = decemberWeek3TableView.getSelectionModel().getSelectedItem();
+                }
+                else if (decemberWeek4TableView.getSelectionModel().getSelectedItem() != null){
+                    timeZoneChangeAppointment = decemberWeek4TableView.getSelectionModel().getSelectedItem();
+                }
+            }
+
+            GridPane conformation = new GridPane();
+            assert timeZoneChangeAppointment != null;
+            Text conformationInfo = new Text("Appointment:" + "ID#: "
+                    + timeZoneChangeAppointment.appointmentId + " Start Time is: "
+                    + OffsetTime.of(timeZoneChangeAppointment.start.toLocalTime(), ZoneOffset.UTC) + " End Time is: "
+                    + OffsetTime.of(timeZoneChangeAppointment.start.toLocalTime(), ZoneOffset.UTC));
+            conformationInfo.setFont(new Font(20));
+            conformation.getChildren().add(conformationInfo);
+            GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER, Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
+            Stage popUp = new Stage();
+            Scene conformationScene = new Scene(conformation);
+            popUp.setTitle("Time Zone Change");
+            popUp.setScene(conformationScene);
+            popUp.sizeToScene();
+            popUp.show();
+        }
+        else {
+            GridPane conformation = new GridPane();
+            Text conformationInfo = new Text("Appointment not selected");
+            conformationInfo.setFont(new Font(20));
+            conformation.getChildren().add(conformationInfo);
+            GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER, Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
+            Stage popUp = new Stage();
+            Scene conformationScene = new Scene(conformation);
+            popUp.setTitle("Error");
+            popUp.setScene(conformationScene);
+            popUp.sizeToScene();
+            popUp.show();
+        }
+    }
+
+
 
 
     // view switching method <you're gonna be working with visibility of tables>

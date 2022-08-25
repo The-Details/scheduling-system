@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -282,7 +283,22 @@ public class ModifyAppointment implements Initializable {
                 popUp.sizeToScene();
                 popUp.show();
 
-            }else {
+            } else if (LocalTime.parse(appointmentTimeConvertor(modifyAppointmentStartTime.getValue()).toString()).getHour() < 8
+                    || LocalTime.parse(appointmentTimeConvertor(modifyAppointmentEndTime.getValue()).toString()).getHour() > 22) {
+
+                GridPane conformation = new GridPane();
+                Text conformationInfo = new Text("Conflict with Appointment Scheduled Outside of Business Hours: 8:00AM - 10:00PM");
+                conformationInfo.setFont(new Font(20));
+                conformation.getChildren().add(conformationInfo);
+                GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+                Stage popUp = new Stage();
+                Scene conformationScene = new Scene(conformation);
+                popUp.setTitle("Error");
+                popUp.setScene(conformationScene);
+                popUp.sizeToScene();
+                popUp.show();
+
+            } else {
 
                 Appointments selectedAppointment = new Appointments(
                         currentlySelectedAppointment.getAppointmentId(),
