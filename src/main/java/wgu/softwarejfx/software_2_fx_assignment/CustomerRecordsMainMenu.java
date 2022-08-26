@@ -2850,8 +2850,8 @@ public class CustomerRecordsMainMenu implements Initializable {
             assert timeZoneChangeAppointment != null;
             Text conformationInfo = new Text("Appointment:" + "ID#: "
                     + timeZoneChangeAppointment.appointmentId + " Start Time is: "
-                    + OffsetTime.of(timeZoneChangeAppointment.start.toLocalTime(), ZoneOffset.UTC) + " End Time is: "
-                    + OffsetTime.of(timeZoneChangeAppointment.start.toLocalTime(), ZoneOffset.UTC));
+                    + appointmentTimeReverser(timeZoneChangeAppointment.start.toLocalTime().toString()) + " End Time is: "
+                    + appointmentTimeReverser(timeZoneChangeAppointment.end.toLocalTime().toString()));
             conformationInfo.setFont(new Font(20));
             conformation.getChildren().add(conformationInfo);
             GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER, Priority.ALWAYS,Priority.ALWAYS, new Insets(25));

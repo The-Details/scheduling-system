@@ -23,6 +23,8 @@ public class Contacts {
 
     public static ObservableList<Contacts> allContacts = FXCollections.observableArrayList();
     public static ObservableList<MenuItem> contactMenuItems = FXCollections.observableArrayList();
+    public static ObservableList<String> allContactNames = FXCollections.observableArrayList();
+    public static ObservableList<String> allContactEmails = FXCollections.observableArrayList();
     
     public Contacts(int contactId, String contactName, String email){
      this.contactId = contactId;
@@ -103,6 +105,24 @@ public class Contacts {
 
 
         return contact;
+    }
+
+    public static ObservableList<String> getAllContactNames(){
+       for(Contacts contactCage : allContacts){
+           if(!allContactNames.contains(contactCage.contactName)){
+               allContactNames.add(contactCage.contactName);
+           }
+       }
+       return allContactNames;
+    }
+
+    public static ObservableList<String> getAllContactEmails(){
+        for(Contacts contactCage : allContacts){
+            if(!allContactEmails.contains(contactCage.email)){
+                allContactEmails.add(contactCage.email);
+            }
+        }
+        return allContactEmails;
     }
 
 

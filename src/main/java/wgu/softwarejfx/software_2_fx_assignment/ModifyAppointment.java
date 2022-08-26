@@ -27,8 +27,8 @@ import java.util.ResourceBundle;
 import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.appointmentTimes;
-import static wgu.softwarejfx.software_2_fx_assignment.Contacts.lookupContactById;
-import static wgu.softwarejfx.software_2_fx_assignment.Contacts.lookupContactByName;
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.*;
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.getAllContactEmails;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 
 public class ModifyAppointment implements Initializable {
@@ -50,9 +50,9 @@ public class ModifyAppointment implements Initializable {
     @FXML
     ComboBox<String> modifyAppointmentEndTime;
     @FXML
-    TextField modifyAppointmentContactName;
+    ComboBox<String> modifyAppointmentContactName;
     @FXML
-    TextField modifyAppointmentContactEmail;
+    ComboBox<String> modifyAppointmentContactEmail;
     @FXML
     TextArea modifyAppointmentDescription;
     @FXML
@@ -97,6 +97,8 @@ public class ModifyAppointment implements Initializable {
         );
         modifyAppointmentStartTime.setItems(appointmentTimes);
         modifyAppointmentEndTime.setItems(appointmentTimes);
+        modifyAppointmentContactName.setItems(getAllContactNames());
+        modifyAppointmentContactEmail.setItems(getAllContactEmails());
 
         try {
             if (currentlySelectedAppointment != null) {
@@ -109,8 +111,8 @@ public class ModifyAppointment implements Initializable {
                 modifyAppointmentEnd.setValue(currentlySelectedAppointment.getStart().toLocalDate());
                 modifyAppointmentStartTime.setValue(appointmentTimeReverser(currentlySelectedAppointment.getStart().toLocalTime().toString()));
                 modifyAppointmentEndTime.setValue(appointmentTimeReverser(currentlySelectedAppointment.getEnd().toLocalTime().toString()));
-                modifyAppointmentContactName.setText(lookupContactById(currentlySelectedAppointment.getContactId()).contactName);
-                modifyAppointmentContactEmail.setText(lookupContactById(currentlySelectedAppointment.getContactId()).email);
+                modifyAppointmentContactName.setValue(lookupContactById(currentlySelectedAppointment.getContactId()).contactName);
+                modifyAppointmentContactEmail.setValue(lookupContactById(currentlySelectedAppointment.getContactId()).email);
                 modifyAppointmentDescription.setText(currentlySelectedAppointment.getDescription());
             } else {
                 GridPane conformation = new GridPane();
@@ -225,7 +227,7 @@ public class ModifyAppointment implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            } else if (modifyAppointmentContactName.getText().isEmpty() || modifyAppointmentContactEmail.getText().isEmpty()) {
+            } else if (modifyAppointmentContactName.getEditor().getText().isEmpty() || modifyAppointmentContactEmail.getEditor().getText().isEmpty()) {
                 System.out.println("Error: Contact Info is Empty");
 
                 GridPane conformation = new GridPane();
@@ -325,10 +327,9 @@ public class ModifyAppointment implements Initializable {
                 selectedAppointment.setEnd(LocalDateTime.of(modifyAppointmentEnd.getValue(), appointmentTimeConvertor(modifyAppointmentEndTime.getValue())));
                 selectedAppointment.setLast_update(LocalDateTime.now());
                 selectedAppointment.setLastUpdateBy(currentUser);
-                selectedAppointment.setContactId(lookupContactByName(modifyAppointmentContactName.getText()).contactId);
+                selectedAppointment.setContactId(lookupContactByName(modifyAppointmentContactName.getEditor().getText()).contactId);
 
                 updateAppointment(Integer.parseInt(modifyAppointmentId.getText()), selectedAppointment);
-//                appointmentFilter();
             }
         }catch (Exception e){
             e.printStackTrace();

@@ -24,8 +24,7 @@ import java.util.ResourceBundle;
 
 import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
-import static wgu.softwarejfx.software_2_fx_assignment.Contacts.contactExistenceChecker;
-import static wgu.softwarejfx.software_2_fx_assignment.Contacts.newContact;
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.*;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUser;
 import static wgu.softwarejfx.software_2_fx_assignment.LoginController.currentUserId;
 import static wgu.softwarejfx.software_2_fx_assignment.ModifyCustomer.currentlySelectedCustomer;
@@ -52,9 +51,9 @@ public class AddAppointment implements Initializable {
     @FXML
     ComboBox<String> addAppointmentEndTime;
     @FXML
-    TextField addAppointmentContactName;
+    ComboBox<String> addAppointmentContactName;
     @FXML
-    TextField addAppointmentContactEmail;
+    ComboBox<String> addAppointmentContactEmail;
     @FXML
     TextArea addAppointmentDescription;
     @FXML
@@ -72,7 +71,8 @@ public class AddAppointment implements Initializable {
         setAppointmentTimes();
         addAppointmentStartTime.setItems(appointmentTimes);
         addAppointmentEndTime.setItems(appointmentTimes);
-
+        addAppointmentContactName.setItems(getAllContactNames());
+        addAppointmentContactEmail.setItems(getAllContactEmails());
     }
 
     /**
@@ -170,7 +170,7 @@ public class AddAppointment implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            } else if (addAppointmentContactName.getText().isEmpty() || addAppointmentContactEmail.getText().isEmpty()) {
+            } else if (addAppointmentContactName.getEditor().getText().isEmpty() || addAppointmentContactEmail.getEditor().getText().isEmpty()) {
                 System.out.println("Error: Contact is Empty");
 
                 GridPane conformation = new GridPane();
@@ -243,7 +243,7 @@ public class AddAppointment implements Initializable {
                         currentUser,
                         currentlySelectedCustomer.getCustomerId(),
                         currentUserId,
-                        contactExistenceChecker(addAppointmentContactName.getText(), addAppointmentContactEmail.getText()).contactId
+                        contactExistenceChecker(addAppointmentContactName.getEditor().getText(), addAppointmentContactEmail.getEditor().getText()).contactId
                 );
 
                 addAppointment(newAppointment);
