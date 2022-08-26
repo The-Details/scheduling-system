@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="550.0" minWidth="450.0" prefHeight="700.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wgu.softwarejfx.software_2_fx_assignment.ModifyAppointment">
+<AnchorPane minHeight="550.0" minWidth="450.0" prefHeight="700.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wgu.softwarejfx.software_2_fx_assignment.ModifyAppointment">
    <GridPane hgap="15.0" prefHeight="700.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <columnConstraints>
          <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.41504549411508" minWidth="10.0" prefWidth="153.41508826652702" />
@@ -350,8 +350,24 @@
             <Insets right="20.0" />
          </padding>
          <children>
-            <TextField fx:id="modifyAppointmentContactName" promptText="Name" GridPane.rowIndex="1" />
-            <TextField fx:id="modifyAppointmentContactEmail" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="modifyAppointmentContactName" editable="true" prefHeight="25.0" prefWidth="174.0" promptText="Name" GridPane.rowIndex="1">
+               <contextMenu>
+                  <ContextMenu>
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                     </items>
+                  </ContextMenu>
+               </contextMenu>
+            </ComboBox>
+            <ComboBox fx:id="modifyAppointmentContactEmail" editable="true" prefHeight="25.0" prefWidth="174.0" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <contextMenu>
+                  <ContextMenu>
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                     </items>
+                  </ContextMenu>
+               </contextMenu>
+            </ComboBox>
          </children>
       </GridPane>
    </GridPane>

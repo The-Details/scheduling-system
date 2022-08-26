@@ -73,6 +73,10 @@ public class AddAppointment implements Initializable {
         addAppointmentEndTime.setItems(appointmentTimes);
         addAppointmentContactName.setItems(getAllContactNames());
         addAppointmentContactEmail.setItems(getAllContactEmails());
+
+        addAppointmentContactName.getEditor().textProperty().addListener((obs, oldText, newText) -> addAppointmentContactName.setValue(newText));
+
+        addAppointmentContactEmail.getEditor().textProperty().addListener((obs, oldText, newText) -> addAppointmentContactEmail.setValue(newText));
     }
 
     /**
@@ -170,7 +174,7 @@ public class AddAppointment implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            } else if (addAppointmentContactName.getEditor().getText().isEmpty() || addAppointmentContactEmail.getEditor().getText().isEmpty()) {
+            } else if (addAppointmentContactName.getValue().isEmpty() || addAppointmentContactEmail.getValue().isEmpty()) {
                 System.out.println("Error: Contact is Empty");
 
                 GridPane conformation = new GridPane();
@@ -243,7 +247,7 @@ public class AddAppointment implements Initializable {
                         currentUser,
                         currentlySelectedCustomer.getCustomerId(),
                         currentUserId,
-                        contactExistenceChecker(addAppointmentContactName.getEditor().getText(), addAppointmentContactEmail.getEditor().getText()).contactId
+                        contactExistenceChecker(addAppointmentContactName.getValue(), addAppointmentContactEmail.getValue()).contactId
                 );
 
                 addAppointment(newAppointment);

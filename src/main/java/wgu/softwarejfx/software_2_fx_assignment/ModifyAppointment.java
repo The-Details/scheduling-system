@@ -100,6 +100,10 @@ public class ModifyAppointment implements Initializable {
         modifyAppointmentContactName.setItems(getAllContactNames());
         modifyAppointmentContactEmail.setItems(getAllContactEmails());
 
+        modifyAppointmentContactName.getEditor().textProperty().addListener((obs, oldText, newText) -> modifyAppointmentContactName.setValue(newText));
+
+        modifyAppointmentContactEmail.getEditor().textProperty().addListener((obs, oldText, newText) -> modifyAppointmentContactEmail.setValue(newText));
+
         try {
             if (currentlySelectedAppointment != null) {
                 modifyAppointmentId.setDisable(true);
@@ -227,7 +231,7 @@ public class ModifyAppointment implements Initializable {
                 popUp.setScene(conformationScene);
                 popUp.sizeToScene();
                 popUp.show();
-            } else if (modifyAppointmentContactName.getEditor().getText().isEmpty() || modifyAppointmentContactEmail.getEditor().getText().isEmpty()) {
+            } else if (modifyAppointmentContactName.getValue().isEmpty() || modifyAppointmentContactEmail.getValue().isEmpty()) {
                 System.out.println("Error: Contact Info is Empty");
 
                 GridPane conformation = new GridPane();
@@ -327,7 +331,7 @@ public class ModifyAppointment implements Initializable {
                 selectedAppointment.setEnd(LocalDateTime.of(modifyAppointmentEnd.getValue(), appointmentTimeConvertor(modifyAppointmentEndTime.getValue())));
                 selectedAppointment.setLast_update(LocalDateTime.now());
                 selectedAppointment.setLastUpdateBy(currentUser);
-                selectedAppointment.setContactId(lookupContactByName(modifyAppointmentContactName.getEditor().getText()).contactId);
+                selectedAppointment.setContactId(lookupContactByName(modifyAppointmentContactName.getValue()).contactId);
 
                 updateAppointment(Integer.parseInt(modifyAppointmentId.getText()), selectedAppointment);
             }
