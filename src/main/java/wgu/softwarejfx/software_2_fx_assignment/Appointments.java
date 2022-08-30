@@ -237,7 +237,7 @@ public class Appointments {
                 + selectedAppointment.createdBy
                 + "', " + "Last_Update = '"
                 + selectedAppointment.last_update
-                + "', " + "Title = '"
+                + "', " + "Last_Updated_By = '"
                 + selectedAppointment.lastUpdateBy
                 + "', " + "Customer_ID = '"
                 + selectedAppointment.customerId
@@ -682,7 +682,7 @@ public class Appointments {
                     }
 
                     GridPane conformation = new GridPane();
-                    Text conformationInfo = new Text("Conflict on: " + appointmentStartDate + " at " + appointmentStartTime);
+                    Text conformationInfo = new Text("Conflict on: " + appointmentStartDate + " at " + appointmentTimeReverser(appointmentStartTime.toString()));
                     conformationInfo.setFont(new Font(20));
                     conformation.getChildren().add(conformationInfo);
                     GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
@@ -702,7 +702,7 @@ public class Appointments {
                     }
 
                     GridPane conformation = new GridPane();
-                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate + " at " + appointmentEndTime);
+                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate + " at " + appointmentTimeReverser(appointmentEndTime.toString()));
                     conformationInfo.setFont(new Font(20));
                     conformation.getChildren().add(conformationInfo);
                     GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
@@ -784,7 +784,7 @@ public class Appointments {
                         isThereAConflict = true;
 
                     GridPane conformation = new GridPane();
-                    Text conformationInfo = new Text("Conflict on: " + appointmentStartDate + " at " + appointmentStartTime);
+                    Text conformationInfo = new Text("Conflict on: " + appointmentStartDate + " at " + appointmentTimeReverser(appointmentStartTime.toString()));
                     conformationInfo.setFont(new Font(20));
                     conformation.getChildren().add(conformationInfo);
                     GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
@@ -803,7 +803,7 @@ public class Appointments {
 
 
                     GridPane conformation = new GridPane();
-                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate + " at " + appointmentEndTime);
+                    Text conformationInfo = new Text("Conflict on: " + appointmentEndDate + " at " + appointmentTimeReverser(appointmentEndTime.toString()));
                     conformationInfo.setFont(new Font(20));
                     conformation.getChildren().add(conformationInfo);
                     GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));

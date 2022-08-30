@@ -108,13 +108,15 @@ public class Customers {
                 + customerToUpdate.address
                 + "', " + "Postal_Code = '"
                 + customerToUpdate.zipCode
+                + "', " + "Phone = '"
+                + customerToUpdate.phoneNumber
                 + "', " + "Create_Date = '"
                 + customerToUpdate.createDate
                 + "', " + "Created_By = '"
                 + customerToUpdate.createdBy
                 + "', " + "Last_Update = '"
                 + customerToUpdate.lastUpdate
-                + "', " + "Title = '"
+                + "', " + "Last_Updated_By = '"
                 + customerToUpdate.lastUpdateBy
                 + "', " + "Division_ID = '"
                 + customerToUpdate.divisionId
