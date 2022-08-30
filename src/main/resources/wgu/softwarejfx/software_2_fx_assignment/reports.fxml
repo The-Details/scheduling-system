@@ -37,9 +37,15 @@
               <columns>
                 <TableColumn fx:id="contactIdCol" prefWidth="82.0" text="Contact ID" />
                 <TableColumn fx:id="contactNameCol" prefWidth="149.0" text="Contact Name" />
-                  <TableColumn fx:id="contactEmailCol" prefWidth="144.0" text="Contact Email" />
-                  <TableColumn fx:id="contactAppointmentCountCol" prefWidth="90.0" text="App. Count" />
+                  <TableColumn fx:id="contactEmailCol" prefWidth="145.0" text="Contact Email" />
+                  <TableColumn fx:id="contactAppointmentCountCol" prefWidth="89.0" text="App. Count" />
                   <TableColumn fx:id="contactAssociatedAppointmentCol" prefWidth="230.0" text="Associated Appointments" />
+                  <TableColumn fx:id="appointmentTitle" prefWidth="90.0" text="App. Title" />
+                  <TableColumn fx:id="appointmentType" prefWidth="90.0" text="App. Type" />
+                  <TableColumn fx:id="appointmentStart" prefWidth="90.0" text="App. Start" />
+                  <TableColumn fx:id="appointmentEnd" prefWidth="90.0" text="App. End" />
+                  <TableColumn fx:id="appointmentCustomerId" prefWidth="90.0" text="App. Customer ID" />
+                  <TableColumn fx:id="appointmentDescription" prefWidth="90.0" text="App. Description" />
               </columns>
             </TableView>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -269,6 +275,7 @@
                   <Insets bottom="5.0" />
                </GridPane.margin>
             </Button>
+            <Label text="Note: The 3rd report is login attempts tracked in the activity log" wrapText="true" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM" />
          </children>
          <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

@@ -143,7 +143,9 @@ public class AddCustomer implements Initializable {
                         allCustomers.size() + 1,
                         addCustomerName.getText(),
                         addCustomerAddress.getText() + ", "
-                                + addCustomerCity.getText(),
+                                + addCustomerCity.getText() + ", "
+                                + addCustomerStateProvince.getValue() + ", "
+                                + addCustomerCountry.getValue(),
                         addCustomerZipCode.getText(),
                         addCustomerPhone.getText(),
                         dateTime,
@@ -161,7 +163,9 @@ public class AddCustomer implements Initializable {
                         addCustomerName.getText(),
                         addCustomerAddress.getText() + ", "
                                 + addCustomerBorough.getValue() + ", "
-                                + addCustomerCity.getText(),
+                                + addCustomerCity.getText() + ", "
+                                + addCustomerStateProvince.getValue() + ", "
+                                + addCustomerCountry.getValue(),
                         addCustomerZipCode.getText(),
                         addCustomerPhone.getText(),
                         dateTime,
@@ -182,10 +186,11 @@ public class AddCustomer implements Initializable {
 
 
     /**
+     * LAMBDA JUSTIFICATION: The reason why a lambda expression is used in
+     * this method is because it is unknown what the user will choose and presenting every option available is not an option
+     *
      * This method is used to determine which country in the add customer form has been selected to serve as the basis for the address
      *
-     * Lambda Justification: The reason why a lambda expression is used in
-     * this method is because it is unknown what the user will choose and presenting every option available is not an option
      */
     public void countrySpecifier(){
 

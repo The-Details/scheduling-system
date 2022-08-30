@@ -281,7 +281,7 @@ public class Appointments {
         }
 
         GridPane conformation = new GridPane();
-        Text conformationInfo = new Text("Appointment: ID#: " + selectedAppointment.appointmentId + " on " + selectedAppointment.getStart().toLocalDate() + " at " + selectedAppointment.start.toLocalTime() + " has been cancelled.");
+        Text conformationInfo = new Text("Appointment: ID#: " + selectedAppointment.appointmentId + " of Type: " + selectedAppointment.type + " on " + selectedAppointment.getStart().toLocalDate() + " at " + selectedAppointment.start.toLocalTime() + " has been cancelled.");
         conformationInfo.setFont(new Font(20));
         conformation.getChildren().add(conformationInfo);
         GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
@@ -321,6 +321,16 @@ public class Appointments {
         Appointments verifiedAppointment = null;
         for(Appointments screener : allAppointments){
             if(screener.getAppointmentId() == appointmentId){
+                verifiedAppointment = screener;
+            }
+        }
+        return verifiedAppointment;
+    }
+
+    public static Appointments lookupAppointmentByContactId(int contactId){
+        Appointments verifiedAppointment = null;
+        for(Appointments screener : allAppointments){
+            if(screener.contactId == contactId){
                 verifiedAppointment = screener;
             }
         }
@@ -865,12 +875,12 @@ public class Appointments {
 
             int nowTimeJoin = Integer.parseInt(nowTimeSplitter[0] + nowTimeSplitter[1]);
 
-            int nowTimeFifteenMinTil = nowTimeJoin - 15;
+            int nowTimeFifteenMinTil = nowTimeJoin + 15;
 
-            if(startTimeFifteenMinTil == nowTimeFifteenMinTil || (startTimeJoin > nowTimeFifteenMinTil && startTimeJoin < nowTimeJoin)){
+            if(startTimeJoin == nowTimeFifteenMinTil || (startTimeJoin <= nowTimeFifteenMinTil && startTimeJoin > nowTimeJoin)){
                 upcomingAppointmentCount++;
                 GridPane conformation = new GridPane();
-                Text conformationInfo = new Text("Appointment with: " + lookupCustomerById(appointmentCage.customerId).customerName + " coming up in 15 minutes or less.");
+                Text conformationInfo = new Text("Appointment: " + appointmentCage.appointmentId + " on " + appointmentCage.start.toLocalDate() + " at " + appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()) + " with: " + lookupCustomerById(appointmentCage.customerId).customerName + " coming up in 15 minutes or less.");
                 conformationInfo.setFont(new Font(20));
                 conformation.getChildren().add(conformationInfo);
                 GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));

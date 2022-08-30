@@ -320,8 +320,11 @@ public class ModifyCustomer implements Initializable {
     }
 
     /**
-     * Lambda Justification: The reason why a lambda expression is used in
+     * LAMBDA JUSTIFICATION: The reason why a lambda expression is used in
      * this method is because it is unknown what the user will change and presenting every option available is not an option
+     *
+     * This method is used to determine which country in the add customer form has been selected to serve as the basis for the address
+     *
      */
     public void countrySpecifier(){
 

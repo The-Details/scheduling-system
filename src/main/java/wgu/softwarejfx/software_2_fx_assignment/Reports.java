@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -36,6 +37,20 @@ public class Reports implements Initializable {
     TableColumn<Report, Integer> contactAppointmentCountCol;
     @FXML
     TableColumn<Report, Integer> contactAssociatedAppointmentCol;
+    @FXML
+    TableColumn<Report, String> appointmentTitle;
+    @FXML
+    TableColumn<Report, String> appointmentType;
+    @FXML
+    TableColumn<Report, String> appointmentDescription;
+    @FXML
+    TableColumn<Report, LocalDateTime> appointmentStart;
+    @FXML
+    TableColumn<Report, LocalDateTime> appointmentEnd;
+    @FXML
+    TableColumn<Report, Integer> appointmentCustomerId;
+
+
     @FXML
     Label janTypes;
     @FXML
@@ -92,6 +107,12 @@ public class Reports implements Initializable {
         contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         contactNameCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
         contactEmailCol.setCellValueFactory(new PropertyValueFactory<>("contactEmail"));
+        appointmentTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        appointmentStart.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appointmentEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
+        appointmentCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         contactAppointmentCountCol.setCellValueFactory(new PropertyValueFactory<>("appointmentCount"));
         contactAssociatedAppointmentCol.setCellValueFactory(new PropertyValueFactory<>("associatedAppointments"));
 

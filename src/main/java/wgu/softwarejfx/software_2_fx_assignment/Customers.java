@@ -43,7 +43,7 @@ public class Customers {
     static int updateCustomerResultSet;
     static Statement deleteCustomerStmt;
     static String deleteCustomerUpdate;
-    static ResultSet deleteCustomerResultSet;
+    static int deleteCustomerResultSet;
 
     public static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
 
@@ -138,7 +138,7 @@ public class Customers {
         try {
             deleteCustomerStmt = SchedulingSystem.connection.createStatement();
             deleteCustomerUpdate = "DELETE FROM customers WHERE customer_id = " + selectedCustomer.customerId;
-            deleteCustomerResultSet = deleteCustomerStmt.executeQuery(deleteCustomerUpdate);
+            deleteCustomerResultSet = deleteCustomerStmt.executeUpdate(deleteCustomerUpdate);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

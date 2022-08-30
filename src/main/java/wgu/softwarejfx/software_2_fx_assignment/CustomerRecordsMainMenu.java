@@ -22,9 +22,8 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.OffsetTime;
-import java.time.ZoneOffset;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -1613,14 +1612,8 @@ public class CustomerRecordsMainMenu implements Initializable {
     TableColumn<Appointments, String> decemberAppointmentDescriptionCol4;
 
     /**
-     * Lambda Justification: A lambda expression is used here to run an appointment reminder method everytime 5 minutes has passed
+     * LAMBDA JUSTIFICATION: A lambda expression is used here to run an appointment reminder method everytime 5 minutes has passed
      */
-    Timeline timeline = new Timeline(
-        new KeyFrame(Duration.minutes(5), e -> appointmentReminder())
-    );
-
-
-    // setting up customer cols
     public void customerTableSetup (){
         customersIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customersNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -1628,6 +1621,10 @@ public class CustomerRecordsMainMenu implements Initializable {
         customersPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         customersZipCodeCol.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
         customersTableView.setItems(allCustomers);
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.minutes(5), e -> appointmentReminder())
+        );
     }
 
     // setting up appoint cols
@@ -2848,10 +2845,18 @@ public class CustomerRecordsMainMenu implements Initializable {
 
             GridPane conformation = new GridPane();
             assert timeZoneChangeAppointment != null;
+
+            DateTimeFormatter naturalFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mma");
+            ZonedDateTime currentZoneStartTime = timeZoneChangeAppointment.start.atZone(ZoneId.of("America/Los_Angeles"))
+                    .withZoneSameInstant(ZoneId.systemDefault());
+
+            ZonedDateTime currentZoneEndTime = timeZoneChangeAppointment.start.atZone(ZoneId.of("America/Los_Angeles"))
+                    .withZoneSameInstant(ZoneId.systemDefault());
+
             Text conformationInfo = new Text("Appointment:" + "ID#: "
                     + timeZoneChangeAppointment.appointmentId + " Start Time is: "
-                    + appointmentTimeReverser(timeZoneChangeAppointment.start.toLocalTime().toString()) + " End Time is: "
-                    + appointmentTimeReverser(timeZoneChangeAppointment.end.toLocalTime().toString()));
+                    + naturalFormat.format(currentZoneStartTime) + " End Time is: "
+                    + naturalFormat.format(currentZoneEndTime));
             conformationInfo.setFont(new Font(20));
             conformation.getChildren().add(conformationInfo);
             GridPane.setConstraints(conformationInfo, 0,0,1,1,CENTER, VPos.CENTER, Priority.ALWAYS,Priority.ALWAYS, new Insets(25));
