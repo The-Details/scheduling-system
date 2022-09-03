@@ -3,11 +3,17 @@ package wgu.softwarejfx.software_2_fx_assignment;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,10 +23,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static javafx.geometry.HPos.CENTER;
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
-import static wgu.softwarejfx.software_2_fx_assignment.Contacts.contactExistenceChecker;
-import static wgu.softwarejfx.software_2_fx_assignment.Contacts.findAssociatedAppointments;
-
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.*;
 
 
 public class Reports implements Initializable {
@@ -32,6 +37,8 @@ public class Reports implements Initializable {
     ComboBox<String> contactEmail;
     @FXML
     TextField contactId;
+    @FXML
+    Button lookupButton;
     @FXML
     TableView<Appointments> contactAssociatedAppointmentsTableView;
     @FXML
@@ -100,16 +107,42 @@ public class Reports implements Initializable {
     Label decCount;
 
 
+    @FXML
+    public void lookupContactButton() throws SQLException {
+        contactId.setText(String.valueOf(contactExistenceChecker(contactName.getValue(), contactEmail.getValue()).contactId));
+
+        if(contactName.getValue() != null && contactEmail.getValue() != null){
+            contactAssociatedAppointmentsTableView.setItems(findAssociatedAppointments(contactExistenceChecker(contactName.getValue(), contactEmail.getValue())));
+        }
+        else {
+            GridPane conformation = new GridPane();
+            Text conformationInfo = new Text("Contact Info Not Chosen");
+            conformationInfo.setFont(new Font(20));
+            conformation.getChildren().add(conformationInfo);
+            GridPane.setConstraints(conformationInfo, 0, 0, 1, 1, CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(25));
+            Stage popUp = new Stage();
+            Scene conformationScene = new Scene(conformation);
+            popUp.setTitle("Error");
+            popUp.setScene(conformationScene);
+            popUp.sizeToScene();
+            popUp.show();
+        }
+    }
+
+
+
+
     public void reportSetup() throws SQLException {
+
+        contactName.setItems(getAllContactNames());
+        contactEmail.setItems(getAllContactEmails());
 
         contactName.getEditor().textProperty().addListener((obs, oldText, newText) -> contactName.setValue(newText));
 
         contactEmail.getEditor().textProperty().addListener((obs, oldText, newText) -> contactEmail.setValue(newText));
 
         contactId.setDisable(true);
-        contactId.setText(String.valueOf(contactExistenceChecker(contactName.getValue(), contactEmail.getValue()).contactId));
 
-        contactAssociatedAppointmentsTableView.setItems(findAssociatedAppointments(contactExistenceChecker(contactName.getValue(), contactEmail.getValue())));
         appointmentTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentType.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
