@@ -143,6 +143,7 @@ public class Reports implements Initializable {
 
         contactId.setDisable(true);
 
+        appointmentId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentType.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("description"));

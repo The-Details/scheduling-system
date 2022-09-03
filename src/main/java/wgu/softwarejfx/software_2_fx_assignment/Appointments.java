@@ -123,8 +123,8 @@ public class Appointments {
         this.description = description;
         this.location = location;
         this.type = type;
-        this.start = LocalDateTime.from(start.atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault()));
-        this.end = LocalDateTime.from(end.atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault()));
+        this.start = start;
+        this.end = end;
         this.createDate = createDate;
         this.createdBy = createdBy;
         this.last_update = last_update;
@@ -181,7 +181,7 @@ public class Appointments {
                 + "values('" + newAppointment.appointmentId
                 + "', '" + newAppointment.title + "', '" + newAppointment.description + "', '" + newAppointment.location
                 + "', '" + newAppointment.type
-                + "', '" + newAppointment.start + "', '" + newAppointment.end + "', '" + newAppointment.createDate
+                + "', '" + appointmentTimeConvertor(newAppointment.start.toString()) + "', '" + appointmentTimeConvertor(newAppointment.end.toString()) + "', '" + newAppointment.createDate
                 + "', '" + newAppointment.createdBy
                 + "', '" + newAppointment.last_update + "', '" + newAppointment.lastUpdateBy
                 + "', '" + newAppointment.customerId
@@ -205,8 +205,8 @@ public class Appointments {
                 screener.setDescription(selectedAppointment.getDescription());
                 screener.setLocation(selectedAppointment.getLocation());
                 screener.setType(selectedAppointment.getType());
-                screener.setStart(selectedAppointment.getStart());
-                screener.setEnd(selectedAppointment.getEnd());
+                screener.setStart(LocalDateTime.from(selectedAppointment.getStart().atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault())));
+                screener.setEnd(LocalDateTime.from(selectedAppointment.getEnd().atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault())));
                 screener.setCreateDate(selectedAppointment.getCreateDate());
                 screener.setCreatedBy(selectedAppointment.getCreatedBy());
                 screener.setLast_update(selectedAppointment.getLast_update());

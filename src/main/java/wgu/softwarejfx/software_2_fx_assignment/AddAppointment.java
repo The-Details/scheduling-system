@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -239,8 +240,8 @@ public class AddAppointment implements Initializable {
                         addAppointmentDescription.getText(),
                         addAppointmentLocation.getText(),
                         addAppointmentType.getText(),
-                        appointmentStart,
-                        appointmentEnd,
+                        LocalDateTime.from(appointmentStart.atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault())),
+                        LocalDateTime.from(appointmentEnd.atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault())),
                         LocalDateTime.now(),
                         currentUser,
                         LocalDateTime.now(),

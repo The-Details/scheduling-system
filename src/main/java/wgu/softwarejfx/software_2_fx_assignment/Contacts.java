@@ -99,7 +99,7 @@ public class Contacts {
                 }
             }
         }
-        else {
+        else if (contactName != null && contactEmail != null){
             contact = newContact(contactName, contactEmail);
         }
 
