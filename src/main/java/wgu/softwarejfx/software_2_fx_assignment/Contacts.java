@@ -126,12 +126,12 @@ public class Contacts {
     }
 
 
-    public static ObservableList<Integer> findAssociatedAppointments(Contacts selectedContact){
-        ObservableList<Integer> associatedAppointmentsList = FXCollections.observableArrayList();
+    public static ObservableList<Appointments> findAssociatedAppointments(Contacts selectedContact){
+        ObservableList<Appointments> associatedAppointmentsList = FXCollections.observableArrayList();
 
         for(Appointments appointmentCage : allAppointments){
-            if(!associatedAppointmentsList.contains(appointmentCage.appointmentId) && appointmentCage.contactId == selectedContact.contactId){
-                associatedAppointmentsList.add(appointmentCage.appointmentId);
+            if(!associatedAppointmentsList.contains(appointmentCage) && appointmentCage.contactId == selectedContact.contactId){
+                associatedAppointmentsList.add(appointmentCage);
             }
         }
         return  associatedAppointmentsList;

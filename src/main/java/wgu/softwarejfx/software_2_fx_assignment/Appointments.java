@@ -13,10 +13,7 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Arrays;
 
 import static javafx.geometry.HPos.CENTER;
@@ -126,8 +123,8 @@ public class Appointments {
         this.description = description;
         this.location = location;
         this.type = type;
-        this.start = start;
-        this.end = end;
+        this.start = LocalDateTime.from(start.atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault()));
+        this.end = LocalDateTime.from(end.atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault()));
         this.createDate = createDate;
         this.createdBy = createdBy;
         this.last_update = last_update;
@@ -875,9 +872,9 @@ public class Appointments {
 
             int nowTimeJoin = Integer.parseInt(nowTimeSplitter[0] + nowTimeSplitter[1]);
 
-            int nowTimeFifteenMinTil = nowTimeJoin + 15;
+            int nowTimeFifteenMinTil = nowTimeJoin - 15;
 
-            if(startTimeJoin == nowTimeFifteenMinTil || (startTimeJoin <= nowTimeFifteenMinTil && startTimeJoin > nowTimeJoin)){
+            if(startTimeJoin == nowTimeJoin || startTimeJoin == nowTimeFifteenMinTil || (startTimeJoin >= nowTimeFifteenMinTil && startTimeJoin < nowTimeJoin)){
                 upcomingAppointmentCount++;
                 GridPane conformation = new GridPane();
                 Text conformationInfo = new Text("Appointment: " + appointmentCage.appointmentId + " on " + appointmentCage.start.toLocalDate() + " at " + appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()) + " with: " + lookupCustomerById(appointmentCage.customerId).customerName + " coming up in 15 minutes or less.");

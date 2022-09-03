@@ -2850,7 +2850,7 @@ public class CustomerRecordsMainMenu implements Initializable {
             ZonedDateTime currentZoneStartTime = timeZoneChangeAppointment.start.atZone(ZoneId.of("America/Los_Angeles"))
                     .withZoneSameInstant(ZoneId.systemDefault());
 
-            ZonedDateTime currentZoneEndTime = timeZoneChangeAppointment.start.atZone(ZoneId.of("America/Los_Angeles"))
+            ZonedDateTime currentZoneEndTime = timeZoneChangeAppointment.end.atZone(ZoneId.of("America/Los_Angeles"))
                     .withZoneSameInstant(ZoneId.systemDefault());
 
             Text conformationInfo = new Text("Appointment:" + "ID#: "

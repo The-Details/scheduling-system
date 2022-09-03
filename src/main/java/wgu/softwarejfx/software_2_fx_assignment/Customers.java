@@ -17,8 +17,7 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 
 import static javafx.geometry.HPos.CENTER;
-import static wgu.softwarejfx.software_2_fx_assignment.Appointments.getAllAppointments;
-import static wgu.softwarejfx.software_2_fx_assignment.Appointments.lookupAppointmentByCustomerId;
+import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
 
 /**
  * This class serves as a basis for manipulating customer data
@@ -134,7 +133,7 @@ public class Customers {
         getAllCustomers().remove(selectedCustomer);
 
         for (Appointments appointmentToDelete : lookupAppointmentByCustomerId(selectedCustomer.getCustomerId())){
-            getAllAppointments().remove(appointmentToDelete);
+            deleteAppointment(appointmentToDelete);
         }
 
         try {

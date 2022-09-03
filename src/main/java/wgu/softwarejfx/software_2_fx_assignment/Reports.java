@@ -5,50 +5,49 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.*;
-import static wgu.softwarejfx.software_2_fx_assignment.Report.generateReportData;
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.contactExistenceChecker;
+import static wgu.softwarejfx.software_2_fx_assignment.Contacts.findAssociatedAppointments;
+
 
 
 public class Reports implements Initializable {
 
+
     @FXML
-    TableView<Report> contactAssociatedAppointmentsTableView;
+    ComboBox<String> contactName;
     @FXML
-    TableColumn<Report, Integer> contactIdCol;
+    ComboBox<String> contactEmail;
     @FXML
-    TableColumn<Report, String> contactNameCol;
+    TextField contactId;
     @FXML
-    TableColumn<Report, String> contactEmailCol;
+    TableView<Appointments> contactAssociatedAppointmentsTableView;
     @FXML
-    TableColumn<Report, Integer> contactAppointmentCountCol;
+    TableColumn<Appointments, Integer> appointmentId;
     @FXML
-    TableColumn<Report, Integer> contactAssociatedAppointmentCol;
+    TableColumn<Appointments, String> appointmentTitle;
     @FXML
-    TableColumn<Report, String> appointmentTitle;
+    TableColumn<Appointments, String> appointmentType;
     @FXML
-    TableColumn<Report, String> appointmentType;
+    TableColumn<Appointments, String> appointmentDescription;
     @FXML
-    TableColumn<Report, String> appointmentDescription;
+    TableColumn<Appointments, LocalDateTime> appointmentStart;
     @FXML
-    TableColumn<Report, LocalDateTime> appointmentStart;
+    TableColumn<Appointments, LocalDateTime> appointmentEnd;
     @FXML
-    TableColumn<Report, LocalDateTime> appointmentEnd;
-    @FXML
-    TableColumn<Report, Integer> appointmentCustomerId;
+    TableColumn<Appointments, Integer> appointmentCustomerId;
 
 
     @FXML
@@ -101,20 +100,22 @@ public class Reports implements Initializable {
     Label decCount;
 
 
-    public void reportSetup() {
+    public void reportSetup() throws SQLException {
 
-        contactAssociatedAppointmentsTableView.setItems(generateReportData());
-        contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-        contactNameCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-        contactEmailCol.setCellValueFactory(new PropertyValueFactory<>("contactEmail"));
+        contactName.getEditor().textProperty().addListener((obs, oldText, newText) -> contactName.setValue(newText));
+
+        contactEmail.getEditor().textProperty().addListener((obs, oldText, newText) -> contactEmail.setValue(newText));
+
+        contactId.setDisable(true);
+        contactId.setText(String.valueOf(contactExistenceChecker(contactName.getValue(), contactEmail.getValue()).contactId));
+
+        contactAssociatedAppointmentsTableView.setItems(findAssociatedAppointments(contactExistenceChecker(contactName.getValue(), contactEmail.getValue())));
         appointmentTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentType.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         appointmentStart.setCellValueFactory(new PropertyValueFactory<>("start"));
         appointmentEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        contactAppointmentCountCol.setCellValueFactory(new PropertyValueFactory<>("appointmentCount"));
-        contactAssociatedAppointmentCol.setCellValueFactory(new PropertyValueFactory<>("associatedAppointments"));
 
 
         appointmentTotalDataByMonth();
@@ -161,7 +162,11 @@ public class Reports implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        reportSetup();
+        try {
+            reportSetup();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

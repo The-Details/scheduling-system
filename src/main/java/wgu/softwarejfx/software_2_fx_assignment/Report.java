@@ -42,27 +42,27 @@ public class Report {
 
 
 
-    public static ObservableList<Report> generateReportData(){
-
-        for(Contacts contactCage : allContacts){
-            if(!newContactReportData.contains(new Report(contactCage.contactId,
-                    contactCage.contactName, contactCage.email, lookupAppointmentByContactId(contactCage.contactId).title
-                    , lookupAppointmentByContactId(contactCage.contactId).description,
-                    lookupAppointmentByContactId(contactCage.contactId).type, lookupAppointmentByContactId(contactCage.contactId).start,
-                    lookupAppointmentByContactId(contactCage.contactId).end, lookupAppointmentByContactId(contactCage.contactId).customerId,
-                    findAssociatedAppointments(contactCage).size(), findAssociatedAppointments(contactCage)))){
-
-                newContactReportData.add(new Report(contactCage.contactId,
-                        contactCage.contactName, contactCage.email,lookupAppointmentByContactId(contactCage.contactId).title
-                        , lookupAppointmentByContactId(contactCage.contactId).description,
-                        lookupAppointmentByContactId(contactCage.contactId).type, lookupAppointmentByContactId(contactCage.contactId).start,
-                        lookupAppointmentByContactId(contactCage.contactId).end, lookupAppointmentByContactId(contactCage.contactId).customerId,
-                        findAssociatedAppointments(contactCage).size(), findAssociatedAppointments(contactCage)));
-            }
-        }
-
-        return newContactReportData;
-    }
+//    public static ObservableList<Report> generateReportData(){
+//
+//        for(Contacts contactCage : allContacts){
+//            if(!newContactReportData.contains(new Report(contactCage.contactId,
+//                    contactCage.contactName, contactCage.email, lookupAppointmentByContactId(contactCage.contactId).title
+//                    , lookupAppointmentByContactId(contactCage.contactId).description,
+//                    lookupAppointmentByContactId(contactCage.contactId).type, lookupAppointmentByContactId(contactCage.contactId).start,
+//                    lookupAppointmentByContactId(contactCage.contactId).end, lookupAppointmentByContactId(contactCage.contactId).customerId,
+//                    findAssociatedAppointments(contactCage).size(), findAssociatedAppointments(contactCage)))){
+//
+//                newContactReportData.add(new Report(contactCage.contactId,
+//                        contactCage.contactName, contactCage.email,lookupAppointmentByContactId(contactCage.contactId).title
+//                        , lookupAppointmentByContactId(contactCage.contactId).description,
+//                        lookupAppointmentByContactId(contactCage.contactId).type, lookupAppointmentByContactId(contactCage.contactId).start,
+//                        lookupAppointmentByContactId(contactCage.contactId).end, lookupAppointmentByContactId(contactCage.contactId).customerId,
+//                        findAssociatedAppointments(contactCage).size(), findAssociatedAppointments(contactCage)));
+//            }
+//        }
+//
+//        return newContactReportData;
+//    }
 
 
 
