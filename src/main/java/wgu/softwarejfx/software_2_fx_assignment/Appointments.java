@@ -205,8 +205,8 @@ public class Appointments {
                 screener.setDescription(selectedAppointment.getDescription());
                 screener.setLocation(selectedAppointment.getLocation());
                 screener.setType(selectedAppointment.getType());
-                screener.setStart(LocalDateTime.from(selectedAppointment.getStart().atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault())));
-                screener.setEnd(LocalDateTime.from(selectedAppointment.getEnd().atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault())));
+                screener.setStart(selectedAppointment.getStart());
+                screener.setEnd(selectedAppointment.getEnd());
                 screener.setCreateDate(selectedAppointment.getCreateDate());
                 screener.setCreatedBy(selectedAppointment.getCreatedBy());
                 screener.setLast_update(selectedAppointment.getLast_update());
@@ -264,6 +264,7 @@ public class Appointments {
         juneAppointments.remove(selectedAppointment);
         julyAppointments.remove(selectedAppointment);
         augustAppointments.remove(selectedAppointment);
+        septemberAppointments.remove(selectedAppointment);
         octoberAppointments.remove(selectedAppointment);
         novemberAppointments.remove(selectedAppointment);
         decemberAppointments.remove(selectedAppointment);
