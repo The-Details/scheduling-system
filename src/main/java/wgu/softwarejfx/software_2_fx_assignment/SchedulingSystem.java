@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import static wgu.softwarejfx.software_2_fx_assignment.Appointments.allAppointments;
@@ -107,8 +108,8 @@ public class SchedulingSystem extends Application {
                 appointmentsResultSet.getString("description"),
                 appointmentsResultSet.getString("location"),
                 appointmentsResultSet.getString("type"),
-                LocalDateTime.parse(appointmentsResultSet.getString("start"), dateTimeFormatter),
-                LocalDateTime.parse(appointmentsResultSet.getString("end"), dateTimeFormatter),
+                LocalDateTime.from(LocalDateTime.parse(appointmentsResultSet.getString("start"), dateTimeFormatter).atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault())),
+                LocalDateTime.from(LocalDateTime.parse(appointmentsResultSet.getString("end"), dateTimeFormatter).atZone(ZoneId.of("America/Los_Angeles")).withZoneSameInstant(ZoneId.systemDefault())),
                 LocalDateTime.parse(appointmentsResultSet.getString("create_date"), dateTimeFormatter),
                 appointmentsResultSet.getString("created_by"),
                 LocalDateTime.parse(appointmentsResultSet.getString("last_update"), dateTimeFormatter),

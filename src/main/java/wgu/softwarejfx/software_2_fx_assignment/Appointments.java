@@ -181,7 +181,7 @@ public class Appointments {
                 + "values('" + newAppointment.appointmentId
                 + "', '" + newAppointment.title + "', '" + newAppointment.description + "', '" + newAppointment.location
                 + "', '" + newAppointment.type
-                + "', '" + appointmentTimeConvertor(newAppointment.start.toString()) + "', '" + appointmentTimeConvertor(newAppointment.end.toString()) + "', '" + newAppointment.createDate
+                + "', '" + newAppointment.start + "', '" + newAppointment.end + "', '" + newAppointment.createDate
                 + "', '" + newAppointment.createdBy
                 + "', '" + newAppointment.last_update + "', '" + newAppointment.lastUpdateBy
                 + "', '" + newAppointment.customerId
