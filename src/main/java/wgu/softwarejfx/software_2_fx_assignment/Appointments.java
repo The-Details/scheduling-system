@@ -601,6 +601,22 @@ public class Appointments {
         }
     }
 
+
+    public static ObservableList<Appointments> currentAppointmentChecker(){
+        ObservableList<Appointments> currentAppointmentList = FXCollections.observableArrayList();
+
+        for(Appointments appointment : allAppointments){
+            if(appointment.start.toLocalDate().getDayOfMonth() == LocalDate.now().getDayOfMonth()){
+                if(!currentAppointmentList.contains(appointment)){
+                    currentAppointmentList.add(appointment);
+                }
+            }
+        }
+
+        return currentAppointmentList;
+    }
+
+
     /**
      *
      * @param standardTime
@@ -863,7 +879,7 @@ public class Appointments {
         int upcomingAppointmentCount = 0;
 
         for(Appointments appointmentCage : allAppointments){
-            String[] startTimeSplitter = appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()).split(":|AM|PM", 3);
+            String[] startTimeSplitter = appointmentCage.start.toLocalTime().toString().split(":", 3);
 
             int startTimeJoin = Integer.parseInt(startTimeSplitter[0] + startTimeSplitter[1]);
 
@@ -875,7 +891,7 @@ public class Appointments {
 
             int nowTimeFifteenMinTil = nowTimeJoin - 15;
 
-            if(startTimeJoin == nowTimeJoin || startTimeJoin == nowTimeFifteenMinTil || (startTimeJoin >= nowTimeFifteenMinTil && startTimeJoin < nowTimeJoin)){
+            if(startTimeJoin == nowTimeJoin || (startTimeJoin >= nowTimeFifteenMinTil && startTimeJoin < nowTimeJoin)){
                 upcomingAppointmentCount++;
                 GridPane conformation = new GridPane();
                 Text conformationInfo = new Text("Appointment: " + appointmentCage.appointmentId + " on " + appointmentCage.start.toLocalDate() + " at " + appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()) + " with: " + lookupCustomerById(appointmentCage.customerId).customerName + " coming up in 15 minutes or less.");

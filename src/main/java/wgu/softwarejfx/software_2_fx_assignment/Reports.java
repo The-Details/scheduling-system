@@ -56,6 +56,8 @@ public class Reports implements Initializable {
     @FXML
     TableColumn<Appointments, Integer> appointmentCustomerId;
 
+    @FXML
+    Label currentAppointments;
 
     @FXML
     Label janTypes;
@@ -151,6 +153,7 @@ public class Reports implements Initializable {
         appointmentEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
+        currentAppointments.setText(String.valueOf(currentAppointmentChecker().size()));
 
         appointmentTotalDataByMonth();
 

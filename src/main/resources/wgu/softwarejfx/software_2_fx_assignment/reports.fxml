@@ -273,7 +273,15 @@
                   <Insets bottom="5.0" />
                </GridPane.margin>
             </Button>
-            <Label text="Note: The 3rd report is login attempts tracked in the activity log" wrapText="true" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM" />
+            <Label prefHeight="60.0" prefWidth="133.0" text="Number of Appointment Today:" wrapText="true" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="currentAppointments" prefHeight="38.0" prefWidth="29.0" text="##" textAlignment="CENTER" wrapText="true" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
             <ComboBox fx:id="contactName" prefWidth="150.0" promptText="Contact Name" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="45.0" />

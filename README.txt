@@ -36,7 +36,7 @@ How to run the program:
 Description:
     - To find the total number of customer appointments by type and month run the total data method in main menu
     - To check individual contacts association with current appointments
-    - To check user login attempts check login activity text file
+    - To check the number of appointments on the current day
 
 MySQL Connector Driver Version:
     - mysql-connector-java-8.0.25 and later
