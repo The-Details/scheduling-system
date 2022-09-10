@@ -891,7 +891,7 @@ public class Appointments {
 
             int nowTimeFifteenMinTil = nowTimeJoin - 15;
 
-            if(startTimeJoin == nowTimeJoin || (startTimeJoin >= nowTimeFifteenMinTil && startTimeJoin < nowTimeJoin)){
+            if(startTimeJoin == nowTimeJoin || (((Integer.parseInt(startTimeSplitter[0]) - Integer.parseInt(nowTimeSplitter[0])) == 1) && (15 >= (60 - Integer.parseInt(nowTimeSplitter[1]))))){
                 upcomingAppointmentCount++;
                 GridPane conformation = new GridPane();
                 Text conformationInfo = new Text("Appointment: " + appointmentCage.appointmentId + " on " + appointmentCage.start.toLocalDate() + " at " + appointmentTimeReverser(appointmentCage.start.toLocalTime().toString()) + " with: " + lookupCustomerById(appointmentCage.customerId).customerName + " coming up in 15 minutes or less.");
